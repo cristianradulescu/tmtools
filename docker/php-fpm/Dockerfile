@@ -9,6 +9,7 @@ FROM php:fpm
 
 RUN docker-php-ext-install opcache \
   && pecl install xdebug \
+  && docker-php-ext-install pdo_mysql \
   && docker-php-ext-enable xdebug
 
 COPY php-fpm.conf /etc/php-fpm.conf
