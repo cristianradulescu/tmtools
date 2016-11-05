@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h3>{{ employee }}</h3>
+
+    <table class="table table-sm">
+        <tbody>
+            <tr>
+                <th>Username</th>
+                <td>{{ employee.username }}</td>
+            </tr>
+            <tr>
+                <th>Email address</th>
+                <td>{{ employee.emailAddress }}</td>
+            </tr>
+            <tr>
+                <th>Birthday</th>
+                <td>{% if employee.birthday %}{{ employee.birthday|date('Y-m-d') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Personal numeric code</th>
+                <td>{{ employee.personalNumericCode }}</td>
+            </tr>
+            <tr>
+                <th>Identity card number</th>
+                <td>{{ employee.identityCardNumber }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div>
+        <a href="{{ path('employee_index') }}" class="btn btn-primary btn-sm" role="button">Back to the list</a>
+        <a href="{{ path('employee_edit', { 'id': employee.id }) }}" class="btn btn-primary btn-sm" role="button">Edit</a>
+        {{ form_start(delete_form) }}
+            <input type="submit" value="Delete" class="btn btn-danger btn-sm" role="button">
+    </div>
+
+{% endblock %}

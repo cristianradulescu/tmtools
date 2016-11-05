@@ -1,0 +1,9 @@
+homepage:
+    path:     /
+    defaults: { _controller: "AppBundle:Default:index" }
+    methods:  GET
+
+app_employee:
+    resource: "@AppBundle/Resources/config/routing/employee.yml"
+    prefix:   /employee
+
