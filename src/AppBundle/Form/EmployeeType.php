@@ -3,6 +3,7 @@
 namespace AppBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -13,7 +14,15 @@ class EmployeeType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('firstName')->add('lastName')->add('username')->add('emailAddress')->add('birthday')->add('personalNumericCode')->add('identityCardNumber')        ;
+        $builder->add('firstName')
+            ->add('lastName')
+            ->add('username')
+            ->add('emailAddress')
+            ->add('birthday', DateType::class, array(
+                'widget' => 'single_text'
+            ))
+            ->add('personalNumericCode')
+            ->add('identityCardNumber');
     }
     
     /**
