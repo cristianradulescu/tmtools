@@ -1,0 +1,12 @@
+<div class="col-sm-3 col-md-2 sidebar">
+    <ul class="nav nav-sidebar">
+        {% for menu_item, submenu_items in sidebar_menu_items() %}
+            <li>{{ menu_item }}</li>
+            <ul>
+            {% for submenu_item in submenu_items %}
+                <li><a href="{{ path(submenu_item['route']) }}">{{ submenu_item['name'] }}</a></li>
+            {% endfor %}
+            </ul>
+        {% endfor %}
+    </ul>
+</div>

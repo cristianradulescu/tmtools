@@ -1,0 +1,14 @@
+#parameters:
+#    parameter_name: value
+
+services:
+#    service_name:
+#        class: AppBundle\Directory\ClassName
+#        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
+    app.sidebar_menu:
+        class: AppBundle\Twig\SidebarMenuExtension
+        calls:
+            - ['setSidebarMenuDetails', ['%sidebar%']]
+        #public: false
+        tags:
+            - { name: twig.extension }

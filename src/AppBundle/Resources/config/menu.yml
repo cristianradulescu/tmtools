@@ -1,0 +1,8 @@
+parameters:
+    sidebar:
+        HR:
+            - { route: "employee_index", name: "List" }
+            - { route: "employee_new", name: "Add new" }
+        Accounting:
+            - { route: "employee_index", name: "TBD" }
+
