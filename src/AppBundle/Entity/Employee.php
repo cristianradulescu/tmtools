@@ -7,74 +7,105 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Employee
  *
- * @ORM\Table(name="employee")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\EmployeeRepository")
+ * @ORM\Table(name="employee", uniqueConstraints={@ORM\UniqueConstraint(name="username_UNIQUE", columns={"username"}), @ORM\UniqueConstraint(name="email_address_UNIQUE", columns={"email_address"}), @ORM\UniqueConstraint(name="personal_numeric_code_UNIQUE", columns={"personal_numeric_code"}), @ORM\UniqueConstraint(name="identity_card_number_UNIQUE", columns={"identity_card_number"})}, indexes={@ORM\Index(name="fk_employee_job_title_idx", columns={"job_title_id"}), @ORM\Index(name="fk_employee_employee_idx", columns={"direct_manager_id"}), @ORM\Index(name="fk_employee_team_idx", columns={"team_id"})})
+ * @ORM\Entity
  */
 class Employee
 {
     /**
-     * @var int
+     * @var integer
      *
-     * @ORM\Column(name="id", type="integer")
+     * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="first_name", type="string", length=255)
+     * @ORM\Column(name="first_name", type="string", length=45, nullable=false)
      */
     private $firstName;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="last_name", type="string", length=255)
+     * @ORM\Column(name="last_name", type="string", length=45, nullable=false)
      */
     private $lastName;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="username", type="string", length=255)
+     * @ORM\Column(name="username", type="string", length=255, nullable=false)
      */
     private $username;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="email_address", type="string", length=255, unique=true)
+     * @ORM\Column(name="email_address", type="string", length=255, nullable=false)
      */
     private $emailAddress;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="birthday", type="date")
+     * @ORM\Column(name="birthday", type="date", nullable=true)
      */
     private $birthday;
 
     /**
-     * @var string
+     * @var integer
      *
-     * @ORM\Column(name="personal_numeric_code", type="bigint", length=20, unique=true, options={"unsigned"=true})
+     * @ORM\Column(name="personal_numeric_code", type="bigint", nullable=true)
      */
     private $personalNumericCode;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="identity_card_number", type="string", length=255, unique=true)
+     * @ORM\Column(name="identity_card_number", type="string", length=45, nullable=true)
      */
     private $identityCardNumber;
+
+    /**
+     * @var \Employee
+     *
+     * @ORM\ManyToOne(targetEntity="Employee")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="direct_manager_id", referencedColumnName="id")
+     * })
+     */
+    private $directManager;
+
+    /**
+     * @var \JobTitle
+     *
+     * @ORM\ManyToOne(targetEntity="JobTitle")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="job_title_id", referencedColumnName="id")
+     * })
+     */
+    private $jobTitle;
+
+    /**
+     * @var \Team
+     *
+     * @ORM\ManyToOne(targetEntity="Team")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="team_id", referencedColumnName="id")
+     * })
+     */
+    private $team;
+
 
 
     /**
      * Get id
      *
-     * @return int
+     * @return integer
      */
     public function getId()
     {
@@ -204,7 +235,7 @@ class Employee
     /**
      * Set personalNumericCode
      *
-     * @param string $personalNumericCode
+     * @param integer $personalNumericCode
      *
      * @return Employee
      */
@@ -218,7 +249,7 @@ class Employee
     /**
      * Get personalNumericCode
      *
-     * @return string
+     * @return integer
      */
     public function getPersonalNumericCode()
     {
@@ -250,9 +281,79 @@ class Employee
     }
 
     /**
-     * Get full name.
+     * Set directManager
      *
-     * Concatenate last name with first name.
+     * @param \AppBundle\Entity\Employee $directManager
+     *
+     * @return Employee
+     */
+    public function setDirectManager(\AppBundle\Entity\Employee $directManager = null)
+    {
+        $this->directManager = $directManager;
+
+        return $this;
+    }
+
+    /**
+     * Get directManager
+     *
+     * @return \AppBundle\Entity\Employee
+     */
+    public function getDirectManager()
+    {
+        return $this->directManager;
+    }
+
+    /**
+     * Set jobTitle
+     *
+     * @param \AppBundle\Entity\JobTitle $jobTitle
+     *
+     * @return Employee
+     */
+    public function setJobTitle(\AppBundle\Entity\JobTitle $jobTitle = null)
+    {
+        $this->jobTitle = $jobTitle;
+
+        return $this;
+    }
+
+    /**
+     * Get jobTitle
+     *
+     * @return \AppBundle\Entity\JobTitle
+     */
+    public function getJobTitle()
+    {
+        return $this->jobTitle;
+    }
+
+    /**
+     * Set team
+     *
+     * @param \AppBundle\Entity\Team $team
+     *
+     * @return Employee
+     */
+    public function setTeam(\AppBundle\Entity\Team $team = null)
+    {
+        $this->team = $team;
+
+        return $this;
+    }
+
+    /**
+     * Get team
+     *
+     * @return \AppBundle\Entity\Team
+     */
+    public function getTeam()
+    {
+        return $this->team;
+    }
+
+    /**
+     * Get full employee name
      *
      * @return string
      */
@@ -262,6 +363,7 @@ class Employee
     }
 
     /**
+     *
      * @return string
      */
     public function __toString()

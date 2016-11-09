@@ -22,9 +22,12 @@ class EmployeeType extends AbstractType
                 'widget' => 'single_text'
             ))
             ->add('personalNumericCode')
-            ->add('identityCardNumber');
+            ->add('identityCardNumber')
+            ->add('directManager')
+            ->add('jobTitle')
+            ->add('team');
     }
-    
+
     /**
      * {@inheritdoc}
      */
