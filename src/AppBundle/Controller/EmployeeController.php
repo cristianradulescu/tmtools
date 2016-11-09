@@ -22,7 +22,7 @@ class EmployeeController extends Controller
 
         $employees = $em->getRepository('AppBundle:Employee')->findAll();
 
-        return $this->render('AppBundle:Employee:index.html.twig', array(
+        return $this->render('AppBundle:employee:index.html.twig', array(
             'employees' => $employees,
         ));
     }
@@ -45,7 +45,7 @@ class EmployeeController extends Controller
             return $this->redirectToRoute('employee_show', array('id' => $employee->getId()));
         }
 
-        return $this->render('AppBundle:Employee:new.html.twig', array(
+        return $this->render('AppBundle:employee:new.html.twig', array(
             'employee' => $employee,
             'form' => $form->createView(),
         ));
@@ -59,7 +59,7 @@ class EmployeeController extends Controller
     {
         $deleteForm = $this->createDeleteForm($employee);
 
-        return $this->render('AppBundle:Employee:show.html.twig', array(
+        return $this->render('AppBundle:employee:show.html.twig', array(
             'employee' => $employee,
             'delete_form' => $deleteForm->createView(),
         ));
@@ -81,7 +81,7 @@ class EmployeeController extends Controller
             return $this->redirectToRoute('employee_edit', array('id' => $employee->getId()));
         }
 
-        return $this->render('AppBundle:Employee:edit.html.twig', array(
+        return $this->render('AppBundle:employee:edit.html.twig', array(
             'employee' => $employee,
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
