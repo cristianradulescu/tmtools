@@ -1,0 +1,26 @@
+{% extends 'AppBundle::base.html.twig' %}
+
+{% block body %}
+<h3>Job titles list</h3>
+
+<table class="table table-sm">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for jobTitle in jobTitles %}
+        <tr>
+            <td>{{ jobTitle.name }}</td>
+            <td>
+                <a href="{{ path('jobtitle_edit', { 'id': jobTitle.id }) }}" class="btn btn-primary btn-sm" role="button">edit</a>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+<a href="{{ path('jobtitle_new') }}" class="btn btn-primary btn-sm" role="button">Create a new job title</a>
+{% endblock %}

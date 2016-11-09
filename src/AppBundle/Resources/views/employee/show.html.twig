@@ -14,6 +14,10 @@
                 <td>{{ employee.emailAddress }}</td>
             </tr>
             <tr>
+                <th>Job title</th>
+                <td>{{ employee.jobTitle }}</td>
+            </tr>
+            <tr>
                 <th>Birthday</th>
                 <td>{% if employee.birthday %}{{ employee.birthday|date('Y-m-d') }}{% endif %}</td>
             </tr>

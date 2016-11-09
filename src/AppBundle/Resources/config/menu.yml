@@ -1,7 +1,9 @@
 parameters:
     sidebar:
         HR:
-            - { route: "employee_index", name: "List" }
+            - { route: "employee_index", name: "Employees" }
             - { route: "employee_new", name: "New employee" }
+            - { route: "jobtitle_index", name: "Job titles" }
+            - { route: "jobtitle_new", name: "New job title" }
         Accounting:
             - { route: "employee_index", name: "TBD" }

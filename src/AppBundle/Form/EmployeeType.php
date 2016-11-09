@@ -24,8 +24,8 @@ class EmployeeType extends AbstractType
             ->add('personalNumericCode')
             ->add('identityCardNumber')
             ->add('directManager')
-            ->add('jobTitle')
-            ->add('team');
+            ->add('jobTitle');
+            //->add('team');
     }
 
     /**

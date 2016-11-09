@@ -7,5 +7,9 @@ homepage:
 
 app_employee:
     resource: "@AppBundle/Resources/config/routing/employee.yml"
-    prefix:   /employee
+    prefix:   /hr/employee
+
+app_jobtitle:
+    resource: "@AppBundle/Resources/config/routing/jobtitle.yml"
+    prefix:   /hr/jobtitle
 
