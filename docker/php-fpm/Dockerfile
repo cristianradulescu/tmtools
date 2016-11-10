@@ -13,6 +13,7 @@ RUN docker-php-ext-install opcache \
   && docker-php-ext-enable xdebug
 
 COPY php-fpm.conf /etc/php-fpm.conf
+COPY php.ini /usr/local/etc/php/php.ini
 
 RUN useradd -ms /bin/bash cristian
 USER cristian
