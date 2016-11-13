@@ -1,15 +1,8 @@
-homepage:
-    path: /
-    defaults:
-        _controller: "AppBundle:Employee:index"
-        path: /employee
-        permanent: true
+admin_area:
+    resource: "@SonataAdminBundle/Resources/config/routing/sonata_admin.xml"
+    prefix: /
 
-app_employee:
-    resource: "@AppBundle/Resources/config/routing/employee.yml"
-    prefix:   /hr/employee
-
-app_jobtitle:
-    resource: "@AppBundle/Resources/config/routing/jobtitle.yml"
-    prefix:   /hr/jobtitle
-
+_sonata_admin:
+    resource: .
+    type: sonata_admin
+    prefix: /
