@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Employee
  *
- * @ORM\Table(name="employee", uniqueConstraints={@ORM\UniqueConstraint(name="username_UNIQUE", columns={"username"}), @ORM\UniqueConstraint(name="email_address_UNIQUE", columns={"email_address"}), @ORM\UniqueConstraint(name="personal_numeric_code_UNIQUE", columns={"personal_numeric_code"}), @ORM\UniqueConstraint(name="identity_card_number_UNIQUE", columns={"identity_card_number"})}, indexes={@ORM\Index(name="fk_employee_job_title_idx", columns={"job_title_id"}), @ORM\Index(name="fk_employee_employee_idx", columns={"direct_manager_id"}), @ORM\Index(name="fk_employee_team_idx", columns={"team_id"})})
+ * @ORM\Table(name="employee", uniqueConstraints={@ORM\UniqueConstraint(name="username_UNIQUE", columns={"username"}), @ORM\UniqueConstraint(name="email_address_UNIQUE", columns={"email_address"}), @ORM\UniqueConstraint(name="personal_numeric_code_UNIQUE", columns={"personal_numeric_code"}), @ORM\UniqueConstraint(name="identity_card_number_UNIQUE", columns={"identity_card_number"})}, indexes={@ORM\Index(name="fk_employee_job_title_idx", columns={"job_title_id"}), @ORM\Index(name="fk_employee_employee_idx", columns={"direct_manager_id"}), @ORM\Index(name="fk_employee_team_idx", columns={"team_id"}), @ORM\Index(name="fk_employee_company_idx", columns={"company_id"})})
  * @ORM\Entity
  */
 class Employee
@@ -71,6 +71,16 @@ class Employee
     private $identityCardNumber;
 
     /**
+     * @var \Company
+     *
+     * @ORM\ManyToOne(targetEntity="Company")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="company_id", referencedColumnName="id")
+     * })
+     */
+    private $company;
+
+    /**
      * @var \Employee
      *
      * @ORM\ManyToOne(targetEntity="Employee")
@@ -81,9 +91,9 @@ class Employee
     private $directManager;
 
     /**
-     * @var \JobTitle
+     * @var \EmployeeJobTitle
      *
-     * @ORM\ManyToOne(targetEntity="JobTitle")
+     * @ORM\ManyToOne(targetEntity="EmployeeJobTitle")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="job_title_id", referencedColumnName="id")
      * })
@@ -91,9 +101,9 @@ class Employee
     private $jobTitle;
 
     /**
-     * @var \Team
+     * @var \EmployeeTeam
      *
-     * @ORM\ManyToOne(targetEntity="Team")
+     * @ORM\ManyToOne(targetEntity="EmployeeTeam")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="team_id", referencedColumnName="id")
      * })
@@ -281,6 +291,30 @@ class Employee
     }
 
     /**
+     * Set company
+     *
+     * @param \AppBundle\Entity\Company $company
+     *
+     * @return Employee
+     */
+    public function setCompany(\AppBundle\Entity\Company $company = null)
+    {
+        $this->company = $company;
+
+        return $this;
+    }
+
+    /**
+     * Get company
+     *
+     * @return \AppBundle\Entity\Company
+     */
+    public function getCompany()
+    {
+        return $this->company;
+    }
+
+    /**
      * Set directManager
      *
      * @param \AppBundle\Entity\Employee $directManager
@@ -307,11 +341,11 @@ class Employee
     /**
      * Set jobTitle
      *
-     * @param \AppBundle\Entity\JobTitle $jobTitle
+     * @param \AppBundle\Entity\EmployeeJobTitle $jobTitle
      *
      * @return Employee
      */
-    public function setJobTitle(\AppBundle\Entity\JobTitle $jobTitle = null)
+    public function setJobTitle(\AppBundle\Entity\EmployeeJobTitle $jobTitle = null)
     {
         $this->jobTitle = $jobTitle;
 
@@ -321,7 +355,7 @@ class Employee
     /**
      * Get jobTitle
      *
-     * @return \AppBundle\Entity\JobTitle
+     * @return \AppBundle\Entity\EmployeeJobTitle
      */
     public function getJobTitle()
     {
@@ -331,11 +365,11 @@ class Employee
     /**
      * Set team
      *
-     * @param \AppBundle\Entity\Team $team
+     * @param \AppBundle\Entity\EmployeeTeam $team
      *
      * @return Employee
      */
-    public function setTeam(\AppBundle\Entity\Team $team = null)
+    public function setTeam(\AppBundle\Entity\EmployeeTeam $team = null)
     {
         $this->team = $team;
 
@@ -345,7 +379,7 @@ class Employee
     /**
      * Get team
      *
-     * @return \AppBundle\Entity\Team
+     * @return \AppBundle\Entity\EmployeeTeam
      */
     public function getTeam()
     {

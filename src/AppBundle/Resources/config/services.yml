@@ -1,14 +1,6 @@
-#parameters:
-#    parameter_name: value
-
 services:
-#    service_name:
-#        class: AppBundle\Directory\ClassName
-#        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
-    app.sidebar_menu:
-        class: AppBundle\Twig\SidebarMenuExtension
-        calls:
-            - ['setSidebarMenuDetails', ['%sidebar%']]
-        #public: false
+    app.admin.employee:
+        class: AppBundle\Admin\EmployeeAdmin
+        arguments: [~, AppBundle\Entity\Employee, AppBundle:EmployeeAdmin]
         tags:
-            - { name: twig.extension }
+            - { name: sonata.admin, manager_type: orm, group: HR, label: Employee }
