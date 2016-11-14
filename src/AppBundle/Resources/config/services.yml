@@ -1,6 +1,18 @@
 services:
     app.admin.employee:
         class: AppBundle\Admin\EmployeeAdmin
-        arguments: [~, AppBundle\Entity\Employee, AppBundle:EmployeeAdmin]
+        arguments: [~, AppBundle\Entity\Employee, SonataAdminBundle:CRUD]
         tags:
-            - { name: sonata.admin, manager_type: orm, group: HR, label: Employee }
+            - { name: sonata.admin, manager_type: orm, group: HR, label: Employees }
+
+    app.admin.employee_job_title:
+        class: AppBundle\Admin\EmployeeJobTitleAdmin
+        arguments: [~, AppBundle\Entity\EmployeeJobTitle, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: HR, label: Job titles }
+
+    app.admin.company:
+        class: AppBundle\Admin\CompanyAdmin
+        arguments: [~, AppBundle\Entity\Company, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: HR, label: Companies }
