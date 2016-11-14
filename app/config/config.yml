@@ -68,6 +68,12 @@ swiftmailer:
     spool:     { type: memory }
 
 # Sonata admin
+sonata_admin:
+    title: "TM tools"
+    show_mosaic_button: false
+    options:
+        title_mode: single_text
+
 sonata_block:
     default_contexts: [cms]
     blocks:

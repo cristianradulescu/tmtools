@@ -16,14 +16,8 @@ class EmployeeAdmin extends AbstractAdmin
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
         $datagridMapper
-            ->add('id')
             ->add('firstName')
             ->add('lastName')
-            ->add('username')
-            ->add('emailAddress')
-            ->add('birthday')
-            ->add('personalNumericCode')
-            ->add('identityCardNumber')
         ;
     }
 
@@ -78,6 +72,9 @@ class EmployeeAdmin extends AbstractAdmin
             ->add('birthday')
             ->add('personalNumericCode')
             ->add('identityCardNumber')
+            ->add('jobTitle')
+            ->add('directManager')
+            ->add('company')
         ;
     }
 }

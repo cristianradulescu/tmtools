@@ -17,7 +17,6 @@ class CompanyAdmin extends AbstractAdmin
     {
         $datagridMapper
             ->add('name')
-            ->add('costCenter')
         ;
     }
 
@@ -47,6 +46,7 @@ class CompanyAdmin extends AbstractAdmin
         $formMapper
             ->add('name')
             ->add('costCenter')
+            ->add('divisionManager')
         ;
     }
 
@@ -58,6 +58,7 @@ class CompanyAdmin extends AbstractAdmin
         $showMapper
             ->add('name')
             ->add('costCenter')
+            ->add('divisionManager')
         ;
     }
 }
