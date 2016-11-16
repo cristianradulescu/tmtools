@@ -16,3 +16,9 @@ services:
         arguments: [~, AppBundle\Entity\Company, SonataAdminBundle:CRUD]
         tags:
             - { name: sonata.admin, manager_type: orm, group: HR, label: Companies }
+
+    app.admin.travel_destination:
+        class: AppBundle\Admin\TravelDestinationAdmin
+        arguments: [~, AppBundle\Entity\TravelDestination, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: Accounting, label: Travel destinations }
