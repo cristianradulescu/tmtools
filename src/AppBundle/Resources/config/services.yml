@@ -3,22 +3,34 @@ services:
         class: AppBundle\Admin\EmployeeAdmin
         arguments: [~, AppBundle\Entity\Employee, SonataAdminBundle:CRUD]
         tags:
-            - { name: sonata.admin, manager_type: orm, group: HR, label: Employees }
+            - { name: sonata.admin, manager_type: orm, group: hr, label: Employees }
 
     app.admin.employee_job_title:
         class: AppBundle\Admin\EmployeeJobTitleAdmin
         arguments: [~, AppBundle\Entity\EmployeeJobTitle, SonataAdminBundle:CRUD]
         tags:
-            - { name: sonata.admin, manager_type: orm, group: HR, label: Job titles }
+            - { name: sonata.admin, manager_type: orm, group: hr, label: Job titles }
 
     app.admin.company:
         class: AppBundle\Admin\CompanyAdmin
         arguments: [~, AppBundle\Entity\Company, SonataAdminBundle:CRUD]
         tags:
-            - { name: sonata.admin, manager_type: orm, group: HR, label: Companies }
+            - { name: sonata.admin, manager_type: orm, group: hr, label: Companies }
 
     app.admin.travel_destination:
         class: AppBundle\Admin\TravelDestinationAdmin
         arguments: [~, AppBundle\Entity\TravelDestination, SonataAdminBundle:CRUD]
         tags:
-            - { name: sonata.admin, manager_type: orm, group: Accounting, label: Travel destinations }
+            - { name: sonata.admin, manager_type: orm, group: travel, label: Destinations }
+
+    app.admin.travel_purpose:
+        class: AppBundle\Admin\TravelPurposeAdmin
+        arguments: [~, AppBundle\Entity\TravelPurpose, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: travel, label: Purposes }
+
+    app.admin.travel_document:
+        class: AppBundle\Admin\TravelDocumentAdmin
+        arguments: [~, AppBundle\Entity\TravelDocument, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: travel, label: Dcuments, show_in_dashboard: false }
