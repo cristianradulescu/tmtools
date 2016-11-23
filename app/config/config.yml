@@ -77,11 +77,6 @@ sonata_admin:
         groups:
             hr:
                 label: HR
-            accounting:
-                label: Accounting
-                items:
-                    - route:        admin_app_traveldocument_create
-                      label:        Generate travel document
             travel:
                 label: Travel
 

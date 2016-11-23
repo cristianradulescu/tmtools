@@ -17,6 +17,12 @@ services:
         tags:
             - { name: sonata.admin, manager_type: orm, group: hr, label: Companies }
 
+    app.admin.travel_document:
+        class: AppBundle\Admin\TravelDocumentAdmin
+        arguments: [~, AppBundle\Entity\TravelDocument, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: travel, label: Documents }
+
     app.admin.travel_destination:
         class: AppBundle\Admin\TravelDestinationAdmin
         arguments: [~, AppBundle\Entity\TravelDestination, SonataAdminBundle:CRUD]
@@ -28,9 +34,3 @@ services:
         arguments: [~, AppBundle\Entity\TravelPurpose, SonataAdminBundle:CRUD]
         tags:
             - { name: sonata.admin, manager_type: orm, group: travel, label: Purposes }
-
-    app.admin.travel_document:
-        class: AppBundle\Admin\TravelDocumentAdmin
-        arguments: [~, AppBundle\Entity\TravelDocument, SonataAdminBundle:CRUD]
-        tags:
-            - { name: sonata.admin, manager_type: orm, group: travel, label: Dcuments, show_in_dashboard: false }

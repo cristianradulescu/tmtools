@@ -16,12 +16,11 @@ class TravelDocumentAdmin extends AbstractAdmin
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
         $datagridMapper
+            ->add('employee')
+            ->add('purpose')
+            ->add('destination')
             ->add('dateStart')
             ->add('dateEnd')
-            ->add('departureLeaveTime')
-            ->add('departureArrivalTime')
-            ->add('destinationArrivalTime')
-            ->add('destinationLeaveTime')
         ;
     }
 
@@ -31,12 +30,11 @@ class TravelDocumentAdmin extends AbstractAdmin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
+            ->add('employee')
+            ->add('purpose')
+            ->add('destination')
             ->add('dateStart')
             ->add('dateEnd')
-            ->add('departureLeaveTime')
-            ->add('departureArrivalTime')
-            ->add('destinationArrivalTime')
-            ->add('destinationLeaveTime')
             ->add('_action', null, array(
                 'actions' => array(
                     'show' => array(),
@@ -71,6 +69,9 @@ class TravelDocumentAdmin extends AbstractAdmin
     protected function configureShowFields(ShowMapper $showMapper)
     {
         $showMapper
+            ->add('employee')
+            ->add('purpose')
+            ->add('destination')
             ->add('dateStart')
             ->add('dateEnd')
             ->add('departureLeaveTime')
