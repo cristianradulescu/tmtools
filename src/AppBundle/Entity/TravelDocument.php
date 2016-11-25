@@ -320,4 +320,16 @@ class TravelDocument
     {
         return $this->purpose;
     }
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->getEmployee().' - '.$this->getPurpose()
+            .' ('.$this->getDateStart()->format('Y-m-d')
+            .' / '.$this->getDateEnd()->format('Y-m-d').')';
+    }
+
+
 }

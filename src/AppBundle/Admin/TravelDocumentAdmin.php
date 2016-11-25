@@ -57,9 +57,9 @@ class TravelDocumentAdmin extends AbstractAdmin
             ->add('dateStart')
             ->add('dateEnd')
             ->add('departureLeaveTime')
-            ->add('departureArrivalTime')
             ->add('destinationArrivalTime')
             ->add('destinationLeaveTime')
+            ->add('departureArrivalTime')
         ;
     }
 
