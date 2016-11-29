@@ -6,6 +6,7 @@ use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
+use Sonata\AdminBundle\Route\RouteCollection;
 use Sonata\AdminBundle\Show\ShowMapper;
 
 class TravelDocumentAdmin extends AbstractAdmin
@@ -37,6 +38,9 @@ class TravelDocumentAdmin extends AbstractAdmin
             ->add('dateEnd')
             ->add('_action', null, array(
                 'actions' => array(
+                    'generate' => array(
+                        'template' => 'AppBundle:CRUD:list__action_generate.html.twig'
+                    ),
                     'show' => array(),
                     'edit' => array(),
                     'delete' => array(),
@@ -79,5 +83,13 @@ class TravelDocumentAdmin extends AbstractAdmin
             ->add('destinationArrivalTime')
             ->add('destinationLeaveTime')
         ;
+    }
+
+    /**
+     * @param RouteCollection $collection
+     */
+    protected function configureRoutes(RouteCollection $collection)
+    {
+        $collection->add('generate');
     }
 }

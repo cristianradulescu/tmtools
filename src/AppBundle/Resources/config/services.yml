@@ -19,7 +19,7 @@ services:
 
     app.admin.travel_document:
         class: AppBundle\Admin\TravelDocumentAdmin
-        arguments: [~, AppBundle\Entity\TravelDocument, SonataAdminBundle:CRUD]
+        arguments: [~, AppBundle\Entity\TravelDocument, AppBundle:TravelDocument]
         tags:
             - { name: sonata.admin, manager_type: orm, group: travel, label: Documents }
 
