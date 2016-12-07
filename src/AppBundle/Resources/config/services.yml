@@ -1,4 +1,9 @@
 services:
+    # App
+    app.travel_document:
+        class: AppBundle\Service\TravelDocumentService
+
+    # Admin
     app.admin.employee:
         class: AppBundle\Admin\EmployeeAdmin
         arguments: [~, AppBundle\Entity\Employee, SonataAdminBundle:CRUD]
