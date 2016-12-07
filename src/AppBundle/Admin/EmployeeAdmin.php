@@ -44,7 +44,6 @@ class EmployeeAdmin extends AbstractAdmin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-            ->add('id')
             ->add('firstName')
             ->add('lastName')
             ->add('username')
@@ -64,7 +63,6 @@ class EmployeeAdmin extends AbstractAdmin
     protected function configureShowFields(ShowMapper $showMapper)
     {
         $showMapper
-            ->add('id')
             ->add('firstName')
             ->add('lastName')
             ->add('username')

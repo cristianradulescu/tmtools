@@ -6,6 +6,7 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\TravelDocument;
 use Sonata\AdminBundle\Controller\CRUDController;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
 class TravelDocumentController extends CRUDController
@@ -68,5 +69,23 @@ class TravelDocumentController extends CRUDController
         $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, $zipFileName);
 
         return $response;
+    }
+
+    /**
+     * Clone the travel document in order to change it's details.
+     *
+     * This is useful when you need to create travel documents with the same details for more employees. The action
+     * redirects to the edit page for the cloned object, in order to allow the user to edit the details.
+     *
+     * @return RedirectResponse
+     */
+    public function cloneAction()
+    {
+        /** @var TravelDocument $object */
+        $object = $this->admin->getSubject();
+        $clonedObject = clone $object;
+        $clonedObject = $this->admin->create($clonedObject);
+
+        return new RedirectResponse($this->admin->generateUrl('edit', array('id' => $clonedObject->getId())));
     }
 }

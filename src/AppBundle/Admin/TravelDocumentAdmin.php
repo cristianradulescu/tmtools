@@ -41,6 +41,9 @@ class TravelDocumentAdmin extends AbstractAdmin
                     'generate' => array(
                         'template' => 'AppBundle:CRUD:list__action_generate.html.twig'
                     ),
+                    'clone' => array(
+                        'template' => 'AppBundle:CRUD:list__action_clone.html.twig'
+                    ),
                     'show' => array(),
                     'edit' => array(),
                     'delete' => array(),
@@ -91,5 +94,6 @@ class TravelDocumentAdmin extends AbstractAdmin
     protected function configureRoutes(RouteCollection $collection)
     {
         $collection->add('generate');
+        $collection->add('clone');
     }
 }
