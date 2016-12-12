@@ -1,4 +1,5 @@
-tm-tools
+TM tools
 ========
 
-A Symfony project created on October 28, 2016, 12:59 pm.
+Team management tools for personal use.
+[Docs](docs/index.md)
