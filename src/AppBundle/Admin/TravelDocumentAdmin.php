@@ -12,6 +12,14 @@ use Sonata\AdminBundle\Show\ShowMapper;
 class TravelDocumentAdmin extends AbstractAdmin
 {
     /**
+     * @var array
+     */
+    protected $datagridValues = array(
+        '_sort_by' => 'dateStart',
+        '_sort_order' => 'DESC',
+    );
+
+    /**
      * @param DatagridMapper $datagridMapper
      */
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
