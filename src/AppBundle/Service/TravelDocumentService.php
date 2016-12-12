@@ -23,8 +23,13 @@ class TravelDocumentService
     {
         $employee = $travelDocument->getEmployee();
         $company = $employee->getCompany();
+        $daysOnTravel = $this->computeDaysOnTravelByTravelDates(
+            $travelDocument->getDateStart(),
+            $travelDocument->getDateEnd()
+        );
+        $paymentAmount = $daysOnTravel * self::TRAVEL_DAY_PAYMENT;
 
-        $placeholders['ordin_de_deplasare_p1.svg'] = array(
+        $placeholders['ordin_de_deplasare.svg'] = array(
             'PLACEHOLDER_COST_CENTER' => $company->getCostCenter(),
             'PLACEHOLDER_EMPLOYEE_NAME' => $employee->getFullName(),
             'PLACEHOLDER_EMPLOYEE_JOB_TITLE' => $employee->getJobTitle(),
@@ -38,15 +43,6 @@ class TravelDocumentService
                 ->format(self::DATE_FORMAT_PATTERN),
             'PLACEHOLDER_DESTINATION_LEAVE_TIME' => $travelDocument->getDestinationLeaveTime()
                 ->format(self::DATE_FORMAT_PATTERN),
-        );
-
-        $daysOnTravel = $this->computeDaysOnTravelByTravelDates(
-            $travelDocument->getDateStart(),
-            $travelDocument->getDateEnd()
-        );
-        $paymentAmount = $daysOnTravel * self::TRAVEL_DAY_PAYMENT;
-
-        $placeholders['ordin_de_deplasare_p2.svg'] = array(
             'PLACEHOLDER_STARTPOINT_LEAVE_TIME' => $travelDocument->getDepartureLeaveTime()
                 ->format(self::DATE_FORMAT_PATTERN),
             'PLACEHOLDER_STARTPOINT_ARRIVAL_TIME' => $travelDocument->getDepartureArrivalTime()

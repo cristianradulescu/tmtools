@@ -6,9 +6,8 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\TravelDocument;
 use AppBundle\Service\TravelDocumentService;
 use Sonata\AdminBundle\Controller\CRUDController;
-use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\ResponseHeaderBag;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class TravelDocumentController
@@ -17,11 +16,11 @@ use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 class TravelDocumentController extends CRUDController
 {
     /**
-     * Generate a zip file with the travel documents.
+     * Generate a file with the travel documents.
      *
-     * SVG format does not supports multiple pages, thus we need to serve all the files in a zip archive.
+     * The file is in SVG format and it is served directly.
      *
-     * @return BinaryFileResponse
+     * @return Response
      */
     public function generateAction()
     {
@@ -32,31 +31,10 @@ class TravelDocumentController extends CRUDController
         $travelDocumentService = $this->get('app.travel_document');
         $placeholders = $travelDocumentService->fillPlaceholders($travelDocument);
 
-        $pages['ordin_de_deplasare_p1.svg'] = $this->render(
-            'AppBundle:svg:ordin_de_deplasare_p1.svg.twig',
-            $placeholders['ordin_de_deplasare_p1.svg']
+        return $this->render(
+            'AppBundle:svg:ordin_de_deplasare.svg.twig',
+            $placeholders['ordin_de_deplasare.svg']
         );
-
-        $pages['ordin_de_deplasare_p2.svg'] = $this->render(
-            'AppBundle:svg:ordin_de_deplasare_p2.svg.twig',
-            $placeholders['ordin_de_deplasare_p2.svg']
-        );
-
-        // create zip file to download both pages at once
-        $zipFileName = 'travel_documents_'.date('YmdHis').'.zip';
-        $zip = new \ZipArchive();
-        $zip->open($zipFileName, \ZipArchive::CREATE);
-        foreach ($pages as $filename => $page) {
-            $zip->addFromString($filename, $page->getContent());
-        }
-        $zipFilePath = $zip->filename;
-            $zip->close();
-
-        $response = new BinaryFileResponse($zipFilePath);
-        $response->deleteFileAfterSend(true);
-        $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, $zipFileName);
-
-        return $response;
     }
 
     /**
