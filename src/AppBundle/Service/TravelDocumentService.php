@@ -36,7 +36,8 @@ class TravelDocumentService
             'PLACEHOLDER_TRAVEL_PURPOSE' => $travelDocument->getPurpose(),
             'PLACEHOLDER_TRAVEL_DESTINATION' => $travelDocument->getDestination(),
             'PLACEHOLDER_COMPANY_NAME' => $company->getName(),
-            'PLACEHOLDER_EMPLOYEE_DETAILS' => $employee->getPersonalNumericCode(),
+            'PLACEHOLDER_EMPLOYEE_DETAILS' => $employee->getIdentityCardNumber().' / '
+                .$employee->getPersonalNumericCode(),
             'PLACEHOLDER_DATE_FROM' => $travelDocument->getDateStart()->format('d.m.Y'),
             'PLACEHOLDER_DATE_TO' => $travelDocument->getDateEnd()->format('d.m.Y'),
             'PLACEHOLDER_DESTINATION_ARRIVAL_TIME' => $travelDocument->getDestinationArrivalTime()
