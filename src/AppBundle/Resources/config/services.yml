@@ -39,3 +39,9 @@ services:
         arguments: [~, AppBundle\Entity\TravelPurpose, SonataAdminBundle:CRUD]
         tags:
             - { name: sonata.admin, manager_type: orm, group: travel, label: Purposes }
+
+    app.admin.reinbursement:
+        class: AppBundle\Admin\ReinbursementAdmin
+        arguments: [~, AppBundle\Entity\Reinbursement, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: reinbursement, label: Reinbursements }

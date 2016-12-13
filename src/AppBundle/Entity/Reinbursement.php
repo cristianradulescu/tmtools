@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Reinbursement
  *
- * @ORM\Table(name="reinbursement", indexes={@ORM\Index(name="fk_reinbursement_reinbursement_type_idx", columns={"type_id"})})
+ * @ORM\Table(name="reinbursement")
  * @ORM\Entity
  */
 class Reinbursement
@@ -22,22 +22,47 @@ class Reinbursement
     private $id;
 
     /**
-     * @var float
+     * @var string
      *
-     * @ORM\Column(name="value", type="float", precision=10, scale=0, nullable=false)
+     * @ORM\Column(name="name", type="string", length=45, nullable=false)
      */
-    private $value = '0';
+    private $name;
 
     /**
-     * @var \ReinbursementType
+     * @var integer
      *
-     * @ORM\ManyToOne(targetEntity="ReinbursementType")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="type_id", referencedColumnName="id")
-     * })
+     * @ORM\Column(name="number", type="string", length=45, nullable=false)
      */
-    private $type;
+    private $number;
 
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="date", type="date", nullable=false)
+     */
+    private $date;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="value", type="decimal", precision=10, scale=2, nullable=false)
+     */
+    private $value;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="ReinbursementDocument", mappedBy="reinbursement")
+     */
+    private $reinbursementDocument;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->reinbursementDocument = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
 
     /**
@@ -51,9 +76,81 @@ class Reinbursement
     }
 
     /**
+     * Set name
+     *
+     * @param string $name
+     *
+     * @return Reinbursement
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Set number
+     *
+     * @param integer $number
+     *
+     * @return Reinbursement
+     */
+    public function setNumber($number)
+    {
+        $this->number = $number;
+
+        return $this;
+    }
+
+    /**
+     * Get number
+     *
+     * @return integer
+     */
+    public function getNumber()
+    {
+        return $this->number;
+    }
+
+    /**
+     * Set date
+     *
+     * @param \DateTime $date
+     *
+     * @return Reinbursement
+     */
+    public function setDate($date)
+    {
+        $this->date = $date;
+
+        return $this;
+    }
+
+    /**
+     * Get date
+     *
+     * @return \DateTime
+     */
+    public function getDate()
+    {
+        return $this->date;
+    }
+
+    /**
      * Set value
      *
-     * @param float $value
+     * @param string $value
      *
      * @return Reinbursement
      */
@@ -67,7 +164,7 @@ class Reinbursement
     /**
      * Get value
      *
-     * @return float
+     * @return string
      */
     public function getValue()
     {
@@ -75,26 +172,36 @@ class Reinbursement
     }
 
     /**
-     * Set type
+     * Add reinbursementDocument
      *
-     * @param \AppBundle\Entity\ReinbursementType $type
+     * @param \AppBundle\Entity\ReinbursementDocument $reinbursementDocument
      *
      * @return Reinbursement
      */
-    public function setType(\AppBundle\Entity\ReinbursementType $type = null)
+    public function addReinbursementDocument(\AppBundle\Entity\ReinbursementDocument $reinbursementDocument)
     {
-        $this->type = $type;
+        $this->reinbursementDocument[] = $reinbursementDocument;
 
         return $this;
     }
 
     /**
-     * Get type
+     * Remove reinbursementDocument
      *
-     * @return \AppBundle\Entity\ReinbursementType
+     * @param \AppBundle\Entity\ReinbursementDocument $reinbursementDocument
      */
-    public function getType()
+    public function removeReinbursementDocument(\AppBundle\Entity\ReinbursementDocument $reinbursementDocument)
     {
-        return $this->type;
+        $this->reinbursementDocument->removeElement($reinbursementDocument);
+    }
+
+    /**
+     * Get reinbursementDocument
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getReinbursementDocument()
+    {
+        return $this->reinbursementDocument;
     }
 }

@@ -79,6 +79,8 @@ sonata_admin:
                 label: HR
             travel:
                 label: Travel
+            reinbursement:
+                label: Reinbursement
 
 sonata_block:
     default_contexts: [cms]
