@@ -18,11 +18,11 @@ class TravelDocumentController extends CRUDController
     /**
      * Generate a file with the travel documents.
      *
-     * The file is in SVG format and it is served directly.
+     * The file is in SVG format and it is served directly, in order to be used for print.
      *
      * @return Response
      */
-    public function generateAction()
+    public function printAction()
     {
         /** @var TravelDocument $travelDocument */
         $travelDocument = $this->admin->getSubject();
