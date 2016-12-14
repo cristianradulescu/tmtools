@@ -192,7 +192,7 @@ CREATE INDEX `fk_aquisition_supplier_account_aquisition_supplier_idx` ON `tmtool
 DROP TABLE IF EXISTS `tmtools`.`reinbursement_type` ;
 
 CREATE TABLE IF NOT EXISTS `tmtools`.`reinbursement_type` (
-  `id` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NULL,
   PRIMARY KEY (`id`))
   ENGINE = InnoDB;
