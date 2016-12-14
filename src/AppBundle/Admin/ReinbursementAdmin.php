@@ -24,7 +24,7 @@ class ReinbursementAdmin extends AbstractAdmin
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
         $datagridMapper
-            ->add('name')
+            ->add('type')
             ->add('value')
             ->add('date')
             ->add('number')
@@ -38,7 +38,7 @@ class ReinbursementAdmin extends AbstractAdmin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->add('name')
+            ->add('type')
             ->add('value')
             ->add('date')
             ->add('number')
@@ -58,7 +58,7 @@ class ReinbursementAdmin extends AbstractAdmin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-            ->add('name')
+            ->add('type')
             ->add('value')
             ->add('date')
             ->add('number')
@@ -71,7 +71,7 @@ class ReinbursementAdmin extends AbstractAdmin
     protected function configureShowFields(ShowMapper $showMapper)
     {
         $showMapper
-            ->add('name')
+            ->add('type')
             ->add('value')
             ->add('date')
             ->add('number')

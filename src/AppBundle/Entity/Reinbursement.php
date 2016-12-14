@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Reinbursement
  *
- * @ORM\Table(name="reinbursement")
+ * @ORM\Table(name="reinbursement", indexes={@ORM\Index(name="fk_reinbursement_reinbursement_type_idx", columns={"type_id"})})
  * @ORM\Entity
  */
 class Reinbursement
@@ -22,14 +22,17 @@ class Reinbursement
     private $id;
 
     /**
-     * @var string
+     * @var \ReinbursementType
      *
-     * @ORM\Column(name="name", type="string", length=45, nullable=false)
+     * @ORM\ManyToOne(targetEntity="ReinbursementType")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="type_id", referencedColumnName="id")
+     * })
      */
-    private $name;
+    private $type;
 
     /**
-     * @var integer
+     * @var string
      *
      * @ORM\Column(name="number", type="string", length=45, nullable=false)
      */
@@ -76,33 +79,33 @@ class Reinbursement
     }
 
     /**
-     * Set name
+     * Set type
      *
-     * @param string $name
+     * @param \AppBundle\Entity\ReinbursementType $type
      *
      * @return Reinbursement
      */
-    public function setName($name)
+    public function setType(\AppBundle\Entity\ReinbursementType $type = null)
     {
-        $this->name = $name;
+        $this->type = $type;
 
         return $this;
     }
 
     /**
-     * Get name
+     * Get type
      *
-     * @return string
+     * @return \AppBundle\Entity\ReinbursementType
      */
-    public function getName()
+    public function getType()
     {
-        return $this->name;
+        return $this->type;
     }
 
     /**
      * Set number
      *
-     * @param integer $number
+     * @param string $number
      *
      * @return Reinbursement
      */
@@ -116,7 +119,7 @@ class Reinbursement
     /**
      * Get number
      *
-     * @return integer
+     * @return string
      */
     public function getNumber()
     {
@@ -204,4 +207,11 @@ class Reinbursement
     {
         return $this->reinbursementDocument;
     }
+
+    public function __toString()
+    {
+        return (string)$this->type.' '.$this->number.' / '.$this->date->format('d-M-Y');
+    }
+
+
 }
