@@ -40,6 +40,12 @@ services:
         tags:
             - { name: sonata.admin, manager_type: orm, group: travel, label: Purposes }
 
+    app.admin.reinbursement_document:
+        class: AppBundle\Admin\ReinbursementDocumentAdmin
+        arguments: [~, AppBundle\Entity\ReinbursementDocument, AppBundle:ReinbursementDocument]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: reinbursement, label: Documents }
+
     app.admin.reinbursement:
         class: AppBundle\Admin\ReinbursementAdmin
         arguments: [~, AppBundle\Entity\Reinbursement, SonataAdminBundle:CRUD]
