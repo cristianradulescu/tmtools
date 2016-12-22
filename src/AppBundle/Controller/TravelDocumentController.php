@@ -29,11 +29,10 @@ class TravelDocumentController extends CRUDController
 
         /** @var TravelDocumentService $travelDocumentService */
         $travelDocumentService = $this->get('app.travel_document');
-        $placeholders = $travelDocumentService->fillPlaceholders($travelDocument);
 
         return $this->render(
             'AppBundle:svg:ordin_de_deplasare.svg.twig',
-            $placeholders['ordin_de_deplasare.svg']
+            $travelDocumentService->fillPlaceholders($travelDocument)
         );
     }
 

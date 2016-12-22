@@ -29,7 +29,7 @@ class TravelDocumentService
         );
         $paymentAmount = $daysOnTravel * self::TRAVEL_DAY_PAYMENT;
 
-        $placeholders['ordin_de_deplasare.svg'] = array(
+        return array(
             'PLACEHOLDER_COST_CENTER' => $company->getCostCenter(),
             'PLACEHOLDER_EMPLOYEE_NAME' => $employee->getFullName(),
             'PLACEHOLDER_EMPLOYEE_JOB_TITLE' => $employee->getJobTitle(),
@@ -56,8 +56,6 @@ class TravelDocumentService
             'PLACEHOLDER_EMPLOYEE_LAST_NAME' => $employee->getLastName(),
             'PLACEHOLDER_EMPLOYEE_FIRST_NAME' => $employee->getFirstName()
         );
-
-        return $placeholders;
     }
 
     /**

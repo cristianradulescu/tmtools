@@ -3,6 +3,9 @@ services:
     app.travel_document:
         class: AppBundle\Service\TravelDocumentService
 
+    app.reinbursement_document:
+        class: AppBundle\Service\ReinbursementDocumentService
+
     # Admin
     app.admin.employee:
         class: AppBundle\Admin\EmployeeAdmin
