@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="reinbursement_document", indexes={@ORM\Index(name="fk_reinbursement_document_employee_idx", columns={"employee_id"})})
  * @ORM\Entity
  */
-class ReinbursementDocument
+class ReinbursementDocument implements EmployeeInterface
 {
     /**
      * @var integer

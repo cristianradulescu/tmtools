@@ -32,6 +32,9 @@ class ReinbursementDocumentAdmin extends AbstractAdmin
             ->add('reinbursement')
             ->add('_action', null, array(
                 'actions' => array(
+                    'print' => array(
+                        'template' => 'AppBundle:CRUD:list__action_print.html.twig'
+                    ),
                     'show' => array(),
                     'edit' => array(),
                     'delete' => array(),

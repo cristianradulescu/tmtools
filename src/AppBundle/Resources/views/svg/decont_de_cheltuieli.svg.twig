@@ -1375,141 +1375,97 @@
     </g>
   </g>
   <text
-          x="158.02"
-          y="86.188004"
+          x="159"
+          y="88"
           style="font-size:14px"
           id="text386">{{PLACEHOLDER_COMPANY_NAME}}</text>
   <text
-          x="159.369"
-          y="106.5"
+          x="159"
+          y="105"
           style="font-size:14px"
           id="text388">{{PLACEHOLDER_COST_CENTER}}</text>
   <text
-          x="163.664"
-          y="162.907"
-          style="font-size:12px"
+          x="163"
+          y="163"
+          style="font-size:14px"
           id="text390">{{PLACEHOLDER_EMPLOYEE_NAME}}</text>
   <text
-          x="179.94501"
-          y="184.164"
-          style="font-size:12px"
+          x="180"
+          y="185"
+          style="font-size:14px"
           id="text392">{{PLACEHOLDER_EMPLOYEE_JOB_TITLE}}</text>
   <text
-          x="80.960999"
-          y="609.73297"
-          style="font-size:10px"
-          id="text394">{{PLACEHOLDER_MANAGER_LAST_NAME}}</text>
+          x="93"
+          y="610"
+          style="font-size:12px"
+          id="text394">{{PLACEHOLDER_DIVISION_MANAGER_LAST_NAME}}</text>
   <text
-          x="81.144997"
-          y="620.755"
-          style="font-size:10px"
-          id="text396">{{PLACEHOLDER_MANAGER_FIRST_NAME}}</text>
+          x="93"
+          y="621"
+          style="font-size:12px"
+          id="text396">{{PLACEHOLDER_DIVISION_MANAGER_FIRST_NAME}}</text>
   <text
-          x="841.979"
-          y="582.51501"
+          x="850"
+          y="582"
           style="font-size:14px"
           id="text398">{{PLACEHOLDER_TOTAL_AMOUNT}}</text>
   <g
           id="g3823">
-    <text
-            id="text400"
-            style="font-size:12px"
-            y="175"
-            x="560">{{PLACEHOLDER_DOC_ID_1}}</text>
-    <text
-            id="text402"
-            style="font-size:12px"
-            y="175.052"
-            x="584.06799">{{PLACEHOLDER_DOC_NAME_1}}</text>
-    <text
-            id="text404"
-            style="font-size:8px"
-            y="169.599"
-            x="774.52899">{{PLACEHOLDER_DOC_NR_1}}</text>
-    <text
-            id="text408"
-            style="font-size:12px"
-            y="175.48801"
-            x="841.55701">{{PLACEHOLDER_DOC_AMOUNT_1}}</text>
-    <text
-            id="text436"
-            style="font-size:8px"
-            y="178.35867"
-            x="773.80804">{{PLACEHOLDER_DOC_DATE_1}}</text>
-    <text
-            id="text400-9"
-            style="font-size:12px"
-            y="195"
-            x="560">{{PLACEHOLDER_DOC_ID_2}}</text>
-    <text
-            id="text402-1"
-            style="font-size:12px"
-            y="195.052"
-            x="584.06799">{{PLACEHOLDER_DOC_NAME_2}}</text>
-    <text
-            id="text404-0"
-            style="font-size:8px"
-            y="189.599"
-            x="774.52899">{{PLACEHOLDER_DOC_NR_2}}</text>
-    <text
-            id="text408-8"
-            style="font-size:12px"
-            y="195.48801"
-            x="841.55701">{{PLACEHOLDER_DOC_AMOUNT_2}}</text>
-    <text
-            id="text436-7"
-            style="font-size:8px"
-            y="198.35867"
-            x="773.80804">{{PLACEHOLDER_DOC_DATE_2}}</text>
-    <text
-            id="text400-2"
-            style="font-size:12px"
-            y="215"
-            x="560">{{PLACEHOLDER_DOC_ID_3}}</text>
-    <text
-            id="text402-6"
-            style="font-size:12px"
-            y="215.052"
-            x="584.06799">{{PLACEHOLDER_DOC_NAME_3}}</text>
-    <text
-            id="text404-9"
-            style="font-size:8px"
-            y="209.599"
-            x="774.52899">{{PLACEHOLDER_DOC_NR_3}}</text>
-    <text
-            id="text408-2"
-            style="font-size:12px"
-            y="215.48801"
-            x="841.55701">{{PLACEHOLDER_DOC_AMOUNT_3}}</text>
-    <text
-            id="text436-77"
-            style="font-size:8px"
-            y="218.35867"
-            x="773.80804">{{PLACEHOLDER_DOC_DATE_3}}</text>
-    <text
-            id="text400-9-4"
-            style="font-size:12px"
-            y="235"
-            x="560">{{PLACEHOLDER_DOC_ID_4}}</text>
-    <text
-            id="text402-1-1"
-            style="font-size:12px"
-            y="235.052"
-            x="584.06799">{{PLACEHOLDER_DOC_NAME_4}}</text>
-    <text
-            id="text404-0-1"
-            style="font-size:8px"
-            y="229.599"
-            x="774.52899">{{PLACEHOLDER_DOC_NR_4}}</text>
-    <text
-            id="text408-8-9"
-            style="font-size:12px"
-            y="235.48801"
-            x="841.55701">{{PLACEHOLDER_DOC_AMOUNT_4}}</text>
-    <text
-            id="text436-7-2"
-            style="font-size:8px"
-            y="238.35867"
-            x="773.80804">{{PLACEHOLDER_DOC_DATE_4}}</text>
+
+    {% set reinbursementTotal = 0 %}
+    {%  for reinbursement in reinbursement_collection %}
+        <text
+                id="text400"
+                style="font-size:12px"
+                y="175"
+                x="565">{{ loop.index }}</text>
+        <text
+                id="text402"
+                style="font-size:12px"
+                y="175"
+                x="595">{{ reinbursement.getType() }}</text>
+        <text
+                id="text404"
+                style="font-size:8px"
+                y="169"
+                x="777">{{ reinbursement.getNumber() }}</text>
+        <text
+                id="text436"
+                style="font-size:8px"
+                y="179"
+                x="777">{{ reinbursement.getDate()|date('m-d-Y') }}</text>
+        <text
+                id="text408"
+                style="font-size:12px"
+                y="175"
+                x="850">{{ reinbursement.getValue() }}</text>
+    {% endfor %}
+
+    {#<text#}
+            {#id="text400-9"#}
+            {#style="font-size:12px"#}
+            {#y="195"#}
+            {#x="560">{{PLACEHOLDER_DOC_INDEX_2}}</text>#}
+    {#<text#}
+            {#id="text402-1"#}
+            {#style="font-size:12px"#}
+            {#y="195.052"#}
+            {#x="584.06799">{{PLACEHOLDER_DOC_TYPE_2}}</text>#}
+    {#<text#}
+            {#id="text404-0"#}
+            {#style="font-size:8px"#}
+            {#y="189.599"#}
+            {#x="774.52899">{{PLACEHOLDER_DOC_NR_2}}</text>#}
+    {#<text#}
+            {#id="text436-7"#}
+            {#style="font-size:8px"#}
+            {#y="198.35867"#}
+            {#x="773.80804">{{PLACEHOLDER_DOC_DATE_2}}</text>#}
+    {#<text#}
+            {#id="text408-8"#}
+            {#style="font-size:12px"#}
+            {#y="195.48801"#}
+            {#x="841.55701">{{PLACEHOLDER_DOC_AMOUNT_2}}</text>#}
+
   </g>
 </svg>

@@ -2,13 +2,14 @@
 
 namespace AppBundle\Service;
 
+use AppBundle\Entity\EmployeeInterface;
 use AppBundle\Entity\TravelDocument;
 
 /**
  * Class TravelDocumentService
  * @package AppBundle\Service
  */
-class TravelDocumentService
+class TravelDocumentService extends DocumentService
 {
 
     const DATE_FORMAT_PATTERN = 'd.m.Y H:i';
@@ -16,13 +17,13 @@ class TravelDocumentService
     const DOCUMENT_TYPE_TEXT = 'Diurna %s zile (%s lei/zi)';
 
     /**
-     * @param TravelDocument $travelDocument
+     * @param EmployeeInterface|TravelDocument $travelDocument
      * @return array
      */
-    public function fillPlaceholders(TravelDocument $travelDocument)
+    public function fillPlaceholders(EmployeeInterface $travelDocument)
     {
-        $employee = $travelDocument->getEmployee();
-        $company = $employee->getCompany();
+        parent::fillPlaceholders($travelDocument);
+
         $daysOnTravel = $this->computeDaysOnTravelByTravelDates(
             $travelDocument->getDateStart(),
             $travelDocument->getDateEnd()
@@ -30,14 +31,14 @@ class TravelDocumentService
         $paymentAmount = $daysOnTravel * self::TRAVEL_DAY_PAYMENT;
 
         return array(
-            'PLACEHOLDER_COST_CENTER' => $company->getCostCenter(),
-            'PLACEHOLDER_EMPLOYEE_NAME' => $employee->getFullName(),
-            'PLACEHOLDER_EMPLOYEE_JOB_TITLE' => $employee->getJobTitle(),
+            'PLACEHOLDER_COST_CENTER' => $this->getCompany()->getCostCenter(),
+            'PLACEHOLDER_EMPLOYEE_NAME' => $this->getEmployee()->getFullName(),
+            'PLACEHOLDER_EMPLOYEE_JOB_TITLE' => $this->getEmployee()->getJobTitle(),
             'PLACEHOLDER_TRAVEL_PURPOSE' => $travelDocument->getPurpose(),
             'PLACEHOLDER_TRAVEL_DESTINATION' => $travelDocument->getDestination(),
-            'PLACEHOLDER_COMPANY_NAME' => $company->getName(),
-            'PLACEHOLDER_EMPLOYEE_DETAILS' => $employee->getIdentityCardNumber().' / '
-                .$employee->getPersonalNumericCode(),
+            'PLACEHOLDER_COMPANY_NAME' => $this->getCompany()->getName(),
+            'PLACEHOLDER_EMPLOYEE_DETAILS' => $this->getEmployee()->getIdentityCardNumber().' / '
+                .$this->getEmployee()->getPersonalNumericCode(),
             'PLACEHOLDER_DATE_FROM' => $travelDocument->getDateStart()->format('d.m.Y'),
             'PLACEHOLDER_DATE_TO' => $travelDocument->getDateEnd()->format('d.m.Y'),
             'PLACEHOLDER_DESTINATION_ARRIVAL_TIME' => $travelDocument->getDestinationArrivalTime()
@@ -51,10 +52,10 @@ class TravelDocumentService
             'PLACEHOLDER_DOCUMENT_TYPE' => sprintf(self::DOCUMENT_TYPE_TEXT, $daysOnTravel, self::TRAVEL_DAY_PAYMENT),
             'PLACEHOLDER_AMOUNT' => $paymentAmount,
             'PLACEHOLDER_TOTAL_AMOUNT' => $paymentAmount,
-            'PLACEHOLDER_MANAGER_LAST_NAME' => $company->getDivisionManager()->getLastName(),
-            'PLACEHOLDER_MANAGER_FIRST_NAME' => $company->getDivisionManager()->getFirstName(),
-            'PLACEHOLDER_EMPLOYEE_LAST_NAME' => $employee->getLastName(),
-            'PLACEHOLDER_EMPLOYEE_FIRST_NAME' => $employee->getFirstName()
+            'PLACEHOLDER_MANAGER_LAST_NAME' => $this->getCompany()->getDivisionManager()->getLastName(),
+            'PLACEHOLDER_MANAGER_FIRST_NAME' => $this->getCompany()->getDivisionManager()->getFirstName(),
+            'PLACEHOLDER_EMPLOYEE_LAST_NAME' => $this->getEmployee()->getLastName(),
+            'PLACEHOLDER_EMPLOYEE_FIRST_NAME' => $this->getEmployee()->getFirstName()
         );
     }
 

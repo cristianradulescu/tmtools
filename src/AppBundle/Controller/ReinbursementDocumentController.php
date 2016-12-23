@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\ReinbursementDocument;
+use AppBundle\Service\ReinbursementDocumentService;
 use Sonata\AdminBundle\Controller\CRUDController;
 
 /**
@@ -23,7 +24,7 @@ class ReinbursementDocumentController extends CRUDController
         /** @var ReinbursementDocument $reinbursementDocument */
         $reinbursementDocument = $this->admin->getSubject();
 
-        /** @var TravelDocumentService $reinbursementDocumentService */
+        /** @var ReinbursementDocumentService $reinbursementDocumentService */
         $reinbursementDocumentService = $this->get('app.reinbursement_document');
 
         return $this->render(
