@@ -1374,98 +1374,101 @@
               inkscape:connector-curvature="0" />
     </g>
   </g>
-  <text
+
+    <!-- Placeholder -->
+    <text
           x="159"
           y="88"
           style="font-size:14px"
-          id="text386">{{PLACEHOLDER_COMPANY_NAME}}</text>
-  <text
+          id="text386">{{PLACEHOLDER_COMPANY_NAME}}
+    </text>
+    <text
           x="159"
           y="105"
           style="font-size:14px"
-          id="text388">{{PLACEHOLDER_COST_CENTER}}</text>
-  <text
+          id="text388">{{PLACEHOLDER_COST_CENTER}}
+    </text>
+    <text
           x="163"
           y="163"
           style="font-size:14px"
-          id="text390">{{PLACEHOLDER_EMPLOYEE_NAME}}</text>
-  <text
+          id="text390">{{PLACEHOLDER_EMPLOYEE_NAME}}
+    </text>
+    <text
           x="180"
           y="185"
           style="font-size:14px"
-          id="text392">{{PLACEHOLDER_EMPLOYEE_JOB_TITLE}}</text>
-  <text
+          id="text392">{{PLACEHOLDER_EMPLOYEE_JOB_TITLE}}
+    </text>
+    <text
           x="93"
           y="610"
           style="font-size:12px"
-          id="text394">{{PLACEHOLDER_DIVISION_MANAGER_LAST_NAME}}</text>
-  <text
+          id="text394">{{PLACEHOLDER_DIVISION_MANAGER_LAST_NAME}}
+    </text>
+    <text
           x="93"
           y="621"
           style="font-size:12px"
-          id="text396">{{PLACEHOLDER_DIVISION_MANAGER_FIRST_NAME}}</text>
-  <text
-          x="850"
-          y="582"
-          style="font-size:14px"
-          id="text398">{{PLACEHOLDER_TOTAL_AMOUNT}}</text>
-  <g
-          id="g3823">
+          id="text396">{{PLACEHOLDER_DIVISION_MANAGER_FIRST_NAME}}
+    </text>
 
+    <!-- Reinbursement table -->
+    <g id="g3823">
     {% set reinbursementTotal = 0 %}
-    {%  for reinbursement in reinbursement_collection %}
+    {%
+        set coords = {
+          'index': {'x' : 565, 'y': 175},
+          'type': {'x': 595, 'y': 175},
+          'number': {'x': 777, 'y': 171},
+          'date': {'x': 777, 'y': 179},
+          'value': {'x': 850, 'y': 175},
+        }
+    %}
+    {% for reinbursement in reinbursement_collection %}
+        {% set row_increment = (loop.index - 1) * 20  %}
         <text
-                id="text400"
-                style="font-size:12px"
-                y="175"
-                x="565">{{ loop.index }}</text>
+            id="text400"
+            style="font-size:12px"
+            x="{{ coords['index']['x'] }}"
+            y="{{ coords['index']['y'] + row_increment }}">{{ loop.index }}
+        </text>
         <text
-                id="text402"
-                style="font-size:12px"
-                y="175"
-                x="595">{{ reinbursement.getType() }}</text>
+            id="text402"
+            style="font-size:12px"
+            x="{{ coords['type']['x'] }}"
+            y="{{ coords['type']['y'] + row_increment }}">{{ reinbursement.getType() }}
+        </text>
         <text
-                id="text404"
-                style="font-size:8px"
-                y="169"
-                x="777">{{ reinbursement.getNumber() }}</text>
+            id="text404"
+            style="font-size:8px"
+            x="{{ coords['number']['x'] }}"
+            y="{{ coords['number']['y'] + row_increment }}">{{ reinbursement.getNumber() }}
+        </text>
         <text
-                id="text436"
-                style="font-size:8px"
-                y="179"
-                x="777">{{ reinbursement.getDate()|date('m-d-Y') }}</text>
+            id="text436"
+            style="font-size:8px"
+            x="{{ coords['date']['x'] }}"
+            y="{{ coords['date']['y'] + row_increment }}">{{ reinbursement.getDate()|date('m-d-Y') }}
+        </text>
         <text
-                id="text408"
-                style="font-size:12px"
-                y="175"
-                x="850">{{ reinbursement.getValue() }}</text>
+            id="text408"
+            style="font-size:12px"
+            x="{{ coords['value']['x'] }}"
+            y="{{ coords['value']['y'] + row_increment }}">{{ reinbursement.getValue() }}
+        </text>
+
+        {% set reinbursementTotal = reinbursementTotal + reinbursement.getValue() %}
     {% endfor %}
+    </g>
+    <!-- /Reinbursement table -->
 
-    {#<text#}
-            {#id="text400-9"#}
-            {#style="font-size:12px"#}
-            {#y="195"#}
-            {#x="560">{{PLACEHOLDER_DOC_INDEX_2}}</text>#}
-    {#<text#}
-            {#id="text402-1"#}
-            {#style="font-size:12px"#}
-            {#y="195.052"#}
-            {#x="584.06799">{{PLACEHOLDER_DOC_TYPE_2}}</text>#}
-    {#<text#}
-            {#id="text404-0"#}
-            {#style="font-size:8px"#}
-            {#y="189.599"#}
-            {#x="774.52899">{{PLACEHOLDER_DOC_NR_2}}</text>#}
-    {#<text#}
-            {#id="text436-7"#}
-            {#style="font-size:8px"#}
-            {#y="198.35867"#}
-            {#x="773.80804">{{PLACEHOLDER_DOC_DATE_2}}</text>#}
-    {#<text#}
-            {#id="text408-8"#}
-            {#style="font-size:12px"#}
-            {#y="195.48801"#}
-            {#x="841.55701">{{PLACEHOLDER_DOC_AMOUNT_2}}</text>#}
+    <text
+        x="850"
+        y="582"
+        style="font-size:14px"
+        id="text398">{{ reinbursementTotal }}
+    </text>
+    <!-- /Placeholders -->
 
-  </g>
 </svg>
