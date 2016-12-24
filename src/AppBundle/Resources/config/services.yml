@@ -54,3 +54,9 @@ services:
         arguments: [~, AppBundle\Entity\Reinbursement, SonataAdminBundle:CRUD]
         tags:
             - { name: sonata.admin, manager_type: orm, group: reinbursement, label: Reinbursements }
+
+    app.admin.user:
+        class: AppBundle\Admin\UserAdmin
+        arguments: [~, AppBundle\Entity\User, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Users }
