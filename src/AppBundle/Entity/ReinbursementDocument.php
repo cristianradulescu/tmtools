@@ -122,4 +122,16 @@ class ReinbursementDocument implements EmployeeInterface
     {
         return $this->reinbursement;
     }
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        $stringRepresentation = (string)$this->getEmployee().' - '.(string)$this->getReinbursement()->first();
+        return $this->getReinbursement()->count() > 1
+                ? $stringRepresentation.'... +'.(string)($this->getReinbursement()->count() - 1)
+                : $stringRepresentation;
+    }
 }
+

@@ -36,6 +36,8 @@ framework:
 twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
+    form_themes:
+        - 'SonataCoreBundle:Form:datepicker.html.twig'
 
 # Doctrine Configuration
 doctrine:
@@ -93,7 +95,7 @@ sonata_admin:
                 label: Logout
                 on_top: true
                 items:
-                    - route: /logout #route name doesn't work with "on_top: true"
+                    - route: "/logout" #route name doesn't work with "on_top: true"
                       label: Logout
 
 sonata_block:

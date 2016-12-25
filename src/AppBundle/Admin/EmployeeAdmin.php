@@ -28,6 +28,7 @@ class EmployeeAdmin extends AbstractAdmin
     {
         $listMapper
             ->add('fullName')
+            ->add('jobTitle')
             ->add('_action', null, array(
                 'actions' => array(
                     'show' => array(),
@@ -48,7 +49,9 @@ class EmployeeAdmin extends AbstractAdmin
             ->add('lastName')
             ->add('username')
             ->add('emailAddress')
-            ->add('birthday')
+            ->add('birthday', 'sonata_type_date_picker', array(
+                'format' => 'dd-MM-yyyy'
+            ))
             ->add('personalNumericCode')
             ->add('identityCardNumber')
             ->add('jobTitle')

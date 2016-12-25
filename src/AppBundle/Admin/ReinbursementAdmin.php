@@ -60,7 +60,7 @@ class ReinbursementAdmin extends AbstractAdmin
         $formMapper
             ->add('type')
             ->add('value')
-            ->add('date')
+            ->add('date', 'sonata_type_date_picker', array('format' => 'dd-MM-yyyy'))
             ->add('number')
         ;
     }

@@ -65,16 +65,20 @@ class TravelDocumentAdmin extends AbstractAdmin
      */
     protected function configureFormFields(FormMapper $formMapper)
     {
+        $dateTimePickerSettings = array(
+            'dp_side_by_side' => true,
+            'format' => 'dd-MM-yyyy HH:mm'
+        );
         $formMapper
             ->add('employee')
             ->add('purpose')
             ->add('destination')
-            ->add('dateStart')
-            ->add('dateEnd')
-            ->add('departureLeaveTime')
-            ->add('destinationArrivalTime')
-            ->add('destinationLeaveTime')
-            ->add('departureArrivalTime')
+            ->add('dateStart', 'sonata_type_date_picker', array('format' => 'dd-MM-yyyy'))
+            ->add('dateEnd', 'sonata_type_date_picker', array('format' => 'dd-MM-yyyy'))
+            ->add('departureLeaveTime', 'sonata_type_datetime_picker', $dateTimePickerSettings)
+            ->add('destinationArrivalTime', 'sonata_type_datetime_picker', $dateTimePickerSettings)
+            ->add('destinationLeaveTime', 'sonata_type_datetime_picker', $dateTimePickerSettings)
+            ->add('departureArrivalTime', 'sonata_type_datetime_picker', $dateTimePickerSettings)
         ;
     }
 
