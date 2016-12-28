@@ -2,4 +2,5 @@ TM tools
 ========
 
 Team management tools for personal use.
-[Docs](docs/index.md)
+
+[Read the docs >>](docs/index.md)
