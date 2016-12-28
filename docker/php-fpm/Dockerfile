@@ -6,8 +6,6 @@ RUN apt-get update \
   && docker-php-ext-install intl \
   && docker-php-ext-configure pcntl \
   && docker-php-ext-install pcntl \
-  && docker-php-ext-configure zip \
-  && docker-php-ext-install zip \
   && docker-php-ext-install opcache \
   && docker-php-ext-install pdo_mysql \
   && pecl install xdebug \
