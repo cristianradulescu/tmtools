@@ -1,21 +1,21 @@
 # TM Tools
 
 ### Table of contents
-1. [Introduction](#introduction)
-2. [Technologies](#technologies)
-3. [Application's structure](#applicationsstructure)
+1. [Introduction](#1-introduction)
+2. [Technologies](#2-technologies)
+3. [Application's structure](#3-applications-structure)
 
-## <a name="#introduction">1. Introduction</a>
+## 1. Introduction
 The application is intended for personal use. Its main purpose is to simplify the generation of employees' documents related to travel expenses.
 Also, it was a great opportunity for me to try Docker :)
 
 
-## <a name="#technologies">2. Techologies</a>
+## 2. Techologies
 The project is built using Symfony PHP framework (v3.x) with MySql for data storage. Sonata Admin bundle is used for CRUD pages. The recommended PHP version is >7.0.
 
 For local development, I use Docker (with docker-composer). The setup is found in the "docker" folder from application's root.
 
-## <a name="#applicationsstructure">3. Application's structure</a>
+## 3. Application's structure
 The main sections are:
 * 3.1. HR
 * 3.2. Travel
