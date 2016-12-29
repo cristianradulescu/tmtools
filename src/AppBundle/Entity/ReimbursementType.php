@@ -5,12 +5,12 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * ReinbursementType
+ * ReimbursementType
  *
- * @ORM\Table(name="reinbursement_type")
+ * @ORM\Table(name="reimbursement_type")
  * @ORM\Entity
  */
-class ReinbursementType
+class ReimbursementType
 {
     /**
      * @var integer
@@ -45,7 +45,7 @@ class ReinbursementType
      *
      * @param string $name
      *
-     * @return ReinbursementType
+     * @return ReimbursementType
      */
     public function setName($name)
     {

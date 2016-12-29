@@ -187,11 +187,11 @@ CREATE INDEX `fk_aquisition_supplier_account_aquisition_supplier_idx` ON `tmtool
 
 
 -- -----------------------------------------------------
--- Table `tmtools`.`reinbursement_type`
+-- Table `tmtools`.`reimbursement_type`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `tmtools`.`reinbursement_type` ;
+DROP TABLE IF EXISTS `tmtools`.`reimbursement_type` ;
 
-CREATE TABLE IF NOT EXISTS `tmtools`.`reinbursement_type` (
+CREATE TABLE IF NOT EXISTS `tmtools`.`reimbursement_type` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NULL,
   PRIMARY KEY (`id`))
@@ -199,44 +199,44 @@ CREATE TABLE IF NOT EXISTS `tmtools`.`reinbursement_type` (
 
 
 -- -----------------------------------------------------
--- Table `tmtools`.`reinbursement`
+-- Table `tmtools`.`reimbursement`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `tmtools`.`reinbursement` ;
+DROP TABLE IF EXISTS `tmtools`.`reimbursement` ;
 
-CREATE TABLE IF NOT EXISTS `tmtools`.`reinbursement` (
+CREATE TABLE IF NOT EXISTS `tmtools`.`reimbursement` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `type_id` INT NOT NULL,
   `number` VARCHAR(45) NOT NULL,
   `date` DATE NOT NULL,
   `value` DECIMAL(10,2) NOT NULL,
   PRIMARY KEY (`id`),
-  CONSTRAINT `fk_reinbursement_reinbursement_type`
+  CONSTRAINT `fk_reimbursement_reimbursement_type`
   FOREIGN KEY (`type_id`)
-  REFERENCES `tmtools`.`reinbursement_type` (`id`)
+  REFERENCES `tmtools`.`reimbursement_type` (`id`)
     ON DELETE RESTRICT
     ON UPDATE CASCADE)
   ENGINE = InnoDB;
 
-CREATE INDEX `fk_reinbursement_reinbursement_type_idx` ON `tmtools`.`reinbursement` (`type_id` ASC);
+CREATE INDEX `fk_reimbursement_reimbursement_type_idx` ON `tmtools`.`reimbursement` (`type_id` ASC);
 
 
 -- -----------------------------------------------------
--- Table `tmtools`.`reinbursement_document`
+-- Table `tmtools`.`reimbursement_document`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `tmtools`.`reinbursement_document` ;
+DROP TABLE IF EXISTS `tmtools`.`reimbursement_document` ;
 
-CREATE TABLE IF NOT EXISTS `tmtools`.`reinbursement_document` (
+CREATE TABLE IF NOT EXISTS `tmtools`.`reimbursement_document` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `employee_id` INT NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`),
-  CONSTRAINT `fk_reinbursement_document_employee`
+  CONSTRAINT `fk_reimbursement_document_employee`
   FOREIGN KEY (`employee_id`)
   REFERENCES `tmtools`.`employee` (`id`)
     ON DELETE RESTRICT
     ON UPDATE CASCADE)
   ENGINE = InnoDB;
 
-CREATE INDEX `fk_reinbursement_document_employee_idx` ON `tmtools`.`reinbursement_document` (`employee_id` ASC);
+CREATE INDEX `fk_reimbursement_document_employee_idx` ON `tmtools`.`reimbursement_document` (`employee_id` ASC);
 
 
 -- -----------------------------------------------------
@@ -295,27 +295,27 @@ CREATE INDEX `fk_travel_document_travel_destination_idx` ON `tmtools`.`travel_do
 
 
 -- -----------------------------------------------------
--- Table `tmtools`.`reinbursement_document_reinbursements`
+-- Table `tmtools`.`reimbursement_document_reimbursements`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `tmtools`.`reinbursement_document_reinbursements` ;
+DROP TABLE IF EXISTS `tmtools`.`reimbursement_document_reimbursements` ;
 
-CREATE TABLE IF NOT EXISTS `tmtools`.`reinbursement_document_reinbursements` (
-  `reinbursement_document_id` INT NOT NULL,
-  `reinbursement_id` INT NOT NULL,
-  PRIMARY KEY (`reinbursement_document_id`, `reinbursement_id`),
-  CONSTRAINT `fk_reinbursement_document`
-  FOREIGN KEY (`reinbursement_document_id`)
-  REFERENCES `tmtools`.`reinbursement_document` (`id`)
+CREATE TABLE IF NOT EXISTS `tmtools`.`reimbursement_document_reimbursements` (
+  `reimbursement_document_id` INT NOT NULL,
+  `reimbursement_id` INT NOT NULL,
+  PRIMARY KEY (`reimbursement_document_id`, `reimbursement_id`),
+  CONSTRAINT `fk_reimbursement_document`
+  FOREIGN KEY (`reimbursement_document_id`)
+  REFERENCES `tmtools`.`reimbursement_document` (`id`)
     ON DELETE RESTRICT
     ON UPDATE CASCADE,
-  CONSTRAINT `fk_reinbursement`
-  FOREIGN KEY (`reinbursement_id`)
-  REFERENCES `tmtools`.`reinbursement` (`id`)
+  CONSTRAINT `fk_reimbursement`
+  FOREIGN KEY (`reimbursement_id`)
+  REFERENCES `tmtools`.`reimbursement` (`id`)
     ON DELETE RESTRICT
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
-CREATE INDEX `fk_reinbursement_idx` ON `tmtools`.`reinbursement_document_reinbursements` (`reinbursement_id` ASC);
+CREATE INDEX `fk_reimbursement_idx` ON `tmtools`.`reimbursement_document_reimbursements` (`reimbursement_id` ASC);
 
 
 -- -----------------------------------------------------
@@ -412,14 +412,14 @@ COMMIT;
 
 
 -- -----------------------------------------------------
--- Data for table `tmtools`.`reinbursement_type`
+-- Data for table `tmtools`.`reimbursement_type`
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `tmtools`;
-INSERT INTO `tmtools`.`reinbursement_type` (`id`, `name`) VALUES (DEFAULT, 'Bon combustibil');
-INSERT INTO `tmtools`.`reinbursement_type` (`id`, `name`) VALUES (DEFAULT, 'Bon taxi');
-INSERT INTO `tmtools`.`reinbursement_type` (`id`, `name`) VALUES (DEFAULT, 'Bilet tren');
-INSERT INTO `tmtools`.`reinbursement_type` (`id`, `name`) VALUES (DEFAULT, 'Factura');
+INSERT INTO `tmtools`.`reimbursement_type` (`id`, `name`) VALUES (DEFAULT, 'Bon combustibil');
+INSERT INTO `tmtools`.`reimbursement_type` (`id`, `name`) VALUES (DEFAULT, 'Bon taxi');
+INSERT INTO `tmtools`.`reimbursement_type` (`id`, `name`) VALUES (DEFAULT, 'Bilet tren');
+INSERT INTO `tmtools`.`reimbursement_type` (`id`, `name`) VALUES (DEFAULT, 'Factura');
 
 COMMIT;
 

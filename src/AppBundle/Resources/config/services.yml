@@ -3,8 +3,8 @@ services:
     app.travel_document:
         class: AppBundle\Service\TravelDocumentService
 
-    app.reinbursement_document:
-        class: AppBundle\Service\ReinbursementDocumentService
+    app.reimbursement_document:
+        class: AppBundle\Service\ReimbursementDocumentService
 
     # Admin
     app.admin.employee:
@@ -43,17 +43,17 @@ services:
         tags:
             - { name: sonata.admin, manager_type: orm, group: travel, label: Purposes }
 
-    app.admin.reinbursement_document:
-        class: AppBundle\Admin\ReinbursementDocumentAdmin
-        arguments: [~, AppBundle\Entity\ReinbursementDocument, AppBundle:ReinbursementDocument]
+    app.admin.reimbursement_document:
+        class: AppBundle\Admin\ReimbursementDocumentAdmin
+        arguments: [~, AppBundle\Entity\ReimbursementDocument, AppBundle:ReimbursementDocument]
         tags:
-            - { name: sonata.admin, manager_type: orm, group: reinbursement, label: Documents }
+            - { name: sonata.admin, manager_type: orm, group: reimbursement, label: Documents }
 
-    app.admin.reinbursement:
-        class: AppBundle\Admin\ReinbursementAdmin
-        arguments: [~, AppBundle\Entity\Reinbursement, SonataAdminBundle:CRUD]
+    app.admin.reimbursement:
+        class: AppBundle\Admin\ReimbursementAdmin
+        arguments: [~, AppBundle\Entity\Reimbursement, SonataAdminBundle:CRUD]
         tags:
-            - { name: sonata.admin, manager_type: orm, group: reinbursement, label: Reinbursements }
+            - { name: sonata.admin, manager_type: orm, group: reimbursement, label: Reimbursements }
 
     app.admin.user:
         class: AppBundle\Admin\UserAdmin

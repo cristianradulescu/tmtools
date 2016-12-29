@@ -1413,9 +1413,9 @@
           id="text396">{{PLACEHOLDER_DIVISION_MANAGER_FIRST_NAME}}
     </text>
 
-    <!-- Reinbursement table -->
+    <!-- Reimbursement table -->
     <g id="g3823">
-    {% set reinbursementTotal = 0 %}
+    {% set reimbursementTotal = 0 %}
     {%
         set coords = {
           'index': {'x' : 565, 'y': 175},
@@ -1425,7 +1425,7 @@
           'value': {'x': 850, 'y': 175},
         }
     %}
-    {% for reinbursement in reinbursement_collection %}
+    {% for reimbursement in reimbursement_collection %}
         {% set row_increment = (loop.index - 1) * 20  %}
         <text
             id="text400"
@@ -1437,37 +1437,37 @@
             id="text402"
             style="font-size:12px"
             x="{{ coords['type']['x'] }}"
-            y="{{ coords['type']['y'] + row_increment }}">{{ reinbursement.getType() }}
+            y="{{ coords['type']['y'] + row_increment }}">{{ reimbursement.getType() }}
         </text>
         <text
             id="text404"
             style="font-size:8px"
             x="{{ coords['number']['x'] }}"
-            y="{{ coords['number']['y'] + row_increment }}">{{ reinbursement.getNumber() }}
+            y="{{ coords['number']['y'] + row_increment }}">{{ reimbursement.getNumber() }}
         </text>
         <text
             id="text436"
             style="font-size:8px"
             x="{{ coords['date']['x'] }}"
-            y="{{ coords['date']['y'] + row_increment }}">{{ reinbursement.getDate()|date('d-m-Y') }}
+            y="{{ coords['date']['y'] + row_increment }}">{{ reimbursement.getDate()|date('d-m-Y') }}
         </text>
         <text
             id="text408"
             style="font-size:12px"
             x="{{ coords['value']['x'] }}"
-            y="{{ coords['value']['y'] + row_increment }}">{{ reinbursement.getValue() }}
+            y="{{ coords['value']['y'] + row_increment }}">{{ reimbursement.getValue() }}
         </text>
 
-        {% set reinbursementTotal = reinbursementTotal + reinbursement.getValue() %}
+        {% set reimbursementTotal = reimbursementTotal + reimbursement.getValue() %}
     {% endfor %}
     </g>
-    <!-- /Reinbursement table -->
+    <!-- /Reimbursement table -->
 
     <text
         x="850"
         y="582"
         style="font-size:14px"
-        id="text398">{{ reinbursementTotal }}
+        id="text398">{{ reimbursementTotal }}
     </text>
     <!-- /Placeholders -->
 

@@ -5,12 +5,12 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * ReinbursementDocument
+ * ReimbursementDocument
  *
- * @ORM\Table(name="reinbursement_document", indexes={@ORM\Index(name="fk_reinbursement_document_employee_idx", columns={"employee_id"})})
+ * @ORM\Table(name="reimbursement_document", indexes={@ORM\Index(name="fk_reimbursement_document_employee_idx", columns={"employee_id"})})
  * @ORM\Entity
  */
-class ReinbursementDocument implements EmployeeInterface
+class ReimbursementDocument implements EmployeeInterface
 {
     /**
      * @var integer
@@ -34,24 +34,24 @@ class ReinbursementDocument implements EmployeeInterface
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="Reinbursement", inversedBy="reinbursementDocument")
-     * @ORM\JoinTable(name="reinbursement_document_reinbursements",
+     * @ORM\ManyToMany(targetEntity="Reimbursement", inversedBy="reimbursementDocument")
+     * @ORM\JoinTable(name="reimbursement_document_reimbursements",
      *   joinColumns={
-     *     @ORM\JoinColumn(name="reinbursement_document_id", referencedColumnName="id")
+     *     @ORM\JoinColumn(name="reimbursement_document_id", referencedColumnName="id")
      *   },
      *   inverseJoinColumns={
-     *     @ORM\JoinColumn(name="reinbursement_id", referencedColumnName="id")
+     *     @ORM\JoinColumn(name="reimbursement_id", referencedColumnName="id")
      *   }
      * )
      */
-    private $reinbursement;
+    private $reimbursement;
 
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->reinbursement = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->reimbursement = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
 
@@ -70,7 +70,7 @@ class ReinbursementDocument implements EmployeeInterface
      *
      * @param \AppBundle\Entity\Employee $employee
      *
-     * @return ReinbursementDocument
+     * @return ReimbursementDocument
      */
     public function setEmployee(\AppBundle\Entity\Employee $employee = null)
     {
@@ -90,37 +90,37 @@ class ReinbursementDocument implements EmployeeInterface
     }
 
     /**
-     * Add reinbursement
+     * Add reimbursement
      *
-     * @param \AppBundle\Entity\Reinbursement $reinbursement
+     * @param \AppBundle\Entity\Reimbursement $reimbursement
      *
-     * @return ReinbursementDocument
+     * @return ReimbursementDocument
      */
-    public function addReinbursement(\AppBundle\Entity\Reinbursement $reinbursement)
+    public function addReimbursement(\AppBundle\Entity\Reimbursement $reimbursement)
     {
-        $this->reinbursement[] = $reinbursement;
+        $this->reimbursement[] = $reimbursement;
 
         return $this;
     }
 
     /**
-     * Remove reinbursement
+     * Remove reimbursement
      *
-     * @param \AppBundle\Entity\Reinbursement $reinbursement
+     * @param \AppBundle\Entity\Reimbursement $reimbursement
      */
-    public function removeReinbursement(\AppBundle\Entity\Reinbursement $reinbursement)
+    public function removeReimbursement(\AppBundle\Entity\Reimbursement $reimbursement)
     {
-        $this->reinbursement->removeElement($reinbursement);
+        $this->reimbursement->removeElement($reimbursement);
     }
 
     /**
-     * Get reinbursement
+     * Get reimbursement
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getReinbursement()
+    public function getReimbursement()
     {
-        return $this->reinbursement;
+        return $this->reimbursement;
     }
 
     /**
@@ -128,9 +128,9 @@ class ReinbursementDocument implements EmployeeInterface
      */
     public function __toString()
     {
-        $stringRepresentation = (string)$this->getEmployee().' - '.(string)$this->getReinbursement()->first();
-        return $this->getReinbursement()->count() > 1
-                ? $stringRepresentation.'... +'.(string)($this->getReinbursement()->count() - 1)
+        $stringRepresentation = (string)$this->getEmployee().' - '.(string)$this->getReimbursement()->first();
+        return $this->getReimbursement()->count() > 1
+                ? $stringRepresentation.'... +'.(string)($this->getReimbursement()->count() - 1)
                 : $stringRepresentation;
     }
 }

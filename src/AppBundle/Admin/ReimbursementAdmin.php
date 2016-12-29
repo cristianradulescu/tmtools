@@ -6,19 +6,29 @@ use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
-use Sonata\AdminBundle\Route\RouteCollection;
 use Sonata\AdminBundle\Show\ShowMapper;
 
-class ReinbursementDocumentAdmin extends AbstractAdmin
+class ReimbursementAdmin extends AbstractAdmin
 {
+    /**
+     * @var array
+     */
+    protected $datagridValues = array(
+        '_sort_by' => 'date',
+        '_sort_order' => 'DESC',
+    );
+
     /**
      * @param DatagridMapper $datagridMapper
      */
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
         $datagridMapper
-            ->add('employee')
-            ->add('reinbursement')
+            ->add('type')
+            ->add('value')
+            ->add('date')
+            ->add('number')
+
         ;
     }
 
@@ -28,13 +38,12 @@ class ReinbursementDocumentAdmin extends AbstractAdmin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->add('employee')
-            ->add('reinbursement')
+            ->add('type')
+            ->add('value')
+            ->add('date')
+            ->add('number')
             ->add('_action', null, array(
                 'actions' => array(
-                    'print' => array(
-                        'template' => 'AppBundle:CRUD:list__action_print.html.twig'
-                    ),
                     'show' => array(),
                     'edit' => array(),
                     'delete' => array(),
@@ -49,8 +58,10 @@ class ReinbursementDocumentAdmin extends AbstractAdmin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-            ->add('employee')
-            ->add('reinbursement')
+            ->add('type')
+            ->add('value')
+            ->add('date', 'sonata_type_date_picker', array('format' => 'dd-MM-yyyy'))
+            ->add('number')
         ;
     }
 
@@ -60,16 +71,10 @@ class ReinbursementDocumentAdmin extends AbstractAdmin
     protected function configureShowFields(ShowMapper $showMapper)
     {
         $showMapper
-            ->add('employee')
-            ->add('reinbursement')
+            ->add('type')
+            ->add('value')
+            ->add('date')
+            ->add('number')
         ;
-    }
-
-    /**
-     * @param RouteCollection $collection
-     */
-    protected function configureRoutes(RouteCollection $collection)
-    {
-        $collection->add('print');
     }
 }

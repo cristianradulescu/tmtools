@@ -80,8 +80,8 @@ sonata_admin:
                 label: HR
             travel:
                 label: Travel
-            reinbursement:
-                label: Reinbursement
+            reimbursement:
+                label: Reimbursement
             menu_separator:
                 label: " "
                 on_top: true
