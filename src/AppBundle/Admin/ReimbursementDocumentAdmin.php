@@ -19,6 +19,7 @@ class ReimbursementDocumentAdmin extends AbstractAdmin
         $datagridMapper
             ->add('employee')
             ->add('reimbursement')
+            ->add('status')
         ;
     }
 
@@ -28,8 +29,8 @@ class ReimbursementDocumentAdmin extends AbstractAdmin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->add('employee')
-            ->add('reimbursement')
+            ->add('shortFormat', null, array('label' => 'Reimbursement'))
+            ->add('status')
             ->add('_action', null, array(
                 'actions' => array(
                     'print' => array(
@@ -49,6 +50,7 @@ class ReimbursementDocumentAdmin extends AbstractAdmin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
+            ->add('status')
             ->add('employee')
             ->add('reimbursement')
         ;
@@ -60,6 +62,7 @@ class ReimbursementDocumentAdmin extends AbstractAdmin
     protected function configureShowFields(ShowMapper $showMapper)
     {
         $showMapper
+            ->add('status')
             ->add('employee')
             ->add('reimbursement')
         ;

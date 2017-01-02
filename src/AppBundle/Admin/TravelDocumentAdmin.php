@@ -30,6 +30,7 @@ class TravelDocumentAdmin extends AbstractAdmin
             ->add('destination')
             ->add('dateStart')
             ->add('dateEnd')
+            ->add('status')
         ;
     }
 
@@ -43,7 +44,7 @@ class TravelDocumentAdmin extends AbstractAdmin
             ->add('purpose')
             ->add('destination')
             ->add('dateStart')
-            ->add('dateEnd')
+            ->add('status')
             ->add('_action', null, array(
                 'actions' => array(
                     'print' => array(
@@ -70,6 +71,7 @@ class TravelDocumentAdmin extends AbstractAdmin
             'format' => 'dd-MM-yyyy HH:mm'
         );
         $formMapper
+            ->add('status')
             ->add('employee')
             ->add('purpose')
             ->add('destination')
@@ -88,6 +90,7 @@ class TravelDocumentAdmin extends AbstractAdmin
     protected function configureShowFields(ShowMapper $showMapper)
     {
         $showMapper
+            ->add('status')
             ->add('employee')
             ->add('purpose')
             ->add('destination')

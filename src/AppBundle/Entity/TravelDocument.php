@@ -7,10 +7,10 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * TravelDocument
  *
- * @ORM\Table(name="travel_document", indexes={@ORM\Index(name="fk_travel_document_employee_idx", columns={"employee_id"}), @ORM\Index(name="fk_travel_document_travel_purpose_idx", columns={"purpose_id"}), @ORM\Index(name="fk_travel_document_travel_destination_idx", columns={"destination_id"})})
+ * @ORM\Table(name="travel_document", indexes={@ORM\Index(name="fk_travel_document_employee_idx", columns={"employee_id"}), @ORM\Index(name="fk_travel_document_travel_purpose_idx", columns={"purpose_id"}), @ORM\Index(name="fk_travel_document_travel_destination_idx", columns={"destination_id"}), @ORM\Index(name="fk_travel_document_status_idx", columns={"status_id"})})
  * @ORM\Entity
  */
-class TravelDocument implements EmployeeInterface
+class TravelDocument
 {
     /**
      * @var integer
@@ -72,6 +72,16 @@ class TravelDocument implements EmployeeInterface
      * })
      */
     private $employee;
+
+    /**
+     * @var \Status
+     *
+     * @ORM\ManyToOne(targetEntity="Status")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="status_id", referencedColumnName="id")
+     * })
+     */
+    private $status;
 
     /**
      * @var \TravelDestination
@@ -271,6 +281,30 @@ class TravelDocument implements EmployeeInterface
     public function getEmployee()
     {
         return $this->employee;
+    }
+
+    /**
+     * Set status
+     *
+     * @param \AppBundle\Entity\Status $status
+     *
+     * @return TravelDocument
+     */
+    public function setStatus(\AppBundle\Entity\Status $status = null)
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+    /**
+     * Get status
+     *
+     * @return \AppBundle\Entity\Status
+     */
+    public function getStatus()
+    {
+        return $this->status;
     }
 
     /**

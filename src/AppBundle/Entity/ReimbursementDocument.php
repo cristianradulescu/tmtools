@@ -7,10 +7,10 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * ReimbursementDocument
  *
- * @ORM\Table(name="reimbursement_document", indexes={@ORM\Index(name="fk_reimbursement_document_employee_idx", columns={"employee_id"})})
+ * @ORM\Table(name="reimbursement_document", indexes={@ORM\Index(name="fk_reimbursement_document_employee_idx", columns={"employee_id"}), @ORM\Index(name="fk_reimbursement_document_status_idx", columns={"status_id"})})
  * @ORM\Entity
  */
-class ReimbursementDocument implements EmployeeInterface
+class ReimbursementDocument
 {
     /**
      * @var integer
@@ -30,6 +30,16 @@ class ReimbursementDocument implements EmployeeInterface
      * })
      */
     private $employee;
+
+    /**
+     * @var \Status
+     *
+     * @ORM\ManyToOne(targetEntity="Status")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="status_id", referencedColumnName="id")
+     * })
+     */
+    private $status;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
@@ -90,6 +100,30 @@ class ReimbursementDocument implements EmployeeInterface
     }
 
     /**
+     * Set status
+     *
+     * @param \AppBundle\Entity\Status $status
+     *
+     * @return ReimbursementDocument
+     */
+    public function setStatus(\AppBundle\Entity\Status $status = null)
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+    /**
+     * Get status
+     *
+     * @return \AppBundle\Entity\Status
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    /**
      * Add reimbursement
      *
      * @param \AppBundle\Entity\Reimbursement $reimbursement
@@ -124,14 +158,22 @@ class ReimbursementDocument implements EmployeeInterface
     }
 
     /**
+     * @return A string represenation of associated employee and reimbursements, truncated for optimized output.
+     */
+    public function getShortFormat()
+    {
+        $shortFormat = (string)$this->getEmployee().' - '.(string)$this->getReimbursement()->first();
+        return $this->getReimbursement()->count() > 1
+            ? $shortFormat.'... +'.(string)($this->getReimbursement()->count() - 1)
+            : $shortFormat;
+    }
+
+    /**
      * @return string
      */
     public function __toString()
     {
-        $stringRepresentation = (string)$this->getEmployee().' - '.(string)$this->getReimbursement()->first();
-        return $this->getReimbursement()->count() > 1
-                ? $stringRepresentation.'... +'.(string)($this->getReimbursement()->count() - 1)
-                : $stringRepresentation;
+        return $this->getTruncatedReimbursements();
     }
 }
 
