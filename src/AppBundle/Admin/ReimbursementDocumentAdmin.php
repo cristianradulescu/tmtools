@@ -30,7 +30,7 @@ class ReimbursementDocumentAdmin extends AbstractAdmin
     {
         $listMapper
             ->add('shortFormat', null, array('label' => 'Reimbursement'))
-            ->add('status')
+            ->add('status', 'string', array('template' => 'AppBundle:CRUD:list_field_status.html.twig'))
             ->add('_action', null, array(
                 'actions' => array(
                     'print' => array(

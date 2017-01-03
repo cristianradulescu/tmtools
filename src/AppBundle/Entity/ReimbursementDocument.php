@@ -173,7 +173,7 @@ class ReimbursementDocument
      */
     public function __toString()
     {
-        return $this->getTruncatedReimbursements();
+        return $this->getShortFormat();
     }
 }
 

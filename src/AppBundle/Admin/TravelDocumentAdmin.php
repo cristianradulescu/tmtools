@@ -44,7 +44,7 @@ class TravelDocumentAdmin extends AbstractAdmin
             ->add('purpose')
             ->add('destination')
             ->add('dateStart')
-            ->add('status')
+            ->add('status', 'string', array('template' => 'AppBundle:CRUD:list_field_status.html.twig'))
             ->add('_action', null, array(
                 'actions' => array(
                     'print' => array(
