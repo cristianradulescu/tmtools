@@ -458,8 +458,8 @@ COMMIT;
 START TRANSACTION;
 USE `tmtools`;
 INSERT INTO `tmtools`.`status` (`id`, `name`) VALUES (1, 'New');
-INSERT INTO `tmtools`.`status` (`id`, `name`) VALUES (2, 'In progress');
-INSERT INTO `tmtools`.`status` (`id`, `name`) VALUES (3, 'Finalized');
+INSERT INTO `tmtools`.`status` (`id`, `name`) VALUES (2, 'Pending');
+INSERT INTO `tmtools`.`status` (`id`, `name`) VALUES (3, 'Completed');
 
 COMMIT;
 
