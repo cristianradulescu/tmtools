@@ -111,4 +111,22 @@ class TravelDocumentAdmin extends AbstractAdmin
         $collection->add('print');
         $collection->add('clone');
     }
+
+    /**
+     * @return array
+     */
+    public function getBatchActions()
+    {
+        $actions =  parent::getBatchActions();
+        $actions['markStatusPending'] = array(
+            'label' => 'Mark as Pending',
+            'ask_confirmation' => true
+        );
+        $actions['markStatusCompleted'] = array(
+            'label' => 'Mark as Completed',
+            'ask_confirmation' => true
+        );
+
+        return $actions;
+    }
 }

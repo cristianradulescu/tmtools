@@ -13,6 +13,13 @@ use Doctrine\ORM\Mapping as ORM;
 class Status
 {
     /**
+     * Place status ids in constants for easy access.
+     */
+    const STATUS_ID_NEW = 1;
+    const STATUS_ID_PENDING = 2;
+    const STATUS_ID_COMPLETED = 3;
+
+    /**
      * @var integer
      *
      * @ORM\Column(name="id", type="integer", nullable=false)

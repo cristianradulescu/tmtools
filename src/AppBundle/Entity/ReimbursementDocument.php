@@ -158,7 +158,11 @@ class ReimbursementDocument implements DocumentStatusInterface
     }
 
     /**
-     * @return A string represenation of associated employee and reimbursements, truncated for optimized output.
+     * A string represenation of associated employee and reimbursements, truncated for optimized output.
+     *
+     * TODO: I don't like this :(
+     *
+     * @return string
      */
     public function getShortFormat()
     {
