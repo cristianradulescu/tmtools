@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="reimbursement_document", indexes={@ORM\Index(name="fk_reimbursement_document_employee_idx", columns={"employee_id"}), @ORM\Index(name="fk_reimbursement_document_status_idx", columns={"status_id"})})
  * @ORM\Entity
  */
-class ReimbursementDocument
+class ReimbursementDocument implements DocumentStatusInterface
 {
     /**
      * @var integer

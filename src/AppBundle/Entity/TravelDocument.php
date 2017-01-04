@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="travel_document", indexes={@ORM\Index(name="fk_travel_document_employee_idx", columns={"employee_id"}), @ORM\Index(name="fk_travel_document_travel_purpose_idx", columns={"purpose_id"}), @ORM\Index(name="fk_travel_document_travel_destination_idx", columns={"destination_id"}), @ORM\Index(name="fk_travel_document_status_idx", columns={"status_id"})})
  * @ORM\Entity
  */
-class TravelDocument
+class TravelDocument implements DocumentStatusInterface, EmployeeInterface
 {
     /**
      * @var integer
