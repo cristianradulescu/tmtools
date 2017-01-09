@@ -8,6 +8,10 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
 
+/**
+ * Class ReimbursementAdmin
+ * @package AppBundle\Admin
+ */
 class ReimbursementAdmin extends AbstractAdmin
 {
     /**
@@ -25,6 +29,7 @@ class ReimbursementAdmin extends AbstractAdmin
     {
         $datagridMapper
             ->add('type')
+            ->add('employee')
             ->add('value')
             ->add('date')
             ->add('number')
@@ -38,6 +43,7 @@ class ReimbursementAdmin extends AbstractAdmin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
+            ->add('employee')
             ->add('type')
             ->add('value')
             ->add('date')
@@ -58,6 +64,7 @@ class ReimbursementAdmin extends AbstractAdmin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
+            ->add('employee')
             ->add('type')
             ->add('value')
             ->add('date', 'sonata_type_date_picker', array('format' => 'dd-MM-yyyy'))
@@ -71,6 +78,7 @@ class ReimbursementAdmin extends AbstractAdmin
     protected function configureShowFields(ShowMapper $showMapper)
     {
         $showMapper
+            ->add('employee')
             ->add('type')
             ->add('value')
             ->add('date')

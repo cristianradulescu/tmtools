@@ -68,7 +68,6 @@ CREATE TABLE IF NOT EXISTS `company` (
 ENGINE = InnoDB;
 
 CREATE UNIQUE INDEX `cost_center_UNIQUE` ON `company` (`cost_center` ASC);
-
 CREATE INDEX `fk_company_employee_idx` ON `company` (`division_manager_id` ASC);
 
 
@@ -114,19 +113,12 @@ CREATE TABLE IF NOT EXISTS `employee` (
 ENGINE = InnoDB;
 
 CREATE UNIQUE INDEX `username_UNIQUE` ON `employee` (`username` ASC);
-
 CREATE UNIQUE INDEX `email_address_UNIQUE` ON `employee` (`email_address` ASC);
-
 CREATE UNIQUE INDEX `personal_numeric_code_UNIQUE` ON `employee` (`personal_numeric_code` ASC);
-
 CREATE UNIQUE INDEX `identity_card_number_UNIQUE` ON `employee` (`identity_card_number` ASC);
-
 CREATE INDEX `fk_employee_job_title_idx` ON `employee` (`job_title_id` ASC);
-
 CREATE INDEX `fk_employee_employee_idx` ON `employee` (`direct_manager_id` ASC);
-
 CREATE INDEX `fk_employee_team_idx` ON `employee` (`team_id` ASC);
-
 CREATE INDEX `fk_employee_company_idx` ON `employee` (`company_id` ASC);
 
 
@@ -212,15 +204,22 @@ CREATE TABLE IF NOT EXISTS `reimbursement` (
   `number` VARCHAR(45) NOT NULL,
   `date` DATE NOT NULL,
   `value` DECIMAL(10,2) NOT NULL,
+  `employee_id` INT NOT NULL,
   PRIMARY KEY (`id`),
   CONSTRAINT `fk_reimbursement_reimbursement_type`
     FOREIGN KEY (`type_id`)
     REFERENCES `reimbursement_type` (`id`)
     ON DELETE RESTRICT
+    ON UPDATE CASCADE,
+  CONSTRAINT `fk_reimbursement_employee`
+  FOREIGN KEY (`employee_id`)
+  REFERENCES `employee` (`id`)
+    ON DELETE RESTRICT
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 CREATE INDEX `fk_reimbursement_reinbursement_type_idx` ON `reimbursement` (`type_id` ASC);
+CREATE INDEX `fk_reimbursement_employee_idx` ON `reimbursement` (`employee_id` ASC);
 
 
 -- -----------------------------------------------------
@@ -258,7 +257,6 @@ CREATE TABLE IF NOT EXISTS `reimbursement_document` (
 ENGINE = InnoDB;
 
 CREATE INDEX `fk_reimbursement_document_employee_idx` ON `reimbursement_document` (`employee_id` ASC);
-
 CREATE INDEX `fk_reimbursement_document_status_idx` ON `reimbursement_document` (`status_id` ASC);
 
 
@@ -317,11 +315,8 @@ CREATE TABLE IF NOT EXISTS `travel_document` (
 ENGINE = InnoDB;
 
 CREATE INDEX `fk_travel_document_employee_idx` ON `travel_document` (`employee_id` ASC);
-
 CREATE INDEX `fk_travel_document_travel_purpose_idx` ON `travel_document` (`purpose_id` ASC);
-
 CREATE INDEX `fk_travel_document_travel_destination_idx` ON `travel_document` (`destination_id` ASC);
-
 CREATE INDEX `fk_travel_document_status_idx` ON `travel_document` (`status_id` ASC);
 
 

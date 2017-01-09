@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Reimbursement
  *
- * @ORM\Table(name="reimbursement", indexes={@ORM\Index(name="fk_reimbursement_reimbursement_type_idx", columns={"type_id"})})
+ * @ORM\Table(name="reimbursement", indexes={@ORM\Index(name="fk_reimbursement_reimbursement_type_idx", columns={"type_id"}), @ORM\Index(name="fk_reimbursement_employee_idx", columns={"employee_id"})})
  * @ORM\Entity
  */
 class Reimbursement
@@ -53,6 +53,16 @@ class Reimbursement
     private $value;
 
     /**
+     * @var \Employee
+     *
+     * @ORM\ManyToOne(targetEntity="Employee")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="employee_id", referencedColumnName="id")
+     * })
+     */
+    private $employee;
+
+    /**
      * @var \Doctrine\Common\Collections\Collection
      *
      * @ORM\ManyToMany(targetEntity="ReimbursementDocument", mappedBy="reimbursement")
@@ -66,7 +76,6 @@ class Reimbursement
     {
         $this->reimbursementDocument = new \Doctrine\Common\Collections\ArrayCollection();
     }
-
 
     /**
      * Get id
@@ -175,6 +184,30 @@ class Reimbursement
     }
 
     /**
+     * Set employee
+     *
+     * @param \AppBundle\Entity\Employee $employee
+     *
+     * @return Reimbursement
+     */
+    public function setEmployee(\AppBundle\Entity\Employee $employee = null)
+    {
+        $this->employee = $employee;
+
+        return $this;
+    }
+
+    /**
+     * Get employee
+     *
+     * @return \AppBundle\Entity\Employee
+     */
+    public function getEmployee()
+    {
+        return $this->employee;
+    }
+
+    /**
      * Add reimbursementDocument
      *
      * @param \AppBundle\Entity\ReimbursementDocument $reimbursementDocument
@@ -212,6 +245,4 @@ class Reimbursement
     {
         return (string)$this->type.' '.$this->number.' / '.$this->date->format('d-M-Y');
     }
-
-
 }
