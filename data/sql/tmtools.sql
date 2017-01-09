@@ -3,6 +3,9 @@
 -- Model: New Model    Version: 1.0
 -- MySQL Workbench Forward Engineering
 
+-- Manually updated at: Jan 09 2017
+-- Manually updated by: Cristian Radulescu
+
 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
@@ -10,48 +13,48 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 -- -----------------------------------------------------
 -- Schema tmtools
 -- -----------------------------------------------------
-DROP SCHEMA IF EXISTS `tmtools` ;
+-- DROP SCHEMA IF EXISTS `tmtools` ;
 
 -- -----------------------------------------------------
 -- Schema tmtools
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `tmtools` DEFAULT CHARACTER SET utf8 ;
-USE `tmtools` ;
+-- CREATE SCHEMA IF NOT EXISTS `tmtools` DEFAULT CHARACTER SET utf8 ;
+-- USE `tmtools` ;
 
 -- -----------------------------------------------------
--- Table `tmtools`.`employee_job_title`
+-- Table `employee_job_title`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `tmtools`.`employee_job_title` ;
+DROP TABLE IF EXISTS `employee_job_title` ;
 
-CREATE TABLE IF NOT EXISTS `tmtools`.`employee_job_title` (
+CREATE TABLE IF NOT EXISTS `employee_job_title` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
-CREATE UNIQUE INDEX `name_UNIQUE` ON `tmtools`.`employee_job_title` (`name` ASC);
+CREATE UNIQUE INDEX `name_UNIQUE` ON `employee_job_title` (`name` ASC);
 
 
 -- -----------------------------------------------------
--- Table `tmtools`.`employee_team`
+-- Table `employee_team`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `tmtools`.`employee_team` ;
+DROP TABLE IF EXISTS `employee_team` ;
 
-CREATE TABLE IF NOT EXISTS `tmtools`.`employee_team` (
+CREATE TABLE IF NOT EXISTS `employee_team` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
-CREATE UNIQUE INDEX `name_UNIQUE` ON `tmtools`.`employee_team` (`name` ASC);
+CREATE UNIQUE INDEX `name_UNIQUE` ON `employee_team` (`name` ASC);
 
 
 -- -----------------------------------------------------
--- Table `tmtools`.`company`
+-- Table `company`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `tmtools`.`company` ;
+DROP TABLE IF EXISTS `company` ;
 
-CREATE TABLE IF NOT EXISTS `tmtools`.`company` (
+CREATE TABLE IF NOT EXISTS `company` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(255) NOT NULL,
   `cost_center` VARCHAR(45) NOT NULL,
@@ -59,22 +62,22 @@ CREATE TABLE IF NOT EXISTS `tmtools`.`company` (
   PRIMARY KEY (`id`),
   CONSTRAINT `fk_company_employee`
     FOREIGN KEY (`division_manager_id`)
-    REFERENCES `tmtools`.`employee` (`id`)
+    REFERENCES `employee` (`id`)
     ON DELETE RESTRICT
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
-CREATE UNIQUE INDEX `cost_center_UNIQUE` ON `tmtools`.`company` (`cost_center` ASC);
+CREATE UNIQUE INDEX `cost_center_UNIQUE` ON `company` (`cost_center` ASC);
 
-CREATE INDEX `fk_company_employee_idx` ON `tmtools`.`company` (`division_manager_id` ASC);
+CREATE INDEX `fk_company_employee_idx` ON `company` (`division_manager_id` ASC);
 
 
 -- -----------------------------------------------------
--- Table `tmtools`.`employee`
+-- Table `employee`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `tmtools`.`employee` ;
+DROP TABLE IF EXISTS `employee` ;
 
-CREATE TABLE IF NOT EXISTS `tmtools`.`employee` (
+CREATE TABLE IF NOT EXISTS `employee` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `first_name` VARCHAR(45) NOT NULL,
   `last_name` VARCHAR(45) NOT NULL,
@@ -90,63 +93,63 @@ CREATE TABLE IF NOT EXISTS `tmtools`.`employee` (
   PRIMARY KEY (`id`),
   CONSTRAINT `fk_employee_job_title`
     FOREIGN KEY (`job_title_id`)
-    REFERENCES `tmtools`.`employee_job_title` (`id`)
+    REFERENCES `employee_job_title` (`id`)
     ON DELETE RESTRICT
     ON UPDATE CASCADE,
   CONSTRAINT `fk_employee_employee`
     FOREIGN KEY (`direct_manager_id`)
-    REFERENCES `tmtools`.`employee` (`id`)
+    REFERENCES `employee` (`id`)
     ON DELETE RESTRICT
     ON UPDATE CASCADE,
   CONSTRAINT `fk_employee_team`
     FOREIGN KEY (`team_id`)
-    REFERENCES `tmtools`.`employee_team` (`id`)
+    REFERENCES `employee_team` (`id`)
     ON DELETE RESTRICT
     ON UPDATE CASCADE,
   CONSTRAINT `fk_employee_company`
     FOREIGN KEY (`company_id`)
-    REFERENCES `tmtools`.`company` (`id`)
+    REFERENCES `company` (`id`)
     ON DELETE RESTRICT
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
-CREATE UNIQUE INDEX `username_UNIQUE` ON `tmtools`.`employee` (`username` ASC);
+CREATE UNIQUE INDEX `username_UNIQUE` ON `employee` (`username` ASC);
 
-CREATE UNIQUE INDEX `email_address_UNIQUE` ON `tmtools`.`employee` (`email_address` ASC);
+CREATE UNIQUE INDEX `email_address_UNIQUE` ON `employee` (`email_address` ASC);
 
-CREATE UNIQUE INDEX `personal_numeric_code_UNIQUE` ON `tmtools`.`employee` (`personal_numeric_code` ASC);
+CREATE UNIQUE INDEX `personal_numeric_code_UNIQUE` ON `employee` (`personal_numeric_code` ASC);
 
-CREATE UNIQUE INDEX `identity_card_number_UNIQUE` ON `tmtools`.`employee` (`identity_card_number` ASC);
+CREATE UNIQUE INDEX `identity_card_number_UNIQUE` ON `employee` (`identity_card_number` ASC);
 
-CREATE INDEX `fk_employee_job_title_idx` ON `tmtools`.`employee` (`job_title_id` ASC);
+CREATE INDEX `fk_employee_job_title_idx` ON `employee` (`job_title_id` ASC);
 
-CREATE INDEX `fk_employee_employee_idx` ON `tmtools`.`employee` (`direct_manager_id` ASC);
+CREATE INDEX `fk_employee_employee_idx` ON `employee` (`direct_manager_id` ASC);
 
-CREATE INDEX `fk_employee_team_idx` ON `tmtools`.`employee` (`team_id` ASC);
+CREATE INDEX `fk_employee_team_idx` ON `employee` (`team_id` ASC);
 
-CREATE INDEX `fk_employee_company_idx` ON `tmtools`.`employee` (`company_id` ASC);
+CREATE INDEX `fk_employee_company_idx` ON `employee` (`company_id` ASC);
 
 
 -- -----------------------------------------------------
--- Table `tmtools`.`travel_destination`
+-- Table `travel_destination`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `tmtools`.`travel_destination` ;
+DROP TABLE IF EXISTS `travel_destination` ;
 
-CREATE TABLE IF NOT EXISTS `tmtools`.`travel_destination` (
+CREATE TABLE IF NOT EXISTS `travel_destination` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
-CREATE UNIQUE INDEX `name_UNIQUE` ON `tmtools`.`travel_destination` (`name` ASC);
+CREATE UNIQUE INDEX `name_UNIQUE` ON `travel_destination` (`name` ASC);
 
 
 -- -----------------------------------------------------
--- Table `tmtools`.`aquisition_supplier`
+-- Table `aquisition_supplier`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `tmtools`.`aquisition_supplier` ;
+DROP TABLE IF EXISTS `aquisition_supplier` ;
 
-CREATE TABLE IF NOT EXISTS `tmtools`.`aquisition_supplier` (
+CREATE TABLE IF NOT EXISTS `aquisition_supplier` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(255) NULL,
   PRIMARY KEY (`id`))
@@ -154,11 +157,11 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `tmtools`.`aquisition_bought_service`
+-- Table `aquisition_bought_service`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `tmtools`.`aquisition_bought_service` ;
+DROP TABLE IF EXISTS `aquisition_bought_service` ;
 
-CREATE TABLE IF NOT EXISTS `tmtools`.`aquisition_bought_service` (
+CREATE TABLE IF NOT EXISTS `aquisition_bought_service` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(225) NULL,
   PRIMARY KEY (`id`))
@@ -166,11 +169,11 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `tmtools`.`aquisition_supplier_account`
+-- Table `aquisition_supplier_account`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `tmtools`.`aquisition_supplier_account` ;
+DROP TABLE IF EXISTS `aquisition_supplier_account` ;
 
-CREATE TABLE IF NOT EXISTS `tmtools`.`aquisition_supplier_account` (
+CREATE TABLE IF NOT EXISTS `aquisition_supplier_account` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `aquisition_supplier_id` INT NULL,
   `bank_account_number` VARCHAR(45) NULL,
@@ -178,20 +181,20 @@ CREATE TABLE IF NOT EXISTS `tmtools`.`aquisition_supplier_account` (
   PRIMARY KEY (`id`),
   CONSTRAINT `fk_aquisition_supplier_account_aquisition_supplier`
     FOREIGN KEY (`aquisition_supplier_id`)
-    REFERENCES `tmtools`.`aquisition_supplier` (`id`)
+    REFERENCES `aquisition_supplier` (`id`)
     ON DELETE RESTRICT
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
-CREATE INDEX `fk_aquisition_supplier_account_aquisition_supplier_idx` ON `tmtools`.`aquisition_supplier_account` (`aquisition_supplier_id` ASC);
+CREATE INDEX `fk_aquisition_supplier_account_aquisition_supplier_idx` ON `aquisition_supplier_account` (`aquisition_supplier_id` ASC);
 
 
 -- -----------------------------------------------------
--- Table `tmtools`.`reimbursement_type`
+-- Table `reimbursement_type`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `tmtools`.`reimbursement_type` ;
+DROP TABLE IF EXISTS `reimbursement_type` ;
 
-CREATE TABLE IF NOT EXISTS `tmtools`.`reimbursement_type` (
+CREATE TABLE IF NOT EXISTS `reimbursement_type` (
   `id` INT NOT NULL,
   `name` VARCHAR(45) NULL,
   PRIMARY KEY (`id`))
@@ -199,11 +202,11 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `tmtools`.`reimbursement`
+-- Table `reimbursement`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `tmtools`.`reimbursement` ;
+DROP TABLE IF EXISTS `reimbursement` ;
 
-CREATE TABLE IF NOT EXISTS `tmtools`.`reimbursement` (
+CREATE TABLE IF NOT EXISTS `reimbursement` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `type_id` INT NOT NULL,
   `number` VARCHAR(45) NOT NULL,
@@ -212,20 +215,20 @@ CREATE TABLE IF NOT EXISTS `tmtools`.`reimbursement` (
   PRIMARY KEY (`id`),
   CONSTRAINT `fk_reimbursement_reimbursement_type`
     FOREIGN KEY (`type_id`)
-    REFERENCES `tmtools`.`reimbursement_type` (`id`)
+    REFERENCES `reimbursement_type` (`id`)
     ON DELETE RESTRICT
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
-CREATE INDEX `fk_reimbursement_reinbursement_type_idx` ON `tmtools`.`reimbursement` (`type_id` ASC);
+CREATE INDEX `fk_reimbursement_reinbursement_type_idx` ON `reimbursement` (`type_id` ASC);
 
 
 -- -----------------------------------------------------
--- Table `tmtools`.`status`
+-- Table `status`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `tmtools`.`status` ;
+DROP TABLE IF EXISTS `status` ;
 
-CREATE TABLE IF NOT EXISTS `tmtools`.`status` (
+CREATE TABLE IF NOT EXISTS `status` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`))
@@ -233,52 +236,52 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `tmtools`.`reimbursement_document`
+-- Table `reimbursement_document`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `tmtools`.`reimbursement_document` ;
+DROP TABLE IF EXISTS `reimbursement_document` ;
 
-CREATE TABLE IF NOT EXISTS `tmtools`.`reimbursement_document` (
+CREATE TABLE IF NOT EXISTS `reimbursement_document` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `employee_id` INT NOT NULL,
   `status_id` INT NOT NULL DEFAULT 1,
   PRIMARY KEY (`id`),
   CONSTRAINT `fk_reimbursement_document_employee`
     FOREIGN KEY (`employee_id`)
-    REFERENCES `tmtools`.`employee` (`id`)
+    REFERENCES `employee` (`id`)
     ON DELETE RESTRICT
     ON UPDATE CASCADE,
   CONSTRAINT `fk_reimbursement_document_status`
     FOREIGN KEY (`status_id`)
-    REFERENCES `tmtools`.`status` (`id`)
+    REFERENCES `status` (`id`)
     ON DELETE RESTRICT
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
-CREATE INDEX `fk_reimbursement_document_employee_idx` ON `tmtools`.`reimbursement_document` (`employee_id` ASC);
+CREATE INDEX `fk_reimbursement_document_employee_idx` ON `reimbursement_document` (`employee_id` ASC);
 
-CREATE INDEX `fk_reimbursement_document_status_idx` ON `tmtools`.`reimbursement_document` (`status_id` ASC);
+CREATE INDEX `fk_reimbursement_document_status_idx` ON `reimbursement_document` (`status_id` ASC);
 
 
 -- -----------------------------------------------------
--- Table `tmtools`.`travel_purpose`
+-- Table `travel_purpose`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `tmtools`.`travel_purpose` ;
+DROP TABLE IF EXISTS `travel_purpose` ;
 
-CREATE TABLE IF NOT EXISTS `tmtools`.`travel_purpose` (
+CREATE TABLE IF NOT EXISTS `travel_purpose` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(255) NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
-CREATE UNIQUE INDEX `name_UNIQUE` ON `tmtools`.`travel_purpose` (`name` ASC);
+CREATE UNIQUE INDEX `name_UNIQUE` ON `travel_purpose` (`name` ASC);
 
 
 -- -----------------------------------------------------
--- Table `tmtools`.`travel_document`
+-- Table `travel_document`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `tmtools`.`travel_document` ;
+DROP TABLE IF EXISTS `travel_document` ;
 
-CREATE TABLE IF NOT EXISTS `tmtools`.`travel_document` (
+CREATE TABLE IF NOT EXISTS `travel_document` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `employee_id` INT NOT NULL,
   `purpose_id` INT NOT NULL,
@@ -293,65 +296,65 @@ CREATE TABLE IF NOT EXISTS `tmtools`.`travel_document` (
   PRIMARY KEY (`id`),
   CONSTRAINT `fk_travel_document_employee`
     FOREIGN KEY (`employee_id`)
-    REFERENCES `tmtools`.`employee` (`id`)
+    REFERENCES `employee` (`id`)
     ON DELETE RESTRICT
     ON UPDATE CASCADE,
   CONSTRAINT `fk_travel_document_travel_purpose`
     FOREIGN KEY (`purpose_id`)
-    REFERENCES `tmtools`.`travel_purpose` (`id`)
+    REFERENCES `travel_purpose` (`id`)
     ON DELETE RESTRICT
     ON UPDATE CASCADE,
   CONSTRAINT `fk_travel_document_travel_destination`
     FOREIGN KEY (`destination_id`)
-    REFERENCES `tmtools`.`travel_destination` (`id`)
+    REFERENCES `travel_destination` (`id`)
     ON DELETE RESTRICT
     ON UPDATE CASCADE,
   CONSTRAINT `fk_travel_document_status`
     FOREIGN KEY (`status_id`)
-    REFERENCES `tmtools`.`status` (`id`)
+    REFERENCES `status` (`id`)
     ON DELETE RESTRICT
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
-CREATE INDEX `fk_travel_document_employee_idx` ON `tmtools`.`travel_document` (`employee_id` ASC);
+CREATE INDEX `fk_travel_document_employee_idx` ON `travel_document` (`employee_id` ASC);
 
-CREATE INDEX `fk_travel_document_travel_purpose_idx` ON `tmtools`.`travel_document` (`purpose_id` ASC);
+CREATE INDEX `fk_travel_document_travel_purpose_idx` ON `travel_document` (`purpose_id` ASC);
 
-CREATE INDEX `fk_travel_document_travel_destination_idx` ON `tmtools`.`travel_document` (`destination_id` ASC);
+CREATE INDEX `fk_travel_document_travel_destination_idx` ON `travel_document` (`destination_id` ASC);
 
-CREATE INDEX `fk_travel_document_status_idx` ON `tmtools`.`travel_document` (`status_id` ASC);
+CREATE INDEX `fk_travel_document_status_idx` ON `travel_document` (`status_id` ASC);
 
 
 -- -----------------------------------------------------
--- Table `tmtools`.`reimbursement_document_reimbursements`
+-- Table `reimbursement_document_reimbursements`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `tmtools`.`reimbursement_document_reimbursements` ;
+DROP TABLE IF EXISTS `reimbursement_document_reimbursements` ;
 
-CREATE TABLE IF NOT EXISTS `tmtools`.`reimbursement_document_reimbursements` (
+CREATE TABLE IF NOT EXISTS `reimbursement_document_reimbursements` (
   `reimbursement_document_id` INT NOT NULL,
   `reimbursement_id` INT NOT NULL,
   PRIMARY KEY (`reimbursement_document_id`, `reimbursement_id`),
   CONSTRAINT `fk_reimbursement_document`
     FOREIGN KEY (`reimbursement_document_id`)
-    REFERENCES `tmtools`.`reimbursement_document` (`id`)
+    REFERENCES `reimbursement_document` (`id`)
     ON DELETE RESTRICT
     ON UPDATE CASCADE,
   CONSTRAINT `fk_reimbursement`
     FOREIGN KEY (`reimbursement_id`)
-    REFERENCES `tmtools`.`reimbursement` (`id`)
+    REFERENCES `reimbursement` (`id`)
     ON DELETE RESTRICT
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
-CREATE INDEX `fk_reimbursement_idx` ON `tmtools`.`reimbursement_document_reimbursements` (`reimbursement_id` ASC);
+CREATE INDEX `fk_reimbursement_idx` ON `reimbursement_document_reimbursements` (`reimbursement_id` ASC);
 
 
 -- -----------------------------------------------------
--- Table `tmtools`.`fos_user`
+-- Table `fos_user`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `tmtools`.`fos_user` ;
+DROP TABLE IF EXISTS `fos_user` ;
 
-CREATE TABLE `tmtools`.`fos_user` (
+CREATE TABLE `fos_user` (
   id INT AUTO_INCREMENT NOT NULL,
   username VARCHAR(180) NOT NULL,
   username_canonical VARCHAR(180) NOT NULL,
@@ -374,92 +377,92 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Data for table `tmtools`.`employee_job_title`
+-- Data for table `employee_job_title`
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `tmtools`;
-INSERT INTO `tmtools`.`employee_job_title` (`id`, `name`) VALUES (DEFAULT, 'Manager');
-INSERT INTO `tmtools`.`employee_job_title` (`id`, `name`) VALUES (DEFAULT, 'Programator');
+INSERT INTO `employee_job_title` (`id`, `name`) VALUES (DEFAULT, 'Manager');
+INSERT INTO `employee_job_title` (`id`, `name`) VALUES (DEFAULT, 'Programator');
 
 COMMIT;
 
 
 -- -----------------------------------------------------
--- Data for table `tmtools`.`employee_team`
+-- Data for table `employee_team`
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `tmtools`;
-INSERT INTO `tmtools`.`employee_team` (`id`, `name`) VALUES (DEFAULT, 'Craiova HUB');
+INSERT INTO `employee_team` (`id`, `name`) VALUES (DEFAULT, 'Craiova HUB');
 
 COMMIT;
 
 
 -- -----------------------------------------------------
--- Data for table `tmtools`.`company`
+-- Data for table `company`
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `tmtools`;
-INSERT INTO `tmtools`.`company` (`id`, `name`, `cost_center`, `division_manager_id`) VALUES (DEFAULT, 'eMAG', '12RO123456', 1);
-INSERT INTO `tmtools`.`company` (`id`, `name`, `cost_center`, `division_manager_id`) VALUES (DEFAULT, 'Dante', '13RO123456', 1);
+INSERT INTO `company` (`id`, `name`, `cost_center`, `division_manager_id`) VALUES (DEFAULT, 'eMAG', '12RO123456', 1);
+INSERT INTO `company` (`id`, `name`, `cost_center`, `division_manager_id`) VALUES (DEFAULT, 'Dante', '13RO123456', 1);
 
 COMMIT;
 
 
 -- -----------------------------------------------------
--- Data for table `tmtools`.`employee`
+-- Data for table `employee`
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `tmtools`;
-INSERT INTO `tmtools`.`employee` (`id`, `first_name`, `last_name`, `username`, `email_address`, `birthday`, `personal_numeric_code`, `identity_card_number`, `job_title_id`, `direct_manager_id`, `team_id`, `company_id`) VALUES (DEFAULT, 'Cristian', 'Radulescu', 'cristian.radulescu', 'cristian.radulescu', '1984-01-01', 1234567890000, 'AB123456', 1, NULL, 1, NULL);
+INSERT INTO `employee` (`id`, `first_name`, `last_name`, `username`, `email_address`, `birthday`, `personal_numeric_code`, `identity_card_number`, `job_title_id`, `direct_manager_id`, `team_id`, `company_id`) VALUES (DEFAULT, 'Cristian', 'Radulescu', 'cristian.radulescu', 'cristian.radulescu', '1984-01-01', 1234567890000, 'AB123456', 1, NULL, 1, NULL);
 
 COMMIT;
 
 
 -- -----------------------------------------------------
--- Data for table `tmtools`.`travel_destination`
+-- Data for table `travel_destination`
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `tmtools`;
-INSERT INTO `tmtools`.`travel_destination` (`id`, `name`) VALUES (DEFAULT, 'Bucuresti');
-INSERT INTO `tmtools`.`travel_destination` (`id`, `name`) VALUES (DEFAULT, 'Craiova');
+INSERT INTO `travel_destination` (`id`, `name`) VALUES (DEFAULT, 'Bucuresti');
+INSERT INTO `travel_destination` (`id`, `name`) VALUES (DEFAULT, 'Craiova');
 
 COMMIT;
 
 
 -- -----------------------------------------------------
--- Data for table `tmtools`.`travel_purpose`
+-- Data for table `travel_purpose`
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `tmtools`;
-INSERT INTO `tmtools`.`travel_purpose` (`id`, `name`) VALUES (DEFAULT, 'Sedinta planificare');
-INSERT INTO `tmtools`.`travel_purpose` (`id`, `name`) VALUES (DEFAULT, 'Eveniment companie');
-INSERT INTO `tmtools`.`travel_purpose` (`id`, `name`) VALUES (DEFAULT, 'Curs');
-INSERT INTO `tmtools`.`travel_purpose` (`id`, `name`) VALUES (DEFAULT, 'Prezentare');
+INSERT INTO `travel_purpose` (`id`, `name`) VALUES (DEFAULT, 'Sedinta planificare');
+INSERT INTO `travel_purpose` (`id`, `name`) VALUES (DEFAULT, 'Eveniment companie');
+INSERT INTO `travel_purpose` (`id`, `name`) VALUES (DEFAULT, 'Curs');
+INSERT INTO `travel_purpose` (`id`, `name`) VALUES (DEFAULT, 'Prezentare');
 
 COMMIT;
 
 
 -- -----------------------------------------------------
--- Data for table `tmtools`.`reimbursement_type`
+-- Data for table `reimbursement_type`
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `tmtools`;
-INSERT INTO `tmtools`.`reimbursement_type` (`id`, `name`) VALUES (DEFAULT, 'Bon combustibil');
-INSERT INTO `tmtools`.`reimbursement_type` (`id`, `name`) VALUES (DEFAULT, 'Bon taxi');
-INSERT INTO `tmtools`.`reimbursement_type` (`id`, `name`) VALUES (DEFAULT, 'Bilet tren');
-INSERT INTO `tmtools`.`reimbursement_type` (`id`, `name`) VALUES (DEFAULT, 'Factura');
+INSERT INTO `reimbursement_type` (`id`, `name`) VALUES (DEFAULT, 'Bon combustibil');
+INSERT INTO `reimbursement_type` (`id`, `name`) VALUES (DEFAULT, 'Bon taxi');
+INSERT INTO `reimbursement_type` (`id`, `name`) VALUES (DEFAULT, 'Bilet tren');
+INSERT INTO `reimbursement_type` (`id`, `name`) VALUES (DEFAULT, 'Factura');
 
 COMMIT;
 
 
 -- -----------------------------------------------------
--- Data for table `tmtools`.`status`
+-- Data for table `status`
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `tmtools`;
-INSERT INTO `tmtools`.`status` (`id`, `name`) VALUES (1, 'New');
-INSERT INTO `tmtools`.`status` (`id`, `name`) VALUES (2, 'Pending');
-INSERT INTO `tmtools`.`status` (`id`, `name`) VALUES (3, 'Completed');
+INSERT INTO `status` (`id`, `name`) VALUES (1, 'New');
+INSERT INTO `status` (`id`, `name`) VALUES (2, 'Pending');
+INSERT INTO `status` (`id`, `name`) VALUES (3, 'Completed');
 
 COMMIT;
 
