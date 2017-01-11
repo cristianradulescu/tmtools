@@ -33,6 +33,7 @@ class ReimbursementAdmin extends AbstractAdmin
             ->add('value')
             ->add('date')
             ->add('number')
+            ->add('reimbursementDocument')
 
         ;
     }
@@ -69,6 +70,7 @@ class ReimbursementAdmin extends AbstractAdmin
             ->add('value')
             ->add('date', 'sonata_type_date_picker', array('format' => 'dd-MM-yyyy'))
             ->add('number')
+            ->add('reimbursementDocument')
         ;
     }
 
@@ -83,6 +85,7 @@ class ReimbursementAdmin extends AbstractAdmin
             ->add('value')
             ->add('date')
             ->add('number')
+            ->add('reimbursementDocument')
         ;
     }
 }

@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="reimbursement_document", indexes={@ORM\Index(name="fk_reimbursement_document_employee_idx", columns={"employee_id"}), @ORM\Index(name="fk_reimbursement_document_status_idx", columns={"status_id"})})
  * @ORM\Entity
  */
-class ReimbursementDocument implements DocumentStatusInterface
+class ReimbursementDocument implements DocumentStatusInterface, EmployeeInterface
 {
     /**
      * @var integer
@@ -44,26 +44,21 @@ class ReimbursementDocument implements DocumentStatusInterface
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="Reimbursement", inversedBy="reimbursementDocument")
-     * @ORM\JoinTable(name="reimbursement_document_reimbursements",
-     *   joinColumns={
-     *     @ORM\JoinColumn(name="reimbursement_document_id", referencedColumnName="id")
-     *   },
-     *   inverseJoinColumns={
-     *     @ORM\JoinColumn(name="reimbursement_id", referencedColumnName="id")
-     *   }
+     * @ORM\OneToMany(
+     *     targetEntity="Reimbursement",
+     *     mappedBy="reimbursementDocument",
+     *     cascade={"persist"}
      * )
      */
-    private $reimbursement;
+    private $reimbursements;
 
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->reimbursement = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->reimbursements = new \Doctrine\Common\Collections\ArrayCollection();
     }
-
 
     /**
      * Get id
@@ -130,9 +125,10 @@ class ReimbursementDocument implements DocumentStatusInterface
      *
      * @return ReimbursementDocument
      */
-    public function addReimbursement(\AppBundle\Entity\Reimbursement $reimbursement)
+    public function addReimbursements(\AppBundle\Entity\Reimbursement $reimbursement)
     {
-        $this->reimbursement[] = $reimbursement;
+        $reimbursement->setReimbursementDocument($this);
+        $this->reimbursements[] = $reimbursement;
 
         return $this;
     }
@@ -144,7 +140,9 @@ class ReimbursementDocument implements DocumentStatusInterface
      */
     public function removeReimbursement(\AppBundle\Entity\Reimbursement $reimbursement)
     {
-        $this->reimbursement->removeElement($reimbursement);
+        $reimbursement->setReimbursementDocument(null);
+        $this->reimbursements->removeElement($reimbursement);
+
     }
 
     /**
@@ -152,9 +150,18 @@ class ReimbursementDocument implements DocumentStatusInterface
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getReimbursement()
+    public function getReimbursements()
     {
-        return $this->reimbursement;
+        return $this->reimbursements;
+    }
+
+    public function setReimbursements($reimbursements)
+    {
+        foreach ($reimbursements as $reimbursement) {
+            $this->addReimbursement($reimbursement);
+        }
+
+        return $this;
     }
 
     /**
@@ -166,9 +173,9 @@ class ReimbursementDocument implements DocumentStatusInterface
      */
     public function getShortFormat()
     {
-        $shortFormat = (string)$this->getEmployee().' - '.(string)$this->getReimbursement()->first();
-        return $this->getReimbursement()->count() > 1
-            ? $shortFormat.'... +'.(string)($this->getReimbursement()->count() - 1)
+        $shortFormat = (string)$this->getEmployee().' - '.(string)$this->reimbursements->first();
+        return $this->reimbursements->count() > 1
+            ? $shortFormat.'... +'.(string)($this->reimbursements->count() - 1)
             : $shortFormat;
     }
 
@@ -180,4 +187,3 @@ class ReimbursementDocument implements DocumentStatusInterface
         return $this->getShortFormat();
     }
 }
-

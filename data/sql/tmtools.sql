@@ -205,6 +205,7 @@ CREATE TABLE IF NOT EXISTS `reimbursement` (
   `date` DATE NOT NULL,
   `value` DECIMAL(10,2) NOT NULL,
   `employee_id` INT NOT NULL,
+  `reimbursement_document_id` INT NULL,
   PRIMARY KEY (`id`),
   CONSTRAINT `fk_reimbursement_reimbursement_type`
     FOREIGN KEY (`type_id`)
@@ -215,11 +216,18 @@ CREATE TABLE IF NOT EXISTS `reimbursement` (
   FOREIGN KEY (`employee_id`)
   REFERENCES `employee` (`id`)
     ON DELETE RESTRICT
-    ON UPDATE CASCADE)
+    ON UPDATE CASCADE,
+  CONSTRAINT `fk_reimbursement_document_reimbursement`
+  FOREIGN KEY (`employee_id`)
+  REFERENCES `reimbursement_document` (`id`)
+    ON DELETE RESTRICT
+    ON UPDATE CASCADE
+)
 ENGINE = InnoDB;
 
 CREATE INDEX `fk_reimbursement_reinbursement_type_idx` ON `reimbursement` (`type_id` ASC);
 CREATE INDEX `fk_reimbursement_employee_idx` ON `reimbursement` (`employee_id` ASC);
+CREATE INDEX `fk_reimbursement_document_idx` ON `reimbursement` (`reimbusement_document_id` ASC);
 
 
 -- -----------------------------------------------------
@@ -318,30 +326,6 @@ CREATE INDEX `fk_travel_document_employee_idx` ON `travel_document` (`employee_i
 CREATE INDEX `fk_travel_document_travel_purpose_idx` ON `travel_document` (`purpose_id` ASC);
 CREATE INDEX `fk_travel_document_travel_destination_idx` ON `travel_document` (`destination_id` ASC);
 CREATE INDEX `fk_travel_document_status_idx` ON `travel_document` (`status_id` ASC);
-
-
--- -----------------------------------------------------
--- Table `reimbursement_document_reimbursements`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `reimbursement_document_reimbursements` ;
-
-CREATE TABLE IF NOT EXISTS `reimbursement_document_reimbursements` (
-  `reimbursement_document_id` INT NOT NULL,
-  `reimbursement_id` INT NOT NULL,
-  PRIMARY KEY (`reimbursement_document_id`, `reimbursement_id`),
-  CONSTRAINT `fk_reimbursement_document`
-    FOREIGN KEY (`reimbursement_document_id`)
-    REFERENCES `reimbursement_document` (`id`)
-    ON DELETE RESTRICT
-    ON UPDATE CASCADE,
-  CONSTRAINT `fk_reimbursement`
-    FOREIGN KEY (`reimbursement_id`)
-    REFERENCES `reimbursement` (`id`)
-    ON DELETE RESTRICT
-    ON UPDATE CASCADE)
-ENGINE = InnoDB;
-
-CREATE INDEX `fk_reimbursement_idx` ON `reimbursement_document_reimbursements` (`reimbursement_id` ASC);
 
 
 -- -----------------------------------------------------

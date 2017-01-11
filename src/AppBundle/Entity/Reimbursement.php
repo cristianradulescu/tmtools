@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Reimbursement
  *
- * @ORM\Table(name="reimbursement", indexes={@ORM\Index(name="fk_reimbursement_reimbursement_type_idx", columns={"type_id"}), @ORM\Index(name="fk_reimbursement_employee_idx", columns={"employee_id"})})
+ * @ORM\Table(name="reimbursement", indexes={@ORM\Index(name="fk_reimbursement_reimbursement_type_idx", columns={"type_id"}), @ORM\Index(name="fk_reimbursement_employee_idx", columns={"employee_id"}), @ORM\Index(name="fk_reimbursement_document_idx", columns={"reimbursement_document_id"})})
  * @ORM\Entity
  */
 class Reimbursement
@@ -63,19 +63,17 @@ class Reimbursement
     private $employee;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var \ReimbursementDocument
      *
-     * @ORM\ManyToMany(targetEntity="ReimbursementDocument", mappedBy="reimbursement")
+     * @ORM\ManyToOne(
+     *     targetEntity="ReimbursementDocument",
+     *     inversedBy="reimbursements"
+     * )
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="reimbursement_document_id", referencedColumnName="id")
+     * })
      */
     private $reimbursementDocument;
-
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->reimbursementDocument = new \Doctrine\Common\Collections\ArrayCollection();
-    }
 
     /**
      * Get id
@@ -208,39 +206,32 @@ class Reimbursement
     }
 
     /**
-     * Add reimbursementDocument
+     * Set reimbursementDocument
      *
      * @param \AppBundle\Entity\ReimbursementDocument $reimbursementDocument
      *
      * @return Reimbursement
      */
-    public function addReimbursementDocument(\AppBundle\Entity\ReimbursementDocument $reimbursementDocument)
+    public function setReimbursementDocument(\AppBundle\Entity\ReimbursementDocument $reimbursementDocument = null)
     {
-        $this->reimbursementDocument[] = $reimbursementDocument;
+        $this->reimbursementDocument = $reimbursementDocument;
 
         return $this;
     }
 
     /**
-     * Remove reimbursementDocument
-     *
-     * @param \AppBundle\Entity\ReimbursementDocument $reimbursementDocument
-     */
-    public function removeReimbursementDocument(\AppBundle\Entity\ReimbursementDocument $reimbursementDocument)
-    {
-        $this->reimbursementDocument->removeElement($reimbursementDocument);
-    }
-
-    /**
      * Get reimbursementDocument
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return \AppBundle\Entity\ReimbursementDocument
      */
     public function getReimbursementDocument()
     {
         return $this->reimbursementDocument;
     }
 
+    /**
+     * @return string
+     */
     public function __toString()
     {
         return (string)$this->type.' '.$this->number.' / '.$this->date->format('d-M-Y');
