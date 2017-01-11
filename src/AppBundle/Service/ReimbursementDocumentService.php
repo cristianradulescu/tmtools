@@ -2,7 +2,7 @@
 
 namespace AppBundle\Service;
 
-use AppBundle\Entity\EmployeeInterface;
+use AppBundle\Entity\DocumentInterface;
 use AppBundle\Entity\ReimbursementDocument;
 
 /**
@@ -12,10 +12,10 @@ use AppBundle\Entity\ReimbursementDocument;
 class ReimbursementDocumentService extends DocumentService
 {
     /**
-     * @param EmployeeInterface|ReimbursementDocument $reimbursementDocument
+     * @param DocumentInterface|ReimbursementDocument $reimbursementDocument
      * @return array
      */
-    public function fillPlaceholders(EmployeeInterface $reimbursementDocument)
+    public function fillPlaceholders(DocumentInterface $reimbursementDocument)
     {
         parent::fillPlaceholders($reimbursementDocument);
 

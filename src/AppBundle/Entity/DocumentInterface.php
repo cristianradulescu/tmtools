@@ -3,13 +3,18 @@
 namespace AppBundle\Entity;
 
 /**
- * Interface EmployeeInterface
+ * Interface DocumentInterface
  * @package AppBundle\Entity
  */
-interface EmployeeInterface
+interface DocumentInterface
 {
     /**
      * @return Employee
      */
     public function getEmployee();
+
+    /**
+     * @return Employee
+     */
+    public function getStatus();
 }

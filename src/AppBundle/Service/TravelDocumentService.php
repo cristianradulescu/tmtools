@@ -2,7 +2,7 @@
 
 namespace AppBundle\Service;
 
-use AppBundle\Entity\EmployeeInterface;
+use AppBundle\Entity\DocumentInterface;
 use AppBundle\Entity\TravelDocument;
 
 /**
@@ -17,10 +17,10 @@ class TravelDocumentService extends DocumentService
     const DOCUMENT_TYPE_TEXT = 'Diurna %s zile (%s lei/zi)';
 
     /**
-     * @param EmployeeInterface|TravelDocument $travelDocument
+     * @param DocumentInterface|TravelDocument $travelDocument
      * @return array
      */
-    public function fillPlaceholders(EmployeeInterface $travelDocument)
+    public function fillPlaceholders(DocumentInterface $travelDocument)
     {
         parent::fillPlaceholders($travelDocument);
 
