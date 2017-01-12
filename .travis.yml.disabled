@@ -1,32 +1,24 @@
-# Project language
 language: php
 php:
   - '7.1'
 
-# Start mysql service
 services:
   - mysql
 
-# Cache composer packages so "composer install" is faster
 cache:
   directories:
     - $HOME/.composer/cache/files
 
-# Define an environment variable
 env:
   - SYMFONY_VERSION="dev-master" SYMFONY_ENV="test" DB=mysql
 
-# Update composer
 before_install:
   - mysql -e 'CREATE DATABASE tmtools;'
   - mysql tmtools < data/sql/tmtools.sql
 
-# Install composer dependencies,
-# Create database, schema and fixtures
 install:
   - composer install
 
-# Run script
 script:
   - phpunit
 
