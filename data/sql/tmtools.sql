@@ -187,7 +187,7 @@ CREATE INDEX `fk_aquisition_supplier_account_aquisition_supplier_idx` ON `aquisi
 DROP TABLE IF EXISTS `reimbursement_type` ;
 
 CREATE TABLE IF NOT EXISTS `reimbursement_type` (
-  `id` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
@@ -227,7 +227,7 @@ ENGINE = InnoDB;
 
 CREATE INDEX `fk_reimbursement_reinbursement_type_idx` ON `reimbursement` (`type_id` ASC);
 CREATE INDEX `fk_reimbursement_employee_idx` ON `reimbursement` (`employee_id` ASC);
-CREATE INDEX `fk_reimbursement_document_idx` ON `reimbursement` (`reimbusement_document_id` ASC);
+CREATE INDEX `fk_reimbursement_document_idx` ON `reimbursement` (`reimbursement_document_id` ASC);
 
 
 -- -----------------------------------------------------
@@ -426,10 +426,10 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `tmtools`;
-INSERT INTO `reimbursement_type` (`id`, `name`) VALUES (DEFAULT, 'Bon combustibil');
-INSERT INTO `reimbursement_type` (`id`, `name`) VALUES (DEFAULT, 'Bon taxi');
-INSERT INTO `reimbursement_type` (`id`, `name`) VALUES (DEFAULT, 'Bilet tren');
-INSERT INTO `reimbursement_type` (`id`, `name`) VALUES (DEFAULT, 'Factura');
+INSERT INTO `reimbursement_type` (`id`, `name`) VALUES (1, 'Bon combustibil');
+INSERT INTO `reimbursement_type` (`id`, `name`) VALUES (2, 'Bon taxi');
+INSERT INTO `reimbursement_type` (`id`, `name`) VALUES (3, 'Bilet tren');
+INSERT INTO `reimbursement_type` (`id`, `name`) VALUES (4, 'Factura');
 
 COMMIT;
 
