@@ -2395,23 +2395,23 @@
     <text
             x="252.205"
             y="510.95"
-            id="text582">{{ PLACEHOLDER_EMPLOYEE_DETAILS }}</text>
+            id="text582">{{ PLACEHOLDER_EMPLOYEE_ICN }} / {{ PLACEHOLDER_EMPLOYEE_PNC }}</text>
     <text
             x="281.331"
             y="491.338"
-            id="text584">{{ PLACEHOLDER_DATE_FROM }}</text>
+            id="text584">{{ PLACEHOLDER_DATE_FROM|date('d.m.Y') }}</text>
     <text
             x="468.712"
             y="491.176"
-            id="text586">{{ PLACEHOLDER_DATE_TO }}</text>
+            id="text586">{{ PLACEHOLDER_DATE_TO|date('d.m.Y') }}</text>
     <text
             x="162.821"
             y="655.053"
-            id="text588">{{ PLACEHOLDER_DESTINATION_ARRIVAL_TIME }}</text>
+            id="text588">{{ PLACEHOLDER_DESTINATION_ARRIVAL_TIME|date('d.m.Y H:i') }}</text>
     <text
             x="163.144"
             y="675.313"
-            id="text590">{{ PLACEHOLDER_DESTINATION_LEAVE_TIME }}</text>
+            id="text590">{{ PLACEHOLDER_DESTINATION_LEAVE_TIME|date('d.m.Y H:i') }}</text>
   </g>
   <!-- /Placeholders -->
   <!-- Placeholders for the second page -->
@@ -2422,23 +2422,23 @@
     <text
             x="215.905"
             y="285.401"
-            id="text594">{{ PLACEHOLDER_STARTPOINT_LEAVE_TIME }}</text>
+            id="text594">{{ PLACEHOLDER_STARTPOINT_LEAVE_TIME|date('d.m.Y H:i') }}</text>
     <text
             x="208.595"
             y="307.638"
-            id="text596">{{ PLACEHOLDER_STARTPOINT_ARRIVAL_TIME }}</text>
+            id="text596">{{ PLACEHOLDER_STARTPOINT_ARRIVAL_TIME|date('d.m.Y H:i') }}</text>
     <text
             x="108.694"
             y="435.172"
-            id="text598">{{ PLACEHOLDER_DOCUMENT_TYPE }}</text>
+            id="text598">Diurna {{ days_on_travel }} zile ({{ travel_allowance }} lei/zi)</text>
     <text
             x="535.79199"
             y="434.38199"
-            id="text600">{{ PLACEHOLDER_AMOUNT }}</text>
+            id="text600">{{ days_on_travel * travel_allowance }} LEI</text>
     <text
             x="542.25897"
             y="630.96002"
-            id="text602">{{ PLACEHOLDER_TOTAL_AMOUNT }}</text>
+            id="text602">{{ days_on_travel * travel_allowance }} LEI</text>
     <text
             x="105.239"
             y="759.49902"
