@@ -11,6 +11,8 @@ use AppBundle\Entity\ReimbursementDocument;
  */
 class ReimbursementDocumentService extends DocumentService
 {
+    const SERVICE_ID = 'app.reimbursement_document';
+
     /**
      * @param DocumentInterface|ReimbursementDocument $reimbursementDocument
      * @return array

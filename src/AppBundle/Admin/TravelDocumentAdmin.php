@@ -2,14 +2,17 @@
 
 namespace AppBundle\Admin;
 
-use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Route\RouteCollection;
 use Sonata\AdminBundle\Show\ShowMapper;
 
-class TravelDocumentAdmin extends AbstractAdmin
+/**
+ * Class TravelDocumentAdmin
+ * @package AppBundle\Admin
+ */
+class TravelDocumentAdmin extends DocumentAdmin
 {
     /**
      * @var array
@@ -42,7 +45,6 @@ class TravelDocumentAdmin extends AbstractAdmin
         $listMapper
             ->add('employee')
             ->add('purpose')
-            ->add('destination')
             ->add('dateStart')
             ->add('status', 'string', array('template' => 'AppBundle:CRUD:list_field_status.html.twig'))
             ->add('_action', null, array(
@@ -55,7 +57,7 @@ class TravelDocumentAdmin extends AbstractAdmin
                     ),
                     'show' => array(),
                     'edit' => array(),
-                    'delete' => array(),
+                    // Removed "Delete" since there are too many buttons here; use the batch delete instead
                 )
             ))
         ;
@@ -108,25 +110,7 @@ class TravelDocumentAdmin extends AbstractAdmin
      */
     protected function configureRoutes(RouteCollection $collection)
     {
-        $collection->add('print');
         $collection->add('clone');
-    }
-
-    /**
-     * @return array
-     */
-    public function getBatchActions()
-    {
-        $actions =  parent::getBatchActions();
-        $actions['markStatusPending'] = array(
-            'label' => 'Mark as Pending',
-            'ask_confirmation' => true
-        );
-        $actions['markStatusCompleted'] = array(
-            'label' => 'Mark as Completed',
-            'ask_confirmation' => true
-        );
-
-        return $actions;
+        parent::configureRoutes($collection);
     }
 }

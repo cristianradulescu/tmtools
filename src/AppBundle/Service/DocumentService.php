@@ -40,10 +40,13 @@ abstract class DocumentService
 
     /**
      * @param DocumentInterface $entity
+     * @return array
      */
     public function fillPlaceholders(DocumentInterface $entity)
     {
         $this->employee = $entity->getEmployee();
         $this->company = $this->employee->getCompany();
+
+        return array();
     }
 }

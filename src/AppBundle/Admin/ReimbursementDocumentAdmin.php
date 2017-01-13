@@ -4,7 +4,6 @@ namespace AppBundle\Admin;
 
 use AppBundle\Entity\Reimbursement;
 use AppBundle\Entity\ReimbursementDocument;
-use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
@@ -12,7 +11,11 @@ use Sonata\AdminBundle\Model\ModelManagerInterface;
 use Sonata\AdminBundle\Route\RouteCollection;
 use Sonata\AdminBundle\Show\ShowMapper;
 
-class ReimbursementDocumentAdmin extends AbstractAdmin
+/**
+ * Class ReimbursementDocumentAdmin
+ * @package AppBundle\Admin
+ */
+class ReimbursementDocumentAdmin extends DocumentAdmin
 {
     /**
      * @param DatagridMapper $datagridMapper
@@ -32,6 +35,7 @@ class ReimbursementDocumentAdmin extends AbstractAdmin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
+            ->add('employee')
             ->add('shortFormat', null, array('label' => 'Reimbursements'))
             ->add('status', 'string', array('template' => 'AppBundle:CRUD:list_field_status.html.twig'))
             ->add('_action', null, array(
@@ -86,14 +90,6 @@ class ReimbursementDocumentAdmin extends AbstractAdmin
             ->add('employee')
             ->add('reimbursements')
         ;
-    }
-
-    /**
-     * @param RouteCollection $collection
-     */
-    protected function configureRoutes(RouteCollection $collection)
-    {
-        $collection->add('print');
     }
 
     /**

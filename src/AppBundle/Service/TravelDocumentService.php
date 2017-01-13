@@ -11,6 +11,7 @@ use AppBundle\Entity\TravelDocument;
  */
 class TravelDocumentService extends DocumentService
 {
+    const SERVICE_ID = 'app.travel_document';
 
     /**
      * @param DocumentInterface|TravelDocument $travelDocument

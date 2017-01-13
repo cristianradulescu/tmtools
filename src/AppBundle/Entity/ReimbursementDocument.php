@@ -173,7 +173,7 @@ class ReimbursementDocument implements DocumentInterface
      */
     public function getShortFormat()
     {
-        $shortFormat = (string)$this->getEmployee().' - '.(string)$this->reimbursements->first();
+        $shortFormat = (string)$this->reimbursements->first();
         return $this->reimbursements->count() > 1
             ? $shortFormat.'... +'.(string)($this->reimbursements->count() - 1)
             : $shortFormat;
