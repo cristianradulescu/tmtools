@@ -47,8 +47,15 @@ class ReimbursementAdmin extends AbstractAdmin
             ->add('employee')
             ->add('type')
             ->add('value')
-            ->add('date')
-            ->add('number')
+            ->add('date', 'date', array(
+                'format' => 'Y-M-d'
+            ))
+            ->add('status',
+                'string',
+                array(
+                    'template' => 'AppBundle:CRUD:list_field_status.html.twig'
+                )
+            )
             ->add('_action', null, array(
                 'actions' => array(
                     'show' => array(),

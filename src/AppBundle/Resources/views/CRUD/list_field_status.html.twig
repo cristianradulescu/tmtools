@@ -1,8 +1,12 @@
 {% extends 'SonataAdminBundle:CRUD:base_list_field.html.twig' %}
 
 {% block field %}
-    {% set label = 'danger' %}
-    {% if (object.status.id == 2) %}
+    {% if (object.status.id == null) %}
+        {% set label = 'default' %}
+        {% set value = 'N/A' %}
+    {% elseif (object.status.id == 1) %}
+        {% set label = 'danger' %}
+    {% elseif (object.status.id == 2) %}
         {% set label = 'warning' %}
     {% elseif (object.status.id == 3) %}
         {% set label = 'success' %}

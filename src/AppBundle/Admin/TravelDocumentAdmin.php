@@ -45,7 +45,9 @@ class TravelDocumentAdmin extends DocumentAdmin
         $listMapper
             ->add('employee')
             ->add('purpose')
-            ->add('dateStart')
+            ->add('dateStart', 'date', array(
+                'format' => 'Y-M-d'
+            ))
             ->add('status', 'string', array('template' => 'AppBundle:CRUD:list_field_status.html.twig'))
             ->add('_action', null, array(
                 'actions' => array(

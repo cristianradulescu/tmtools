@@ -230,6 +230,21 @@ class Reimbursement
     }
 
     /**
+     * Get the status via associated reimbursement document.
+     *
+     * If the reimbrusement is not yet associated with a document, will return an empty status.
+     *
+     * @return Status
+     */
+    public function getStatus()
+    {
+        return $this->getReimbursementDocument()
+            ? $this->getReimbursementDocument()->getStatus()
+            : new Status();
+
+    }
+
+    /**
      * @return string
      */
     public function __toString()

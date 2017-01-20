@@ -18,6 +18,14 @@ use Sonata\AdminBundle\Show\ShowMapper;
 class ReimbursementDocumentAdmin extends DocumentAdmin
 {
     /**
+     * @var array
+     */
+    protected $datagridValues = array(
+        '_sort_by' => 'id',
+        '_sort_order' => 'DESC',
+    );
+
+    /**
      * @param DatagridMapper $datagridMapper
      */
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
