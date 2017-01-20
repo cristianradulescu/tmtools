@@ -1,4 +1,6 @@
 language: php
+sudo: false
+
 php:
   - '7.1'
 
@@ -14,13 +16,13 @@ env:
 
 before_install:
   - mysql -e 'CREATE DATABASE tmtools;'
-  - mysql tmtools < data/sql/tmtools.sql
+#  - mysql tmtools < data/sql/tmtools.sql
 
 install:
-  - composer install
+  - composer install -n
 
 script:
-  - phpunit
+  - php vendor/bin/codecept run unit
 
 notifications:
   email: false
