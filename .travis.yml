@@ -16,13 +16,13 @@ env:
 
 before_install:
   - mysql -e 'CREATE DATABASE tmtools;'
-#  - mysql tmtools < data/sql/tmtools.sql
+  - mysql tmtools < tests/_data/dump.sql
 
 install:
   - composer install -n
 
 script:
-  - php vendor/bin/codecept run unit
+  - php vendor/bin/codecept run
 
 notifications:
   email: false
