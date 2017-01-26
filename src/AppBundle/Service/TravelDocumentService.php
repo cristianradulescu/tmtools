@@ -20,10 +20,6 @@ class TravelDocumentService extends DocumentService
     public function fillPlaceholders(DocumentInterface $travelDocument)
     {
         parent::fillPlaceholders($travelDocument);
-        $daysOnTravel = $this->computeDaysOnTravelByTravelDates(
-            $travelDocument->getDateStart(),
-            $travelDocument->getDateEnd()
-        );
 
         return array(
             'PLACEHOLDER_COST_CENTER' => $this->getCompany()->getCostCenter(),
@@ -44,24 +40,8 @@ class TravelDocumentService extends DocumentService
             'PLACEHOLDER_MANAGER_FIRST_NAME' => $this->getCompany()->getDivisionManager()->getFirstName(),
             'PLACEHOLDER_EMPLOYEE_LAST_NAME' => $this->getEmployee()->getLastName(),
             'PLACEHOLDER_EMPLOYEE_FIRST_NAME' => $this->getEmployee()->getFirstName(),
-            'days_on_travel' => $daysOnTravel
+            'days_on_travel' => $travelDocument->getDateEnd()
+                ->diff($travelDocument->getDateStart())->days + 1
         );
-    }
-
-    /**
-     * Determine the document type (payment for days spent travelling).
-     *
-     * Must add 1 day to the final result in order to include the first day, since the date difference method will not
-     * include it.
-     *
-     * @param \DateTime $startDate
-     * @param \DateTime $endDate
-     * @return string
-     */
-    protected function computeDaysOnTravelByTravelDates(\DateTime $startDate, \DateTime $endDate)
-    {
-        $travelTime = $endDate->diff($startDate);
-
-        return $travelTime->days + 1;
     }
 }

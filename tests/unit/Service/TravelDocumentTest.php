@@ -5,6 +5,10 @@ use AppBundle\Entity\TravelDocument;
 use AppBundle\Service\TravelDocumentService;
 use \Mockery as m;
 
+/**
+ * Class TravelDocumentTest
+ * @package Service
+ */
 class TravelDocumentTest extends \PHPUnit_Framework_TestCase
 {
     protected function setUp()
@@ -46,7 +50,7 @@ class TravelDocumentTest extends \PHPUnit_Framework_TestCase
                 'PLACEHOLDER_EMPLOYEE_FIRST_NAME' => $dataProvider['employee_first_name'],
                 'days_on_travel' => $dataProvider['days_on_travel']
             ),
-            (new TravelDocumentService())->fillPlaceholders($this->buildTravelDocumentMock($dataProvider))
+            (new TravelDocumentService())->fillPlaceholders($this->mockTravelDocument($dataProvider))
         );
     }
 
@@ -111,7 +115,7 @@ class TravelDocumentTest extends \PHPUnit_Framework_TestCase
      * @param array $dataProvider
      * @return m\MockInterface|TravelDocument
      */
-    protected function buildTravelDocumentMock(array $dataProvider)
+    protected function mockTravelDocument(array $dataProvider)
     {
         // company
         $company = m::mock('AppBundle\Entity\Company');
