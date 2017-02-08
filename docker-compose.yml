@@ -21,3 +21,22 @@ services:
             - MYSQL_DATABASE=tmtools
             - MYSQL_USER=tmtoolsuser
             - MYSQL_PASSWORD=tmtoolspass
+    postgres:
+        image: postgres:latest
+        ports:
+            - "5432:5432"
+        volumes:
+            - ./:/app
+        environment:
+            - POSTGRES_DB=tmtools
+            - POSTGRES_USER=tmtoolsuser
+            - POSTGRES_PASSWORD=tmtoolspass
+    pgadmin:
+        image: meedan/pgadmin
+        ports:
+            - "5050:5050"
+        volumes:
+            - ./docker/pgadmin:/home/pgadmin/.pgadmin
+        environment:
+            - PGADMIN_USER=tmtools@tmtools.com
+            - PGADMIN_PASSWORD=tmtoolspass

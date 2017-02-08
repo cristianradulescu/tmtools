@@ -17,3 +17,5 @@
 .idea/
 
 tests/_output/*
+/docker/pgadmin/pgadmin4.log
+/docker/pgadmin/sessions/
