@@ -48,14 +48,13 @@ class EmployeeAdmin extends AbstractAdmin
             ->add('firstName')
             ->add('lastName')
             ->add('username')
-            ->add('emailAddress')
             ->add('birthday', 'sonata_type_date_picker', array(
                 'format' => 'dd-MM-yyyy'
             ))
             ->add('personalNumericCode')
             ->add('identityCardNumber')
             ->add('jobTitle')
-            ->add('directManager')
+            ->add('divisionManager')
             ->add('company')
         ;
     }
@@ -69,12 +68,11 @@ class EmployeeAdmin extends AbstractAdmin
             ->add('firstName')
             ->add('lastName')
             ->add('username')
-            ->add('emailAddress')
             ->add('birthday')
             ->add('personalNumericCode')
             ->add('identityCardNumber')
             ->add('jobTitle')
-            ->add('directManager')
+            ->add('divisionManager')
             ->add('company')
         ;
     }

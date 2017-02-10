@@ -7,7 +7,15 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * EmployeeJobTitle
  *
- * @ORM\Table(name="employee_job_title", uniqueConstraints={@ORM\UniqueConstraint(name="name_UNIQUE", columns={"name"})})
+ * @ORM\Table(
+ *     name="employee_job_title",
+ *     uniqueConstraints={
+ *         @ORM\UniqueConstraint(
+ *             name="employee_job_title_name_uindex",
+ *             columns={"name"}
+ *         )
+ *     }
+ * )
  * @ORM\Entity
  */
 class EmployeeJobTitle
@@ -17,18 +25,17 @@ class EmployeeJobTitle
      *
      * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\GeneratedValue(strategy="SEQUENCE")
+     * @ORM\SequenceGenerator(sequenceName="employee_job_title_id_seq", allocationSize=1, initialValue=1)
      */
     private $id;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=45, nullable=true)
+     * @ORM\Column(name="name", type="string", length=45, nullable=false)
      */
     private $name;
-
-
 
     /**
      * Get id

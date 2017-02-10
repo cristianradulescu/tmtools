@@ -7,7 +7,21 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Company
  *
- * @ORM\Table(name="company", uniqueConstraints={@ORM\UniqueConstraint(name="cost_center_UNIQUE", columns={"cost_center"})}, indexes={@ORM\Index(name="fk_company_employee_idx", columns={"division_manager_id"})})
+ * @ORM\Table(
+ *     name="company",
+ *     uniqueConstraints={
+ *         @ORM\UniqueConstraint(
+ *             name="company_cost_center_uindex",
+ *             columns={"cost_center"}
+ *        )
+ *     },
+ *     indexes={
+ *         @ORM\Index(
+ *             name="company_division_manager_id_fk",
+ *             columns={"division_manager_id"}
+ *         )
+ *     }
+ * )
  * @ORM\Entity
  */
 class Company
@@ -17,14 +31,15 @@ class Company
      *
      * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\GeneratedValue(strategy="SEQUENCE")
+     * @ORM\SequenceGenerator(sequenceName="company_id_seq", allocationSize=1, initialValue=1)
      */
     private $id;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=255, nullable=false)
+     * @ORM\Column(name="name", type="string", length=45, nullable=false)
      */
     private $name;
 
@@ -44,8 +59,6 @@ class Company
      * })
      */
     private $divisionManager;
-
-
 
     /**
      * Get id
@@ -136,6 +149,4 @@ class Company
     {
         return $this->getName();
     }
-
-
 }

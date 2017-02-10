@@ -4,7 +4,7 @@ namespace AppBundle\Service;
 
 use AppBundle\Entity\Company;
 use AppBundle\Entity\Employee;
-use AppBundle\Entity\DocumentInterface;
+use AppBundle\Entity\Document;
 
 /**
  * Class DocumentService
@@ -39,12 +39,12 @@ abstract class DocumentService
     }
 
     /**
-     * @param DocumentInterface $entity
+     * @param Document $document
      * @return array
      */
-    public function fillPlaceholders(DocumentInterface $entity)
+    public function fillPlaceholders(Document $document)
     {
-        $this->employee = $entity->getEmployee();
+        $this->employee = $document->getEmployee();
         $this->company = $this->employee->getCompany();
 
         return array();

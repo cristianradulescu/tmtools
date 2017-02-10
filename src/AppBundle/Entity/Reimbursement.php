@@ -7,7 +7,23 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Reimbursement
  *
- * @ORM\Table(name="reimbursement", indexes={@ORM\Index(name="fk_reimbursement_reimbursement_type_idx", columns={"type_id"}), @ORM\Index(name="fk_reimbursement_employee_idx", columns={"employee_id"}), @ORM\Index(name="fk_reimbursement_document_idx", columns={"reimbursement_document_id"})})
+ * @ORM\Table(
+ *     name="reimbursement",
+ *     indexes={
+ *         @ORM\Index(
+ *             name="reimbursement_reimbursement_type_id_fk",
+ *             columns={"type_id"}
+ *         ),
+ *         @ORM\Index(
+ *             name="reimbursement_document_id_fk",
+ *             columns={"document_id"}
+ *         ),
+ *         @ORM\Index(
+ *             name="reimbursement_employee_id_fk",
+ *             columns={"employee_id"}
+ *         )
+ *     }
+ * )
  * @ORM\Entity
  */
 class Reimbursement
@@ -17,19 +33,10 @@ class Reimbursement
      *
      * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\GeneratedValue(strategy="SEQUENCE")
+     * @ORM\SequenceGenerator(sequenceName="reimbursement_id_seq", allocationSize=1, initialValue=1)
      */
     private $id;
-
-    /**
-     * @var \ReimbursementType
-     *
-     * @ORM\ManyToOne(targetEntity="ReimbursementType")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="type_id", referencedColumnName="id")
-     * })
-     */
-    private $type;
 
     /**
      * @var string
@@ -53,6 +60,29 @@ class Reimbursement
     private $value;
 
     /**
+     * @var \ReimbursementType
+     *
+     * @ORM\ManyToOne(targetEntity="ReimbursementType")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="type_id", referencedColumnName="id")
+     * })
+     */
+    private $type;
+
+    /**
+     * @var \Document
+     *
+     * @ORM\ManyToOne(
+     *     targetEntity="Document",
+     *     inversedBy="reimbursements"
+     * )
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="document_id", referencedColumnName="id")
+     * })
+     */
+    private $document;
+
+    /**
      * @var \Employee
      *
      * @ORM\ManyToOne(targetEntity="Employee")
@@ -63,19 +93,6 @@ class Reimbursement
     private $employee;
 
     /**
-     * @var \ReimbursementDocument
-     *
-     * @ORM\ManyToOne(
-     *     targetEntity="ReimbursementDocument",
-     *     inversedBy="reimbursements"
-     * )
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="reimbursement_document_id", referencedColumnName="id")
-     * })
-     */
-    private $reimbursementDocument;
-
-    /**
      * Get id
      *
      * @return integer
@@ -83,30 +100,6 @@ class Reimbursement
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set type
-     *
-     * @param \AppBundle\Entity\ReimbursementType $type
-     *
-     * @return Reimbursement
-     */
-    public function setType(\AppBundle\Entity\ReimbursementType $type = null)
-    {
-        $this->type = $type;
-
-        return $this;
-    }
-
-    /**
-     * Get type
-     *
-     * @return \AppBundle\Entity\ReimbursementType
-     */
-    public function getType()
-    {
-        return $this->type;
     }
 
     /**
@@ -182,6 +175,54 @@ class Reimbursement
     }
 
     /**
+     * Set type
+     *
+     * @param \AppBundle\Entity\ReimbursementType $type
+     *
+     * @return Reimbursement
+     */
+    public function setType(\AppBundle\Entity\ReimbursementType $type = null)
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    /**
+     * Get type
+     *
+     * @return \AppBundle\Entity\ReimbursementType
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * Set document
+     *
+     * @param \AppBundle\Entity\Document $document
+     *
+     * @return Reimbursement
+     */
+    public function setDocument(\AppBundle\Entity\Document $document = null)
+    {
+        $this->document = $document;
+
+        return $this;
+    }
+
+    /**
+     * Get document
+     *
+     * @return \AppBundle\Entity\Document
+     */
+    public function getDocument()
+    {
+        return $this->document;
+    }
+
+    /**
      * Set employee
      *
      * @param \AppBundle\Entity\Employee $employee
@@ -206,41 +247,17 @@ class Reimbursement
     }
 
     /**
-     * Set reimbursementDocument
+     * Get the status via associated document.
      *
-     * @param \AppBundle\Entity\ReimbursementDocument $reimbursementDocument
-     *
-     * @return Reimbursement
-     */
-    public function setReimbursementDocument(\AppBundle\Entity\ReimbursementDocument $reimbursementDocument = null)
-    {
-        $this->reimbursementDocument = $reimbursementDocument;
-
-        return $this;
-    }
-
-    /**
-     * Get reimbursementDocument
-     *
-     * @return \AppBundle\Entity\ReimbursementDocument
-     */
-    public function getReimbursementDocument()
-    {
-        return $this->reimbursementDocument;
-    }
-
-    /**
-     * Get the status via associated reimbursement document.
-     *
-     * If the reimbrusement is not yet associated with a document, will return an empty status.
+     * If the reimbursement is not yet associated with a document, will return an empty status.
      *
      * @return Status
      */
     public function getStatus()
     {
-        return $this->getReimbursementDocument()
-            ? $this->getReimbursementDocument()->getStatus()
-            : new Status();
+        return $this->getDocument()
+            ? $this->getDocument()->getStatus()
+            : new DocumentStatus();
 
     }
 
@@ -249,6 +266,6 @@ class Reimbursement
      */
     public function __toString()
     {
-        return (string)$this->type.' '.$this->number.' / '.$this->date->format('d-M-Y');
+        return (string)$this->getType().' '.$this->getNumber().' / '.$this->getDate()->format('d-M-Y');
     }
 }

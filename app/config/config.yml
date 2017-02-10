@@ -44,7 +44,7 @@ twig:
 # Doctrine Configuration
 doctrine:
     dbal:
-        driver:   pdo_mysql
+        driver:   pdo_pgsql
         host:     "%database_host%"
         port:     "%database_port%"
         dbname:   "%database_name%"
@@ -80,10 +80,10 @@ sonata_admin:
         groups:
             hr:
                 label: HR
+            accounting:
+                label: Accounting
             travel:
                 label: Travel
-            reimbursement:
-                label: Reimbursement
             menu_separator:
                 label: " "
                 on_top: true

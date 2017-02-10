@@ -7,7 +7,15 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * TravelPurpose
  *
- * @ORM\Table(name="travel_purpose", uniqueConstraints={@ORM\UniqueConstraint(name="name_UNIQUE", columns={"name"})})
+ * @ORM\Table(
+ *     name="travel_purpose",
+ *     uniqueConstraints={
+ *         @ORM\UniqueConstraint(
+ *             name="travel_purpose_name_uindex",
+ *             columns={"name"}
+ *         )
+ *     }
+ * )
  * @ORM\Entity
  */
 class TravelPurpose
@@ -17,18 +25,17 @@ class TravelPurpose
      *
      * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\GeneratedValue(strategy="SEQUENCE")
+     * @ORM\SequenceGenerator(sequenceName="travel_purpose_id_seq", allocationSize=1, initialValue=1)
      */
     private $id;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=255, nullable=false)
+     * @ORM\Column(name="name", type="string", length=100, nullable=false)
      */
     private $name;
-
-
 
     /**
      * Get id

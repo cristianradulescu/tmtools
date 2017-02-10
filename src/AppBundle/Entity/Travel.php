@@ -5,19 +5,40 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * TravelDocument
+ * Travel
  *
- * @ORM\Table(name="travel_document", indexes={@ORM\Index(name="fk_travel_document_employee_idx", columns={"employee_id"}), @ORM\Index(name="fk_travel_document_travel_purpose_idx", columns={"purpose_id"}), @ORM\Index(name="fk_travel_document_travel_destination_idx", columns={"destination_id"}), @ORM\Index(name="fk_travel_document_status_idx", columns={"status_id"})})
+ * @ORM\Table(
+ *     name="travel",
+ *     indexes={
+ *         @ORM\Index(
+ *             name="travel_porpose_id_fk",
+ *             columns={"purpose_id"}
+ *         ),
+ *         @ORM\Index(
+ *             name="travel_destination_id_fk",
+ *             columns={"destination_id"}
+ *         ),
+ *         @ORM\Index(
+ *             name="travel_employee_id_fk",
+ *             columns={"employee_id"}
+ *         ),
+ *         @ORM\Index(
+ *             name="travel_document_id_fk",
+ *             columns={"document_id"}
+ *         )
+ *     }
+ * )
  * @ORM\Entity
  */
-class TravelDocument implements DocumentInterface
+class Travel
 {
     /**
      * @var integer
      *
      * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\GeneratedValue(strategy="SEQUENCE")
+     * @ORM\SequenceGenerator(sequenceName="travel_id_seq", allocationSize=1, initialValue=1)
      */
     private $id;
 
@@ -45,13 +66,6 @@ class TravelDocument implements DocumentInterface
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="departure_arrival_time", type="datetime", nullable=false)
-     */
-    private $departureArrivalTime;
-
-    /**
-     * @var \DateTime
-     *
      * @ORM\Column(name="destination_arrival_time", type="datetime", nullable=false)
      */
     private $destinationArrivalTime;
@@ -64,24 +78,21 @@ class TravelDocument implements DocumentInterface
     private $destinationLeaveTime;
 
     /**
-     * @var \Employee
+     * @var \DateTime
      *
-     * @ORM\ManyToOne(targetEntity="Employee")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="employee_id", referencedColumnName="id")
-     * })
+     * @ORM\Column(name="departure_arrival_time", type="datetime", nullable=false)
      */
-    private $employee;
+    private $departureArrivalTime;
 
     /**
-     * @var \Status
+     * @var \TravelPurpose
      *
-     * @ORM\ManyToOne(targetEntity="Status")
+     * @ORM\ManyToOne(targetEntity="TravelPurpose")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="status_id", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="purpose_id", referencedColumnName="id")
      * })
      */
-    private $status;
+    private $purpose;
 
     /**
      * @var \TravelDestination
@@ -94,14 +105,27 @@ class TravelDocument implements DocumentInterface
     private $destination;
 
     /**
-     * @var \TravelPurpose
+     * @var \Employee
      *
-     * @ORM\ManyToOne(targetEntity="TravelPurpose")
+     * @ORM\ManyToOne(targetEntity="Employee")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="purpose_id", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="employee_id", referencedColumnName="id")
      * })
      */
-    private $purpose;
+    private $employee;
+
+    /**
+     * @var \Document
+     *
+     * @ORM\ManyToOne(
+     *     targetEntity="Document",
+     *     inversedBy="travels"
+     * )
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="document_id", referencedColumnName="id")
+     * })
+     */
+    private $document;
 
     /**
      * Get id
@@ -118,7 +142,7 @@ class TravelDocument implements DocumentInterface
      *
      * @param \DateTime $dateStart
      *
-     * @return TravelDocument
+     * @return Travel
      */
     public function setDateStart($dateStart)
     {
@@ -142,7 +166,7 @@ class TravelDocument implements DocumentInterface
      *
      * @param \DateTime $dateEnd
      *
-     * @return TravelDocument
+     * @return Travel
      */
     public function setDateEnd($dateEnd)
     {
@@ -166,7 +190,7 @@ class TravelDocument implements DocumentInterface
      *
      * @param \DateTime $departureLeaveTime
      *
-     * @return TravelDocument
+     * @return Travel
      */
     public function setDepartureLeaveTime($departureLeaveTime)
     {
@@ -186,35 +210,11 @@ class TravelDocument implements DocumentInterface
     }
 
     /**
-     * Set departureArrivalTime
-     *
-     * @param \DateTime $departureArrivalTime
-     *
-     * @return TravelDocument
-     */
-    public function setDepartureArrivalTime($departureArrivalTime)
-    {
-        $this->departureArrivalTime = $departureArrivalTime;
-
-        return $this;
-    }
-
-    /**
-     * Get departureArrivalTime
-     *
-     * @return \DateTime
-     */
-    public function getDepartureArrivalTime()
-    {
-        return $this->departureArrivalTime;
-    }
-
-    /**
      * Set destinationArrivalTime
      *
      * @param \DateTime $destinationArrivalTime
      *
-     * @return TravelDocument
+     * @return Travel
      */
     public function setDestinationArrivalTime($destinationArrivalTime)
     {
@@ -238,7 +238,7 @@ class TravelDocument implements DocumentInterface
      *
      * @param \DateTime $destinationLeaveTime
      *
-     * @return TravelDocument
+     * @return Travel
      */
     public function setDestinationLeaveTime($destinationLeaveTime)
     {
@@ -258,75 +258,27 @@ class TravelDocument implements DocumentInterface
     }
 
     /**
-     * Set employee
+     * Set departureArrivalTime
      *
-     * @param \AppBundle\Entity\Employee $employee
+     * @param \DateTime $departureArrivalTime
      *
-     * @return TravelDocument
+     * @return Travel
      */
-    public function setEmployee(\AppBundle\Entity\Employee $employee = null)
+    public function setDepartureArrivalTime($departureArrivalTime)
     {
-        $this->employee = $employee;
+        $this->departureArrivalTime = $departureArrivalTime;
 
         return $this;
     }
 
     /**
-     * Get employee
+     * Get departureArrivalTime
      *
-     * @return \AppBundle\Entity\Employee
+     * @return \DateTime
      */
-    public function getEmployee()
+    public function getDepartureArrivalTime()
     {
-        return $this->employee;
-    }
-
-    /**
-     * Set status
-     *
-     * @param \AppBundle\Entity\Status $status
-     *
-     * @return TravelDocument
-     */
-    public function setStatus(\AppBundle\Entity\Status $status = null)
-    {
-        $this->status = $status;
-
-        return $this;
-    }
-
-    /**
-     * Get status
-     *
-     * @return \AppBundle\Entity\Status
-     */
-    public function getStatus()
-    {
-        return $this->status;
-    }
-
-    /**
-     * Set destination
-     *
-     * @param \AppBundle\Entity\TravelDestination $destination
-     *
-     * @return TravelDocument
-     */
-    public function setDestination(\AppBundle\Entity\TravelDestination $destination = null)
-    {
-        $this->destination = $destination;
-
-        return $this;
-    }
-
-    /**
-     * Get destination
-     *
-     * @return \AppBundle\Entity\TravelDestination
-     */
-    public function getDestination()
-    {
-        return $this->destination;
+        return $this->departureArrivalTime;
     }
 
     /**
@@ -334,7 +286,7 @@ class TravelDocument implements DocumentInterface
      *
      * @param \AppBundle\Entity\TravelPurpose $purpose
      *
-     * @return TravelDocument
+     * @return Travel
      */
     public function setPurpose(\AppBundle\Entity\TravelPurpose $purpose = null)
     {
@@ -354,12 +306,82 @@ class TravelDocument implements DocumentInterface
     }
 
     /**
+     * Set destination
+     *
+     * @param \AppBundle\Entity\TravelDestination $destination
+     *
+     * @return Travel
+     */
+    public function setDestination(\AppBundle\Entity\TravelDestination $destination = null)
+    {
+        $this->destination = $destination;
+
+        return $this;
+    }
+
+    /**
+     * Get destination
+     *
+     * @return \AppBundle\Entity\TravelDestination
+     */
+    public function getDestination()
+    {
+        return $this->destination;
+    }
+
+    /**
+     * Set employee
+     *
+     * @param \AppBundle\Entity\Employee $employee
+     *
+     * @return Travel
+     */
+    public function setEmployee(\AppBundle\Entity\Employee $employee = null)
+    {
+        $this->employee = $employee;
+
+        return $this;
+    }
+
+    /**
+     * Get employee
+     *
+     * @return \AppBundle\Entity\Employee
+     */
+    public function getEmployee()
+    {
+        return $this->employee;
+    }
+
+    /**
+     * Set document
+     *
+     * @param \AppBundle\Entity\Document $document
+     *
+     * @return Travel
+     */
+    public function setDocument(\AppBundle\Entity\Document $document = null)
+    {
+        $this->document = $document;
+
+        return $this;
+    }
+
+    /**
+     * Get document
+     *
+     * @return \AppBundle\Entity\Document
+     */
+    public function getDocument()
+    {
+        return $this->document;
+    }
+
+    /**
      * @return string
      */
     public function __toString()
     {
-        return $this->getEmployee().' - '.$this->getPurpose()
-            .' ('.$this->getDateStart()->format('Y-m-d')
-            .' / '.$this->getDateEnd()->format('Y-m-d').')';
+        return $this->getEmployee()->getFullName().' / '.$this->getPurpose().'@'.$this->getDestination();
     }
 }

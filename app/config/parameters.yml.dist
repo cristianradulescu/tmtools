@@ -2,7 +2,7 @@
 # Set parameters here that may be different on each deployment target of the app, e.g. development, staging, production.
 # http://symfony.com/doc/current/best_practices/configuration.html#infrastructure-related-configuration
 parameters:
-    database_host:     mysql
+    database_host:     postgres
     database_port:     ~
     database_name:     tmtools
     database_user:     tmtoolsuser
@@ -17,5 +17,12 @@ parameters:
     secret:            123kmde94jfsdlfk3r9fs;dfk@(@*YGE&G!!@#!#EDqWE
 
     travel_allowance: 32.5
+
+    # Travis CI
+    travis_database_host: "127.0.0.1"
+    travis_database_port: "3306"
+    travis_database_dbname: "tmtools"
+    travis_database_user: "travis"
+    travis_database_password: ""
 
 

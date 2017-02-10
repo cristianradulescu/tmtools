@@ -1,13 +1,14 @@
 FROM php:fpm
 
 RUN apt-get update \
-  && apt-get install -y zlib1g-dev libicu-dev g++ \
+  && apt-get install -y zlib1g-dev libicu-dev g++ libpq-dev \
   && docker-php-ext-configure intl \
   && docker-php-ext-install intl \
   && docker-php-ext-configure pcntl \
   && docker-php-ext-install pcntl \
   && docker-php-ext-install opcache \
   && docker-php-ext-install pdo_mysql \
+  && docker-php-ext-install pdo_pgsql \
   && pecl install xdebug \
   && docker-php-ext-enable xdebug
 

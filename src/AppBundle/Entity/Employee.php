@@ -7,7 +7,33 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Employee
  *
- * @ORM\Table(name="employee", uniqueConstraints={@ORM\UniqueConstraint(name="username_UNIQUE", columns={"username"}), @ORM\UniqueConstraint(name="email_address_UNIQUE", columns={"email_address"}), @ORM\UniqueConstraint(name="personal_numeric_code_UNIQUE", columns={"personal_numeric_code"}), @ORM\UniqueConstraint(name="identity_card_number_UNIQUE", columns={"identity_card_number"})}, indexes={@ORM\Index(name="fk_employee_job_title_idx", columns={"job_title_id"}), @ORM\Index(name="fk_employee_employee_idx", columns={"direct_manager_id"}), @ORM\Index(name="fk_employee_team_idx", columns={"team_id"}), @ORM\Index(name="fk_employee_company_idx", columns={"company_id"})})
+ * @ORM\Table(
+ *     name="employee",
+ *     uniqueConstraints={
+ *         @ORM\UniqueConstraint(
+ *             name="employee_personal_numeric_code_uindex",
+ *             columns={"personal_numeric_code"}
+ *         ),
+ *         @ORM\UniqueConstraint(
+ *             name="employee_identity_card_number_uindex",
+ *             columns={"identity_card_number"}
+ *         )
+ *      },
+ *     indexes={
+ *         @ORM\Index(
+ *             name="employee_employee_job_title_id_fk",
+ *             columns={"job_title_id"}
+ *         ),
+ *         @ORM\Index(
+ *             name="employee_employee_id_fk",
+ *             columns={"division_manager_id"}
+ *         ),
+ *         @ORM\Index(
+ *             name="employee_company_id_fk",
+ *             columns={"company_id"}
+ *         )
+ *     }
+ * )
  * @ORM\Entity
  */
 class Employee
@@ -17,7 +43,8 @@ class Employee
      *
      * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\GeneratedValue(strategy="SEQUENCE")
+     * @ORM\SequenceGenerator(sequenceName="employee_id_seq", allocationSize=1, initialValue=1)
      */
     private $id;
 
@@ -38,16 +65,9 @@ class Employee
     /**
      * @var string
      *
-     * @ORM\Column(name="username", type="string", length=255, nullable=false)
+     * @ORM\Column(name="username", type="string", length=45, nullable=true)
      */
     private $username;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="email_address", type="string", length=255, nullable=false)
-     */
-    private $emailAddress;
 
     /**
      * @var \DateTime
@@ -59,36 +79,16 @@ class Employee
     /**
      * @var integer
      *
-     * @ORM\Column(name="personal_numeric_code", type="bigint", nullable=true)
+     * @ORM\Column(name="personal_numeric_code", type="bigint", nullable=false)
      */
     private $personalNumericCode;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="identity_card_number", type="string", length=45, nullable=true)
+     * @ORM\Column(name="identity_card_number", type="string", length=9, nullable=false)
      */
     private $identityCardNumber;
-
-    /**
-     * @var \Company
-     *
-     * @ORM\ManyToOne(targetEntity="Company")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="company_id", referencedColumnName="id")
-     * })
-     */
-    private $company;
-
-    /**
-     * @var \Employee
-     *
-     * @ORM\ManyToOne(targetEntity="Employee")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="direct_manager_id", referencedColumnName="id")
-     * })
-     */
-    private $directManager;
 
     /**
      * @var \EmployeeJobTitle
@@ -101,16 +101,24 @@ class Employee
     private $jobTitle;
 
     /**
-     * @var \EmployeeTeam
+     * @var \Employee
      *
-     * @ORM\ManyToOne(targetEntity="EmployeeTeam")
+     * @ORM\ManyToOne(targetEntity="Employee")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="team_id", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="division_manager_id", referencedColumnName="id")
      * })
      */
-    private $team;
+    private $divisionManager;
 
-
+    /**
+     * @var \Company
+     *
+     * @ORM\ManyToOne(targetEntity="Company")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="company_id", referencedColumnName="id")
+     * })
+     */
+    private $company;
 
     /**
      * Get id
@@ -195,30 +203,6 @@ class Employee
     }
 
     /**
-     * Set emailAddress
-     *
-     * @param string $emailAddress
-     *
-     * @return Employee
-     */
-    public function setEmailAddress($emailAddress)
-    {
-        $this->emailAddress = $emailAddress;
-
-        return $this;
-    }
-
-    /**
-     * Get emailAddress
-     *
-     * @return string
-     */
-    public function getEmailAddress()
-    {
-        return $this->emailAddress;
-    }
-
-    /**
      * Set birthday
      *
      * @param \DateTime $birthday
@@ -291,54 +275,6 @@ class Employee
     }
 
     /**
-     * Set company
-     *
-     * @param \AppBundle\Entity\Company $company
-     *
-     * @return Employee
-     */
-    public function setCompany(\AppBundle\Entity\Company $company = null)
-    {
-        $this->company = $company;
-
-        return $this;
-    }
-
-    /**
-     * Get company
-     *
-     * @return \AppBundle\Entity\Company
-     */
-    public function getCompany()
-    {
-        return $this->company;
-    }
-
-    /**
-     * Set directManager
-     *
-     * @param \AppBundle\Entity\Employee $directManager
-     *
-     * @return Employee
-     */
-    public function setDirectManager(\AppBundle\Entity\Employee $directManager = null)
-    {
-        $this->directManager = $directManager;
-
-        return $this;
-    }
-
-    /**
-     * Get directManager
-     *
-     * @return \AppBundle\Entity\Employee
-     */
-    public function getDirectManager()
-    {
-        return $this->directManager;
-    }
-
-    /**
      * Set jobTitle
      *
      * @param \AppBundle\Entity\EmployeeJobTitle $jobTitle
@@ -363,27 +299,51 @@ class Employee
     }
 
     /**
-     * Set team
+     * Set divisionManager
      *
-     * @param \AppBundle\Entity\EmployeeTeam $team
+     * @param \AppBundle\Entity\Employee $divisionManager
      *
      * @return Employee
      */
-    public function setTeam(\AppBundle\Entity\EmployeeTeam $team = null)
+    public function setDivisionManager(\AppBundle\Entity\Employee $divisionManager = null)
     {
-        $this->team = $team;
+        $this->divisionManager = $divisionManager;
 
         return $this;
     }
 
     /**
-     * Get team
+     * Get divisionManager
      *
-     * @return \AppBundle\Entity\EmployeeTeam
+     * @return \AppBundle\Entity\Employee
      */
-    public function getTeam()
+    public function getDivisionManager()
     {
-        return $this->team;
+        return $this->divisionManager;
+    }
+
+    /**
+     * Set company
+     *
+     * @param \AppBundle\Entity\Company $company
+     *
+     * @return Employee
+     */
+    public function setCompany(\AppBundle\Entity\Company $company = null)
+    {
+        $this->company = $company;
+
+        return $this;
+    }
+
+    /**
+     * Get company
+     *
+     * @return \AppBundle\Entity\Company
+     */
+    public function getCompany()
+    {
+        return $this->company;
     }
 
     /**

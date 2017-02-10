@@ -26,11 +26,23 @@
             <argument>AppBundle\Entity\Company</argument>
             <argument>SonataAdminBundle:CRUD</argument>
         </service>
-        <service id="app.admin.travel_document" class="AppBundle\Admin\TravelDocumentAdmin">
-            <tag name="sonata.admin" manager_type="orm" group="travel" label="Documents"/>
+        <service id="app.admin.document" class="AppBundle\Admin\DocumentAdmin">
+            <tag name="sonata.admin" manager_type="orm" group="accounting" label="Documents"/>
             <argument>null</argument>
-            <argument>AppBundle\Entity\TravelDocument</argument>
-            <argument>AppBundle:TravelDocument</argument>
+            <argument>AppBundle\Entity\Document</argument>
+            <argument>AppBundle:Document</argument>
+        </service>
+        <service id="app.admin.reimbursement" class="AppBundle\Admin\ReimbursementAdmin">
+            <tag name="sonata.admin" manager_type="orm" group="accounting" label="Reimbursements"/>
+            <argument>null</argument>
+            <argument>AppBundle\Entity\Reimbursement</argument>
+            <argument>SonataAdminBundle:CRUD</argument>
+        </service>
+        <service id="app.admin.travel" class="AppBundle\Admin\TravelAdmin">
+            <tag name="sonata.admin" manager_type="orm" group="accounting" label="Travels"/>
+            <argument>null</argument>
+            <argument>AppBundle\Entity\Travel</argument>
+            <argument>SonataAdminBundle:CRUD</argument>
         </service>
         <service id="app.admin.travel_destination" class="AppBundle\Admin\TravelDestinationAdmin">
             <tag name="sonata.admin" manager_type="orm" group="travel" label="Destinations"/>
@@ -42,18 +54,6 @@
             <tag name="sonata.admin" manager_type="orm" group="travel" label="Purposes"/>
             <argument>null</argument>
             <argument>AppBundle\Entity\TravelPurpose</argument>
-            <argument>SonataAdminBundle:CRUD</argument>
-        </service>
-        <service id="app.admin.reimbursement_document" class="AppBundle\Admin\ReimbursementDocumentAdmin">
-            <tag name="sonata.admin" manager_type="orm" group="reimbursement" label="Documents"/>
-            <argument>null</argument>
-            <argument>AppBundle\Entity\ReimbursementDocument</argument>
-            <argument>AppBundle:ReimbursementDocument</argument>
-        </service>
-        <service id="app.admin.reimbursement" class="AppBundle\Admin\ReimbursementAdmin">
-            <tag name="sonata.admin" manager_type="orm" group="reimbursement" label="Reimbursements"/>
-            <argument>null</argument>
-            <argument>AppBundle\Entity\Reimbursement</argument>
             <argument>SonataAdminBundle:CRUD</argument>
         </service>
         <service id="app.admin.user" class="AppBundle\Admin\UserAdmin">

@@ -18,8 +18,8 @@ swiftmailer:
 # Doctrine Configuration for Travis CI
 doctrine:
     dbal:
-        host:     "127.0.0.1"
-        port:     "%database_port%"
-        dbname:   "%database_name%"
-        user:     "travis"
-        password: ""
+        host:     "%travis_database_host%"
+        port:     "%travis_database_port%"
+        dbname:   "%travis_database_name%"
+        user:     "%travis_database_user%"
+        password: "%travis_database_password%"

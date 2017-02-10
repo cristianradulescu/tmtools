@@ -5,26 +5,35 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Status
+ * DocumentStatus
  *
- * @ORM\Table(name="status")
+ * @ORM\Table(
+ *     name="document_status",
+ *     uniqueConstraints={
+ *         @ORM\UniqueConstraint(
+ *             name="document_status_name_uindex",
+ *             columns={"name"}
+ *         )
+ *     }
+ * )
  * @ORM\Entity
  */
-class Status
+class DocumentStatus
 {
     /**
-     * Place status ids in constants for easy access.
+     * Constants for type ids
      */
-    const STATUS_ID_NEW = 1;
-    const STATUS_ID_PENDING = 2;
-    const STATUS_ID_COMPLETED = 3;
+    const STATUS_NEW = 1;
+    const STATUS_PENDING = 2;
+    const STATUS_COMPLETED = 3;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\GeneratedValue(strategy="SEQUENCE")
+     * @ORM\SequenceGenerator(sequenceName="document_status_id_seq", allocationSize=1, initialValue=1)
      */
     private $id;
 
@@ -34,8 +43,6 @@ class Status
      * @ORM\Column(name="name", type="string", length=45, nullable=false)
      */
     private $name;
-
-
 
     /**
      * Get id
@@ -52,7 +59,7 @@ class Status
      *
      * @param string $name
      *
-     * @return Status
+     * @return DocumentStatus
      */
     public function setName($name)
     {
