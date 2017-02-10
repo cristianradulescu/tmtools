@@ -20,8 +20,8 @@ parameters:
 
     # Travis CI
     travis_database_host: "127.0.0.1"
-    travis_database_port: "3306"
-    travis_database_dbname: "tmtools"
+    travis_database_port: ""
+    travis_database_name: "tmtools"
     travis_database_user: "travis"
     travis_database_password: ""
 

@@ -5,7 +5,7 @@
 -- Dumped from database version 9.6.1
 -- Dumped by pg_dump version 9.6.1
 
--- Started on 2017-02-09 15:23:11 UTC
+-- Started on 2017-02-10 14:07:18 UTC
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -25,7 +25,7 @@ CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
 
 
 --
--- TOC entry 2283 (class 0 OID 0)
+-- TOC entry 2285 (class 0 OID 0)
 -- Dependencies: 1
 -- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
 --
@@ -70,7 +70,7 @@ CREATE SEQUENCE company_id_seq
 ALTER TABLE company_id_seq OWNER TO tmtoolsuser;
 
 --
--- TOC entry 2284 (class 0 OID 0)
+-- TOC entry 2286 (class 0 OID 0)
 -- Dependencies: 190
 -- Name: company_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: tmtoolsuser
 --
@@ -111,7 +111,7 @@ CREATE SEQUENCE document_id_seq
 ALTER TABLE document_id_seq OWNER TO tmtoolsuser;
 
 --
--- TOC entry 2285 (class 0 OID 0)
+-- TOC entry 2287 (class 0 OID 0)
 -- Dependencies: 188
 -- Name: document_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: tmtoolsuser
 --
@@ -148,7 +148,7 @@ CREATE SEQUENCE document_status_id_seq
 ALTER TABLE document_status_id_seq OWNER TO tmtoolsuser;
 
 --
--- TOC entry 2286 (class 0 OID 0)
+-- TOC entry 2288 (class 0 OID 0)
 -- Dependencies: 193
 -- Name: document_status_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: tmtoolsuser
 --
@@ -163,7 +163,8 @@ ALTER SEQUENCE document_status_id_seq OWNED BY document_status.id;
 
 CREATE TABLE document_type (
     id integer NOT NULL,
-    name character varying(45) NOT NULL
+    name character varying(45) NOT NULL,
+    template character varying(200)
 );
 
 
@@ -185,7 +186,7 @@ CREATE SEQUENCE document_type_id_seq
 ALTER TABLE document_type_id_seq OWNER TO tmtoolsuser;
 
 --
--- TOC entry 2287 (class 0 OID 0)
+-- TOC entry 2289 (class 0 OID 0)
 -- Dependencies: 195
 -- Name: document_type_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: tmtoolsuser
 --
@@ -230,7 +231,7 @@ CREATE SEQUENCE employee_id_seq
 ALTER TABLE employee_id_seq OWNER TO tmtoolsuser;
 
 --
--- TOC entry 2288 (class 0 OID 0)
+-- TOC entry 2290 (class 0 OID 0)
 -- Dependencies: 191
 -- Name: employee_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: tmtoolsuser
 --
@@ -267,7 +268,7 @@ CREATE SEQUENCE employee_job_title_id_seq
 ALTER TABLE employee_job_title_id_seq OWNER TO tmtoolsuser;
 
 --
--- TOC entry 2289 (class 0 OID 0)
+-- TOC entry 2291 (class 0 OID 0)
 -- Dependencies: 192
 -- Name: employee_job_title_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: tmtoolsuser
 --
@@ -299,7 +300,7 @@ CREATE TABLE fos_user (
 ALTER TABLE fos_user OWNER TO tmtoolsuser;
 
 --
--- TOC entry 2290 (class 0 OID 0)
+-- TOC entry 2292 (class 0 OID 0)
 -- Dependencies: 207
 -- Name: COLUMN fos_user.roles; Type: COMMENT; Schema: public; Owner: tmtoolsuser
 --
@@ -356,7 +357,7 @@ CREATE SEQUENCE reimbursement_id_seq
 ALTER TABLE reimbursement_id_seq OWNER TO tmtoolsuser;
 
 --
--- TOC entry 2291 (class 0 OID 0)
+-- TOC entry 2293 (class 0 OID 0)
 -- Dependencies: 197
 -- Name: reimbursement_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: tmtoolsuser
 --
@@ -393,7 +394,7 @@ CREATE SEQUENCE reimbursement_type_id_seq
 ALTER TABLE reimbursement_type_id_seq OWNER TO tmtoolsuser;
 
 --
--- TOC entry 2292 (class 0 OID 0)
+-- TOC entry 2294 (class 0 OID 0)
 -- Dependencies: 199
 -- Name: reimbursement_type_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: tmtoolsuser
 --
@@ -416,7 +417,8 @@ CREATE TABLE travel (
     departure_leave_time timestamp without time zone NOT NULL,
     destination_arrival_time timestamp without time zone NOT NULL,
     destination_leave_time timestamp without time zone NOT NULL,
-    departure_arrival_time timestamp without time zone NOT NULL
+    departure_arrival_time timestamp without time zone NOT NULL,
+    document_id integer
 );
 
 
@@ -451,7 +453,7 @@ CREATE SEQUENCE travel_destination_id_seq
 ALTER TABLE travel_destination_id_seq OWNER TO tmtoolsuser;
 
 --
--- TOC entry 2293 (class 0 OID 0)
+-- TOC entry 2295 (class 0 OID 0)
 -- Dependencies: 203
 -- Name: travel_destination_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: tmtoolsuser
 --
@@ -475,7 +477,7 @@ CREATE SEQUENCE travel_id_seq
 ALTER TABLE travel_id_seq OWNER TO tmtoolsuser;
 
 --
--- TOC entry 2294 (class 0 OID 0)
+-- TOC entry 2296 (class 0 OID 0)
 -- Dependencies: 201
 -- Name: travel_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: tmtoolsuser
 --
@@ -512,7 +514,7 @@ CREATE SEQUENCE travel_purpose_id_seq
 ALTER TABLE travel_purpose_id_seq OWNER TO tmtoolsuser;
 
 --
--- TOC entry 2295 (class 0 OID 0)
+-- TOC entry 2297 (class 0 OID 0)
 -- Dependencies: 205
 -- Name: travel_purpose_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: tmtoolsuser
 --
@@ -601,7 +603,7 @@ ALTER TABLE ONLY travel_purpose ALTER COLUMN id SET DEFAULT nextval('travel_purp
 
 
 --
--- TOC entry 2253 (class 0 OID 16386)
+-- TOC entry 2255 (class 0 OID 16386)
 -- Dependencies: 185
 -- Data for Name: company; Type: TABLE DATA; Schema: public; Owner: tmtoolsuser
 --
@@ -610,7 +612,7 @@ INSERT INTO company (id, name, cost_center, division_manager_id) VALUES (2, 'eMA
 
 
 --
--- TOC entry 2296 (class 0 OID 0)
+-- TOC entry 2298 (class 0 OID 0)
 -- Dependencies: 190
 -- Name: company_id_seq; Type: SEQUENCE SET; Schema: public; Owner: tmtoolsuser
 --
@@ -619,24 +621,26 @@ SELECT pg_catalog.setval('company_id_seq', 2, true);
 
 
 --
--- TOC entry 2257 (class 0 OID 16429)
+-- TOC entry 2259 (class 0 OID 16429)
 -- Dependencies: 189
 -- Data for Name: document; Type: TABLE DATA; Schema: public; Owner: tmtoolsuser
 --
 
+INSERT INTO document (id, type_id, status_id, employee_id) VALUES (1, 1, 1, 3);
+INSERT INTO document (id, type_id, status_id, employee_id) VALUES (2, 2, 1, 3);
 
 
 --
--- TOC entry 2297 (class 0 OID 0)
+-- TOC entry 2299 (class 0 OID 0)
 -- Dependencies: 188
 -- Name: document_id_seq; Type: SEQUENCE SET; Schema: public; Owner: tmtoolsuser
 --
 
-SELECT pg_catalog.setval('document_id_seq', 1, false);
+SELECT pg_catalog.setval('document_id_seq', 2, true);
 
 
 --
--- TOC entry 2262 (class 0 OID 16450)
+-- TOC entry 2264 (class 0 OID 16450)
 -- Dependencies: 194
 -- Data for Name: document_status; Type: TABLE DATA; Schema: public; Owner: tmtoolsuser
 --
@@ -647,7 +651,7 @@ INSERT INTO document_status (id, name) VALUES (3, 'Completed');
 
 
 --
--- TOC entry 2298 (class 0 OID 0)
+-- TOC entry 2300 (class 0 OID 0)
 -- Dependencies: 193
 -- Name: document_status_id_seq; Type: SEQUENCE SET; Schema: public; Owner: tmtoolsuser
 --
@@ -656,18 +660,18 @@ SELECT pg_catalog.setval('document_status_id_seq', 3, true);
 
 
 --
--- TOC entry 2264 (class 0 OID 16484)
+-- TOC entry 2266 (class 0 OID 16484)
 -- Dependencies: 196
 -- Data for Name: document_type; Type: TABLE DATA; Schema: public; Owner: tmtoolsuser
 --
 
-INSERT INTO document_type (id, name) VALUES (1, 'Travel');
-INSERT INTO document_type (id, name) VALUES (2, 'Reimbursement');
-INSERT INTO document_type (id, name) VALUES (3, 'Service aquisition');
+INSERT INTO document_type (id, name, template) VALUES (2, 'Reimbursement', 'reimbursement_document.svg');
+INSERT INTO document_type (id, name, template) VALUES (3, 'Service aquisition', 'service_aquisition.svg');
+INSERT INTO document_type (id, name, template) VALUES (1, 'Travel', 'travel_document.svg');
 
 
 --
--- TOC entry 2299 (class 0 OID 0)
+-- TOC entry 2301 (class 0 OID 0)
 -- Dependencies: 195
 -- Name: document_type_id_seq; Type: SEQUENCE SET; Schema: public; Owner: tmtoolsuser
 --
@@ -676,7 +680,7 @@ SELECT pg_catalog.setval('document_type_id_seq', 3, true);
 
 
 --
--- TOC entry 2254 (class 0 OID 16389)
+-- TOC entry 2256 (class 0 OID 16389)
 -- Dependencies: 186
 -- Data for Name: employee; Type: TABLE DATA; Schema: public; Owner: tmtoolsuser
 --
@@ -685,7 +689,7 @@ INSERT INTO employee (id, first_name, last_name, username, birthday, personal_nu
 
 
 --
--- TOC entry 2300 (class 0 OID 0)
+-- TOC entry 2302 (class 0 OID 0)
 -- Dependencies: 191
 -- Name: employee_id_seq; Type: SEQUENCE SET; Schema: public; Owner: tmtoolsuser
 --
@@ -694,7 +698,7 @@ SELECT pg_catalog.setval('employee_id_seq', 3, true);
 
 
 --
--- TOC entry 2255 (class 0 OID 16392)
+-- TOC entry 2257 (class 0 OID 16392)
 -- Dependencies: 187
 -- Data for Name: employee_job_title; Type: TABLE DATA; Schema: public; Owner: tmtoolsuser
 --
@@ -704,7 +708,7 @@ INSERT INTO employee_job_title (id, name) VALUES (2, 'PHP Developer');
 
 
 --
--- TOC entry 2301 (class 0 OID 0)
+-- TOC entry 2303 (class 0 OID 0)
 -- Dependencies: 192
 -- Name: employee_job_title_id_seq; Type: SEQUENCE SET; Schema: public; Owner: tmtoolsuser
 --
@@ -713,7 +717,7 @@ SELECT pg_catalog.setval('employee_job_title_id_seq', 2, true);
 
 
 --
--- TOC entry 2275 (class 0 OID 16671)
+-- TOC entry 2277 (class 0 OID 16671)
 -- Dependencies: 207
 -- Data for Name: fos_user; Type: TABLE DATA; Schema: public; Owner: tmtoolsuser
 --
@@ -722,7 +726,7 @@ INSERT INTO fos_user (id, username, username_canonical, email, email_canonical, 
 
 
 --
--- TOC entry 2302 (class 0 OID 0)
+-- TOC entry 2304 (class 0 OID 0)
 -- Dependencies: 208
 -- Name: fos_user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: tmtoolsuser
 --
@@ -731,24 +735,25 @@ SELECT pg_catalog.setval('fos_user_id_seq', 1, false);
 
 
 --
--- TOC entry 2266 (class 0 OID 16531)
+-- TOC entry 2268 (class 0 OID 16531)
 -- Dependencies: 198
 -- Data for Name: reimbursement; Type: TABLE DATA; Schema: public; Owner: tmtoolsuser
 --
 
+INSERT INTO reimbursement (id, type_id, number, date, value, employee_id, document_id) VALUES (1, 1, '111', '2017-02-08', 65.00, 3, 2);
 
 
 --
--- TOC entry 2303 (class 0 OID 0)
+-- TOC entry 2305 (class 0 OID 0)
 -- Dependencies: 197
 -- Name: reimbursement_id_seq; Type: SEQUENCE SET; Schema: public; Owner: tmtoolsuser
 --
 
-SELECT pg_catalog.setval('reimbursement_id_seq', 1, false);
+SELECT pg_catalog.setval('reimbursement_id_seq', 1, true);
 
 
 --
--- TOC entry 2268 (class 0 OID 16540)
+-- TOC entry 2270 (class 0 OID 16540)
 -- Dependencies: 200
 -- Data for Name: reimbursement_type; Type: TABLE DATA; Schema: public; Owner: tmtoolsuser
 --
@@ -757,7 +762,7 @@ INSERT INTO reimbursement_type (id, name) VALUES (1, 'Train ticket');
 
 
 --
--- TOC entry 2304 (class 0 OID 0)
+-- TOC entry 2306 (class 0 OID 0)
 -- Dependencies: 199
 -- Name: reimbursement_type_id_seq; Type: SEQUENCE SET; Schema: public; Owner: tmtoolsuser
 --
@@ -766,15 +771,16 @@ SELECT pg_catalog.setval('reimbursement_type_id_seq', 1, true);
 
 
 --
--- TOC entry 2270 (class 0 OID 16558)
+-- TOC entry 2272 (class 0 OID 16558)
 -- Dependencies: 202
 -- Data for Name: travel; Type: TABLE DATA; Schema: public; Owner: tmtoolsuser
 --
 
+INSERT INTO travel (id, purpose_id, destination_id, employee_id, date_start, date_end, departure_leave_time, destination_arrival_time, destination_leave_time, departure_arrival_time, document_id) VALUES (1, 1, 1, 3, '2017-02-01', '2017-02-03', '2017-02-01 06:00:00', '2017-02-01 09:00:00', '2017-02-03 18:00:00', '2017-02-03 21:30:00', 1);
 
 
 --
--- TOC entry 2272 (class 0 OID 16566)
+-- TOC entry 2274 (class 0 OID 16566)
 -- Dependencies: 204
 -- Data for Name: travel_destination; Type: TABLE DATA; Schema: public; Owner: tmtoolsuser
 --
@@ -783,7 +789,7 @@ INSERT INTO travel_destination (id, name) VALUES (1, 'Bucharest');
 
 
 --
--- TOC entry 2305 (class 0 OID 0)
+-- TOC entry 2307 (class 0 OID 0)
 -- Dependencies: 203
 -- Name: travel_destination_id_seq; Type: SEQUENCE SET; Schema: public; Owner: tmtoolsuser
 --
@@ -792,16 +798,16 @@ SELECT pg_catalog.setval('travel_destination_id_seq', 1, true);
 
 
 --
--- TOC entry 2306 (class 0 OID 0)
+-- TOC entry 2308 (class 0 OID 0)
 -- Dependencies: 201
 -- Name: travel_id_seq; Type: SEQUENCE SET; Schema: public; Owner: tmtoolsuser
 --
 
-SELECT pg_catalog.setval('travel_id_seq', 1, false);
+SELECT pg_catalog.setval('travel_id_seq', 1, true);
 
 
 --
--- TOC entry 2274 (class 0 OID 16574)
+-- TOC entry 2276 (class 0 OID 16574)
 -- Dependencies: 206
 -- Data for Name: travel_purpose; Type: TABLE DATA; Schema: public; Owner: tmtoolsuser
 --
@@ -810,7 +816,7 @@ INSERT INTO travel_purpose (id, name) VALUES (1, 'Meeting');
 
 
 --
--- TOC entry 2307 (class 0 OID 0)
+-- TOC entry 2309 (class 0 OID 0)
 -- Dependencies: 205
 -- Name: travel_purpose_id_seq; Type: SEQUENCE SET; Schema: public; Owner: tmtoolsuser
 --
@@ -828,7 +834,7 @@ ALTER TABLE ONLY company
 
 
 --
--- TOC entry 2102 (class 2606 OID 16434)
+-- TOC entry 2097 (class 2606 OID 16434)
 -- Name: document document_pkey; Type: CONSTRAINT; Schema: public; Owner: tmtoolsuser
 --
 
@@ -837,7 +843,7 @@ ALTER TABLE ONLY document
 
 
 --
--- TOC entry 2105 (class 2606 OID 16455)
+-- TOC entry 2100 (class 2606 OID 16455)
 -- Name: document_status document_status_pkey; Type: CONSTRAINT; Schema: public; Owner: tmtoolsuser
 --
 
@@ -846,7 +852,7 @@ ALTER TABLE ONLY document_status
 
 
 --
--- TOC entry 2108 (class 2606 OID 16490)
+-- TOC entry 2103 (class 2606 OID 16490)
 -- Name: document_type document_type_pkey; Type: CONSTRAINT; Schema: public; Owner: tmtoolsuser
 --
 
@@ -873,16 +879,7 @@ ALTER TABLE ONLY fos_user
 
 
 --
--- TOC entry 2094 (class 2606 OID 16400)
--- Name: employee identity_card_number_UNIQUE; Type: CONSTRAINT; Schema: public; Owner: tmtoolsuser
---
-
-ALTER TABLE ONLY employee
-    ADD CONSTRAINT "identity_card_number_UNIQUE" UNIQUE (identity_card_number);
-
-
---
--- TOC entry 2098 (class 2606 OID 16402)
+-- TOC entry 2095 (class 2606 OID 16402)
 -- Name: employee_job_title job_title_pkey; Type: CONSTRAINT; Schema: public; Owner: tmtoolsuser
 --
 
@@ -891,25 +888,7 @@ ALTER TABLE ONLY employee_job_title
 
 
 --
--- TOC entry 2100 (class 2606 OID 16648)
--- Name: employee_job_title name_UNIQUE; Type: CONSTRAINT; Schema: public; Owner: tmtoolsuser
---
-
-ALTER TABLE ONLY employee_job_title
-    ADD CONSTRAINT "name_UNIQUE" UNIQUE (name);
-
-
---
--- TOC entry 2096 (class 2606 OID 16406)
--- Name: employee personal_numeric_code_UNIQUE; Type: CONSTRAINT; Schema: public; Owner: tmtoolsuser
---
-
-ALTER TABLE ONLY employee
-    ADD CONSTRAINT "personal_numeric_code_UNIQUE" UNIQUE (personal_numeric_code);
-
-
---
--- TOC entry 2110 (class 2606 OID 16536)
+-- TOC entry 2105 (class 2606 OID 16536)
 -- Name: reimbursement reimbursement_pkey; Type: CONSTRAINT; Schema: public; Owner: tmtoolsuser
 --
 
@@ -918,7 +897,7 @@ ALTER TABLE ONLY reimbursement
 
 
 --
--- TOC entry 2112 (class 2606 OID 16545)
+-- TOC entry 2108 (class 2606 OID 16545)
 -- Name: reimbursement_type reimbursement_type_pkey; Type: CONSTRAINT; Schema: public; Owner: tmtoolsuser
 --
 
@@ -927,7 +906,16 @@ ALTER TABLE ONLY reimbursement_type
 
 
 --
--- TOC entry 2116 (class 2606 OID 16571)
+-- TOC entry 2113 (class 2606 OID 16732)
+-- Name: travel_destination travel_destination_name_unique; Type: CONSTRAINT; Schema: public; Owner: tmtoolsuser
+--
+
+ALTER TABLE ONLY travel_destination
+    ADD CONSTRAINT travel_destination_name_unique UNIQUE (name);
+
+
+--
+-- TOC entry 2115 (class 2606 OID 16571)
 -- Name: travel_destination travel_destination_pkey; Type: CONSTRAINT; Schema: public; Owner: tmtoolsuser
 --
 
@@ -936,7 +924,7 @@ ALTER TABLE ONLY travel_destination
 
 
 --
--- TOC entry 2114 (class 2606 OID 16563)
+-- TOC entry 2110 (class 2606 OID 16563)
 -- Name: travel travel_pkey; Type: CONSTRAINT; Schema: public; Owner: tmtoolsuser
 --
 
@@ -954,7 +942,7 @@ ALTER TABLE ONLY travel_purpose
 
 
 --
--- TOC entry 2086 (class 1259 OID 16605)
+-- TOC entry 2086 (class 1259 OID 16735)
 -- Name: company_cost_center_uindex; Type: INDEX; Schema: public; Owner: tmtoolsuser
 --
 
@@ -962,7 +950,7 @@ CREATE UNIQUE INDEX company_cost_center_uindex ON company USING btree (cost_cent
 
 
 --
--- TOC entry 2103 (class 1259 OID 16611)
+-- TOC entry 2098 (class 1259 OID 16748)
 -- Name: document_status_name_uindex; Type: INDEX; Schema: public; Owner: tmtoolsuser
 --
 
@@ -970,7 +958,7 @@ CREATE UNIQUE INDEX document_status_name_uindex ON document_status USING btree (
 
 
 --
--- TOC entry 2106 (class 1259 OID 16617)
+-- TOC entry 2101 (class 1259 OID 16749)
 -- Name: document_type_name_uindex; Type: INDEX; Schema: public; Owner: tmtoolsuser
 --
 
@@ -978,7 +966,7 @@ CREATE UNIQUE INDEX document_type_name_uindex ON document_type USING btree (name
 
 
 --
--- TOC entry 2089 (class 1259 OID 16508)
+-- TOC entry 2089 (class 1259 OID 16751)
 -- Name: employee_identity_card_number_uindex; Type: INDEX; Schema: public; Owner: tmtoolsuser
 --
 
@@ -986,11 +974,43 @@ CREATE UNIQUE INDEX employee_identity_card_number_uindex ON employee USING btree
 
 
 --
--- TOC entry 2090 (class 1259 OID 16507)
+-- TOC entry 2093 (class 1259 OID 16752)
+-- Name: employee_job_title_uindex; Type: INDEX; Schema: public; Owner: tmtoolsuser
+--
+
+CREATE UNIQUE INDEX employee_job_title_uindex ON employee_job_title USING btree (name);
+
+
+--
+-- TOC entry 2090 (class 1259 OID 16750)
 -- Name: employee_personal_numeric_code_uindex; Type: INDEX; Schema: public; Owner: tmtoolsuser
 --
 
 CREATE UNIQUE INDEX employee_personal_numeric_code_uindex ON employee USING btree (personal_numeric_code);
+
+
+--
+-- TOC entry 2106 (class 1259 OID 16753)
+-- Name: reimbursement_type_name_uindex; Type: INDEX; Schema: public; Owner: tmtoolsuser
+--
+
+CREATE UNIQUE INDEX reimbursement_type_name_uindex ON reimbursement_type USING btree (name);
+
+
+--
+-- TOC entry 2111 (class 1259 OID 16754)
+-- Name: travel_destination_name_uindex; Type: INDEX; Schema: public; Owner: tmtoolsuser
+--
+
+CREATE UNIQUE INDEX travel_destination_name_uindex ON travel_destination USING btree (name);
+
+
+--
+-- TOC entry 2116 (class 1259 OID 16755)
+-- Name: travel_purpose_name_uindex; Type: INDEX; Schema: public; Owner: tmtoolsuser
+--
+
+CREATE UNIQUE INDEX travel_purpose_name_uindex ON travel_purpose USING btree (name);
 
 
 --
@@ -1018,12 +1038,12 @@ CREATE UNIQUE INDEX uniq_957a6479c05fb297 ON fos_user USING btree (confirmation_
 
 
 --
--- TOC entry 2124 (class 2606 OID 16689)
+-- TOC entry 2124 (class 2606 OID 16742)
 -- Name: company company_division_manager_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: tmtoolsuser
 --
 
 ALTER TABLE ONLY company
-    ADD CONSTRAINT company_division_manager_id_fk FOREIGN KEY (division_manager_id) REFERENCES employee(id);
+    ADD CONSTRAINT company_division_manager_id_fk FOREIGN KEY (division_manager_id) REFERENCES employee(id) ON UPDATE CASCADE ON DELETE RESTRICT;
 
 
 --
@@ -1042,6 +1062,15 @@ ALTER TABLE ONLY document
 
 ALTER TABLE ONLY document
     ADD CONSTRAINT document_document_type_id_fk FOREIGN KEY (type_id) REFERENCES document_type(id) ON UPDATE CASCADE;
+
+
+--
+-- TOC entry 2130 (class 2606 OID 16761)
+-- Name: document document_employee_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: tmtoolsuser
+--
+
+ALTER TABLE ONLY document
+    ADD CONSTRAINT document_employee_id_fk FOREIGN KEY (employee_id) REFERENCES employee(id) ON UPDATE CASCADE ON DELETE RESTRICT;
 
 
 --
@@ -1072,7 +1101,7 @@ ALTER TABLE ONLY employee
 
 
 --
--- TOC entry 2131 (class 2606 OID 16551)
+-- TOC entry 2132 (class 2606 OID 16551)
 -- Name: reimbursement reimbursement_document_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: tmtoolsuser
 --
 
@@ -1081,7 +1110,7 @@ ALTER TABLE ONLY reimbursement
 
 
 --
--- TOC entry 2132 (class 2606 OID 16580)
+-- TOC entry 2133 (class 2606 OID 16580)
 -- Name: reimbursement reimbursement_employee_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: tmtoolsuser
 --
 
@@ -1090,7 +1119,7 @@ ALTER TABLE ONLY reimbursement
 
 
 --
--- TOC entry 2130 (class 2606 OID 16546)
+-- TOC entry 2131 (class 2606 OID 16546)
 -- Name: reimbursement reimbursement_reimbursement_type_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: tmtoolsuser
 --
 
@@ -1099,7 +1128,16 @@ ALTER TABLE ONLY reimbursement
 
 
 --
--- TOC entry 2135 (class 2606 OID 16595)
+-- TOC entry 2137 (class 2606 OID 16756)
+-- Name: travel travel_document_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: tmtoolsuser
+--
+
+ALTER TABLE ONLY travel
+    ADD CONSTRAINT travel_document_id_fk FOREIGN KEY (document_id) REFERENCES document(id) ON UPDATE CASCADE ON DELETE RESTRICT;
+
+
+--
+-- TOC entry 2136 (class 2606 OID 16595)
 -- Name: travel travel_employee_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: tmtoolsuser
 --
 
@@ -1108,7 +1146,7 @@ ALTER TABLE ONLY travel
 
 
 --
--- TOC entry 2134 (class 2606 OID 16590)
+-- TOC entry 2135 (class 2606 OID 16590)
 -- Name: travel travel_travel_destination_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: tmtoolsuser
 --
 
@@ -1117,7 +1155,7 @@ ALTER TABLE ONLY travel
 
 
 --
--- TOC entry 2133 (class 2606 OID 16585)
+-- TOC entry 2134 (class 2606 OID 16585)
 -- Name: travel travel_travel_purpose_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: tmtoolsuser
 --
 
@@ -1125,7 +1163,7 @@ ALTER TABLE ONLY travel
     ADD CONSTRAINT travel_travel_purpose_id_fk FOREIGN KEY (purpose_id) REFERENCES travel_purpose(id) ON UPDATE CASCADE;
 
 
--- Completed on 2017-02-09 15:23:11 UTC
+-- Completed on 2017-02-10 14:07:18 UTC
 
 --
 -- PostgreSQL database dump complete
