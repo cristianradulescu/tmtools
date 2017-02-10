@@ -111,7 +111,7 @@ class ReimbursementDocumentServiceTest extends \PHPUnit_Framework_TestCase
         $employee->shouldReceive('getJobTitle')->andReturn($dataProvider['employee_job_title']);
 
         // reimbursement document
-        $reimbursementDocument = m::mock('AppBundle\Entity\TravelDocument');
+        $reimbursementDocument = m::mock('AppBundle\Entity\Document');
         $reimbursementDocument->shouldReceive('getEmployee')->andReturn($employee);
         $reimbursementDocument->shouldReceive('getReimbursements')->andReturn($dataProvider['reimbursement_collection']);
 

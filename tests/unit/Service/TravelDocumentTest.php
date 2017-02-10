@@ -3,6 +3,7 @@ namespace Service;
 
 use AppBundle\Entity\TravelDocument;
 use AppBundle\Service\TravelDocumentService;
+use Doctrine\Common\Collections\ArrayCollection;
 use \Mockery as m;
 
 /**
@@ -139,17 +140,22 @@ class TravelDocumentTest extends \PHPUnit_Framework_TestCase
         $employee->shouldReceive('getIdentityCardNumber')->andReturn($dataProvider['employee_icn']);
         $employee->shouldReceive('getPersonalNumericCode')->andReturn($dataProvider['employee_pnc']);
 
+        // travel
+        $travel = m::mock('AppBundle\Entity\Travel');
+        $travel->shouldReceive('getEmployee')->andReturn($employee);
+        $travel->shouldReceive('getDateStart')->andReturn($dataProvider['date_from']);
+        $travel->shouldReceive('getDateEnd')->andReturn($dataProvider['date_to']);
+        $travel->shouldReceive('getDepartureLeaveTime')->andReturn($dataProvider['startpoint_leave_time']);
+        $travel->shouldReceive('getDestinationArrivalTime')->andReturn($dataProvider['destination_arrival_time']);
+        $travel->shouldReceive('getDestinationLeaveTime')->andReturn($dataProvider['destination_leave_time']);
+        $travel->shouldReceive('getDepartureArrivalTime')->andReturn($dataProvider['startpoint_arrival_time']);
+        $travel->shouldReceive('getPurpose')->andReturn($dataProvider['travel_purpose']);
+        $travel->shouldReceive('getDestination')->andReturn($dataProvider['travel_destination']);
+
         // travel document
-        $travelDocument = m::mock('AppBundle\Entity\TravelDocument');
+        $travelDocument = m::mock('AppBundle\Entity\Document');
         $travelDocument->shouldReceive('getEmployee')->andReturn($employee);
-        $travelDocument->shouldReceive('getDateStart')->andReturn($dataProvider['date_from']);
-        $travelDocument->shouldReceive('getDateEnd')->andReturn($dataProvider['date_to']);
-        $travelDocument->shouldReceive('getDepartureLeaveTime')->andReturn($dataProvider['startpoint_leave_time']);
-        $travelDocument->shouldReceive('getDestinationArrivalTime')->andReturn($dataProvider['destination_arrival_time']);
-        $travelDocument->shouldReceive('getDestinationLeaveTime')->andReturn($dataProvider['destination_leave_time']);
-        $travelDocument->shouldReceive('getDepartureArrivalTime')->andReturn($dataProvider['startpoint_arrival_time']);
-        $travelDocument->shouldReceive('getPurpose')->andReturn($dataProvider['travel_purpose']);
-        $travelDocument->shouldReceive('getDestination')->andReturn($dataProvider['travel_destination']);
+        $travelDocument->shouldReceive('getTravels')->andReturn(new ArrayCollection(array($travel)));
 
         return $travelDocument;
     }
