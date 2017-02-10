@@ -8,6 +8,10 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
 
+/**
+ * Class TravelDestinationAdmin
+ * @package AppBundle\Admin
+ */
 class TravelDestinationAdmin extends AbstractAdmin
 {
     /**

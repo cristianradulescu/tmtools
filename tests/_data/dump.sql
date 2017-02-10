@@ -1,112 +1,175 @@
-START TRANSACTION;
+-- --------------------------------------------------------
+-- Host:                         127.0.0.1
+-- Server version:               5.7.16 - MySQL Community Server (GPL)
+-- Server OS:                    Linux
+-- HeidiSQL Version:             9.3.0.4984
+-- --------------------------------------------------------
 
-SET FOREIGN_KEY_CHECKS=0;
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET NAMES utf8mb4 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 
-DROP TABLE IF EXISTS `company`;
+-- Dumping database structure for tmtools
+CREATE DATABASE IF NOT EXISTS `tmtools` /*!40100 DEFAULT CHARACTER SET latin1 */;
+USE `tmtools`;
+
+
+-- Dumping structure for table tmtools.company
 CREATE TABLE IF NOT EXISTS `company` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) NOT NULL,
-  `cost_center` varchar(45) NOT NULL,
-  `division_manager_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `cost_center_UNIQUE` (`cost_center`),
-  KEY `fk_company_employee_idx` (`division_manager_id`),
-  CONSTRAINT `fk_company_employee` FOREIGN KEY (`division_manager_id`) REFERENCES `employee` (`id`) ON UPDATE CASCADE
+`id` int(11) NOT NULL AUTO_INCREMENT,
+`name` varchar(255) NOT NULL,
+`cost_center` varchar(45) NOT NULL,
+`division_manager_id` int(11) NOT NULL,
+`created_at` datetime NOT NULL,
+`updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+PRIMARY KEY (`id`),
+UNIQUE KEY `company_cost_center_UNIQUE` (`cost_center`),
+UNIQUE KEY `company_name_UNIQUE` (`name`),
+KEY `fk_company_employee_id` (`division_manager_id`),
+CONSTRAINT `fk_company_employee_id` FOREIGN KEY (`division_manager_id`) REFERENCES `employee` (`id`) ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
+-- Dumping data for table tmtools.company: ~1 rows (approximately)
 DELETE FROM `company`;
 /*!40000 ALTER TABLE `company` DISABLE KEYS */;
-INSERT INTO `company` (`id`, `name`, `cost_center`, `division_manager_id`) VALUES
-  (1, 'EMAG', '12RO123456', 1);
+INSERT INTO `company` (`id`, `name`, `cost_center`, `division_manager_id`, `created_at`, `updated_at`) VALUES
+(1, 'SC EMAG IT RESEARCH SRL', '11RO270200', 1, '2017-02-10 17:04:30', '2017-02-10 17:04:30');
 /*!40000 ALTER TABLE `company` ENABLE KEYS */;
 
-DROP TABLE IF EXISTS `employee`;
-CREATE TABLE IF NOT EXISTS `employee` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `first_name` varchar(45) NOT NULL,
-  `last_name` varchar(45) NOT NULL,
-  `username` varchar(255) NOT NULL,
-  `email_address` varchar(255) NOT NULL,
-  `birthday` date DEFAULT NULL,
-  `personal_numeric_code` bigint(20) unsigned DEFAULT NULL,
-  `identity_card_number` varchar(45) DEFAULT NULL,
-  `job_title_id` int(11) DEFAULT NULL,
-  `direct_manager_id` int(11) DEFAULT NULL,
-  `team_id` int(11) DEFAULT NULL,
-  `company_id` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `username_UNIQUE` (`username`),
-  UNIQUE KEY `email_address_UNIQUE` (`email_address`),
-  UNIQUE KEY `personal_numeric_code_UNIQUE` (`personal_numeric_code`),
-  UNIQUE KEY `identity_card_number_UNIQUE` (`identity_card_number`),
-  KEY `fk_employee_job_title_idx` (`job_title_id`),
-  KEY `fk_employee_employee_idx` (`direct_manager_id`),
-  KEY `fk_employee_team_idx` (`team_id`),
-  KEY `fk_employee_company_idx` (`company_id`),
-  CONSTRAINT `fk_employee_company` FOREIGN KEY (`company_id`) REFERENCES `company` (`id`) ON UPDATE CASCADE,
-  CONSTRAINT `fk_employee_employee` FOREIGN KEY (`direct_manager_id`) REFERENCES `employee` (`id`) ON UPDATE CASCADE,
-  CONSTRAINT `fk_employee_job_title` FOREIGN KEY (`job_title_id`) REFERENCES `employee_job_title` (`id`) ON UPDATE CASCADE,
-  CONSTRAINT `fk_employee_team` FOREIGN KEY (`team_id`) REFERENCES `employee_team` (`id`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=244 DEFAULT CHARSET=utf8;
 
+-- Dumping structure for table tmtools.document
+CREATE TABLE IF NOT EXISTS `document` (
+`id` int(11) NOT NULL AUTO_INCREMENT,
+`employee_id` int(11) NOT NULL,
+`status_id` int(11) NOT NULL DEFAULT '1',
+`type_id` int(11) NOT NULL,
+`created_at` datetime NOT NULL,
+`updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+PRIMARY KEY (`id`),
+KEY `fk_document_employee_id` (`employee_id`),
+KEY `fk_document_status_id` (`status_id`),
+KEY `fk_document_type_id` (`type_id`),
+CONSTRAINT `fk_document_employee_id` FOREIGN KEY (`employee_id`) REFERENCES `employee` (`id`) ON UPDATE CASCADE,
+CONSTRAINT `fk_document_status_id` FOREIGN KEY (`status_id`) REFERENCES `document_status` (`id`) ON UPDATE CASCADE,
+CONSTRAINT `fk_document_type_id` FOREIGN KEY (`type_id`) REFERENCES `document_type` (`id`) ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- Dumping data for table tmtools.document: ~0 rows (approximately)
+DELETE FROM `document`;
+/*!40000 ALTER TABLE `document` DISABLE KEYS */;
+/*!40000 ALTER TABLE `document` ENABLE KEYS */;
+
+
+-- Dumping structure for table tmtools.document_status
+CREATE TABLE IF NOT EXISTS `document_status` (
+`id` int(11) NOT NULL AUTO_INCREMENT,
+`name` varchar(45) NOT NULL,
+PRIMARY KEY (`id`),
+UNIQUE KEY `document_status_name_UNIQUE` (`name`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+-- Dumping data for table tmtools.document_status: ~3 rows (approximately)
+DELETE FROM `document_status`;
+/*!40000 ALTER TABLE `document_status` DISABLE KEYS */;
+INSERT INTO `document_status` (`id`, `name`) VALUES
+(3, 'Completed'),
+(1, 'New'),
+(2, 'Pending');
+/*!40000 ALTER TABLE `document_status` ENABLE KEYS */;
+
+
+-- Dumping structure for table tmtools.document_type
+CREATE TABLE IF NOT EXISTS `document_type` (
+`id` int(11) NOT NULL AUTO_INCREMENT,
+`name` varchar(45) NOT NULL,
+`template` varchar(200) NOT NULL,
+PRIMARY KEY (`id`),
+UNIQUE KEY `document_type_name_UNIQUE` (`name`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+
+-- Dumping data for table tmtools.document_type: ~3 rows (approximately)
+DELETE FROM `document_type`;
+/*!40000 ALTER TABLE `document_type` DISABLE KEYS */;
+INSERT INTO `document_type` (`id`, `name`, `template`) VALUES
+(1, 'Travel', 'travel_document.svg'),
+(2, 'Reimbursement', 'reimbursement_document_svg'),
+(3, 'Service quisition', 'service_aquisition_document.svg');
+/*!40000 ALTER TABLE `document_type` ENABLE KEYS */;
+
+
+-- Dumping structure for table tmtools.employee
+CREATE TABLE IF NOT EXISTS `employee` (
+`id` int(11) NOT NULL AUTO_INCREMENT,
+`first_name` varchar(45) NOT NULL,
+`last_name` varchar(45) NOT NULL,
+`username` varchar(45) DEFAULT NULL,
+`birthday` date DEFAULT NULL,
+`personal_numeric_code` bigint(20) unsigned NOT NULL,
+`identity_card_number` varchar(9) NOT NULL,
+`job_title_id` int(11) NOT NULL,
+`division_manager_id` int(11) DEFAULT NULL,
+`company_id` int(11) NOT NULL,
+`created_at` datetime NOT NULL,
+`update_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+PRIMARY KEY (`id`),
+UNIQUE KEY `personal_numeric_code_UNIQUE` (`personal_numeric_code`),
+UNIQUE KEY `identity_card_number_UNIQUE` (`identity_card_number`),
+UNIQUE KEY `username_UNIQUE` (`username`),
+KEY `fk_employee_job_title_id` (`job_title_id`),
+KEY `fk_employee_division_manager_id` (`division_manager_id`),
+KEY `fk_employee_company_id` (`company_id`),
+CONSTRAINT `fk_employee_company_id` FOREIGN KEY (`company_id`) REFERENCES `company` (`id`) ON UPDATE CASCADE,
+CONSTRAINT `fk_employee_division_manager_id` FOREIGN KEY (`division_manager_id`) REFERENCES `employee` (`id`) ON UPDATE CASCADE,
+CONSTRAINT `fk_employee_job_title_id` FOREIGN KEY (`job_title_id`) REFERENCES `employee_job_title` (`id`) ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+-- Dumping data for table tmtools.employee: ~31 rows (approximately)
 DELETE FROM `employee`;
 /*!40000 ALTER TABLE `employee` DISABLE KEYS */;
-INSERT INTO `employee` (`id`, `first_name`, `last_name`, `username`, `email_address`, `birthday`, `personal_numeric_code`, `identity_card_number`, `job_title_id`, `direct_manager_id`, `team_id`, `company_id`) VALUES
-  (1, 'Cristian', 'Radulescu', 'cristian.radulescu', 'cristian.radulescu', '1980-07-06', 18034567890123, 'AB 123456', 1, 1, 1, 1),
-  (2, 'John', 'Doe', 'john.doe', 'john.doe', '1981-10-09', 18134567890012, 'CD 789012', 2, 1, 1, 1),
-  (3, 'Foo', 'Bar', 'foo.bar', 'foo.bar', '1982-01-01', 18234567890456, 'EF 345678', 2, 1, 1, 1);
+INSERT INTO `employee` (`id`, `first_name`, `last_name`, `username`, `birthday`, `personal_numeric_code`, `identity_card_number`, `job_title_id`, `division_manager_id`, `company_id`, `created_at`, `update_at`) VALUES
+(1, 'Cristian', 'Radulescu', 'cristian.radulescu', '2011-07-06', 1234567890098, 'AB 123456', 1, 1, 1, '2017-02-10 17:21:52', '2017-02-10 17:21:52'),
+(2, 'Bob', 'Test', 'bob.test', '1987-10-09', 1098765432212, 'CD 987654', 2, 1, 1, '2017-02-10 17:21:52', '2017-02-10 17:21:52'),
+(3, 'Alice', 'Test', 'alice.test', '2011-01-01', 21231234112233, 'EF 123456', 2, 1, 1, '2017-02-10 17:21:52', '2017-02-10 17:21:52');
 /*!40000 ALTER TABLE `employee` ENABLE KEYS */;
 
 
-DROP TABLE IF EXISTS `employee_job_title`;
+-- Dumping structure for table tmtools.employee_job_title
 CREATE TABLE IF NOT EXISTS `employee_job_title` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `name_UNIQUE` (`name`)
+`id` int(11) NOT NULL AUTO_INCREMENT,
+`name` varchar(45) NOT NULL,
+PRIMARY KEY (`id`),
+UNIQUE KEY `employee_jon_title_name_UNIQUE` (`name`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
+-- Dumping data for table tmtools.employee_job_title: ~2 rows (approximately)
 DELETE FROM `employee_job_title`;
 /*!40000 ALTER TABLE `employee_job_title` DISABLE KEYS */;
 INSERT INTO `employee_job_title` (`id`, `name`) VALUES
-  (1, 'Manager'),
-  (2, 'Programator');
+(1, 'Team Manager'),
+(2, 'PHP Developer');
 /*!40000 ALTER TABLE `employee_job_title` ENABLE KEYS */;
 
 
-DROP TABLE IF EXISTS `employee_team`;
-CREATE TABLE IF NOT EXISTS `employee_team` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `name_UNIQUE` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
-
-DELETE FROM `employee_team`;
-/*!40000 ALTER TABLE `employee_team` DISABLE KEYS */;
-INSERT INTO `employee_team` (`id`, `name`) VALUES
-  (1, 'HUB Craiova');
-/*!40000 ALTER TABLE `employee_team` ENABLE KEYS */;
-
-DROP TABLE IF EXISTS `fos_user`;
+-- Dumping structure for table tmtools.fos_user
 CREATE TABLE IF NOT EXISTS `fos_user` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `username` varchar(180) COLLATE utf8_unicode_ci NOT NULL,
-  `username_canonical` varchar(180) COLLATE utf8_unicode_ci NOT NULL,
-  `email` varchar(180) COLLATE utf8_unicode_ci NOT NULL,
-  `email_canonical` varchar(180) COLLATE utf8_unicode_ci NOT NULL,
-  `enabled` tinyint(1) NOT NULL,
-  `salt` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `PASSWORD` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `last_login` datetime DEFAULT NULL,
-  `confirmation_token` varchar(180) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `password_requested_at` datetime DEFAULT NULL,
-  `roles` longtext COLLATE utf8_unicode_ci NOT NULL COMMENT '(DC2Type:array)',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `UNIQ_957A647992FC23A8` (`username_canonical`),
-  UNIQUE KEY `UNIQ_957A6479A0D96FBF` (`email_canonical`),
-  UNIQUE KEY `UNIQ_957A6479C05FB297` (`confirmation_token`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+`id` int(11) NOT NULL AUTO_INCREMENT,
+`username` varchar(180) COLLATE utf8_unicode_ci NOT NULL,
+`username_canonical` varchar(180) COLLATE utf8_unicode_ci NOT NULL,
+`email` varchar(180) COLLATE utf8_unicode_ci NOT NULL,
+`email_canonical` varchar(180) COLLATE utf8_unicode_ci NOT NULL,
+`enabled` tinyint(1) NOT NULL,
+`salt` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+`PASSWORD` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+`last_login` datetime DEFAULT NULL,
+`confirmation_token` varchar(180) COLLATE utf8_unicode_ci DEFAULT NULL,
+`password_requested_at` datetime DEFAULT NULL,
+`roles` longtext COLLATE utf8_unicode_ci NOT NULL COMMENT '(DC2Type:array)',
+PRIMARY KEY (`id`),
+UNIQUE KEY `UNIQ_957A647992FC23A8` (`username_canonical`),
+UNIQUE KEY `UNIQ_957A6479A0D96FBF` (`email_canonical`),
+UNIQUE KEY `UNIQ_957A6479C05FB297` (`confirmation_token`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 DELETE FROM `fos_user`;
 /*!40000 ALTER TABLE `fos_user` DISABLE KEYS */;
@@ -114,155 +177,108 @@ INSERT INTO `fos_user` (`id`, `username`, `username_canonical`, `email`, `email_
   (1, 'test', 'test', 'test', 'test', 1, NULL, '$2y$13$qBjRacI0XwJ4/xCzF9BTCeOLmN2mNcuUvZJbYdCT7ACtjXjTDmkVm', '2017-01-01 00:00:00', NULL, NULL, 'a:1:{i:0;s:10:"ROLE_ADMIN";}');
 /*!40000 ALTER TABLE `fos_user` ENABLE KEYS */;
 
-
-DROP TABLE IF EXISTS `reimbursement`;
+-- Dumping structure for table tmtools.reimbursement
 CREATE TABLE IF NOT EXISTS `reimbursement` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `type_id` int(11) NOT NULL,
-  `number` varchar(45) NOT NULL,
-  `date` date NOT NULL,
-  `value` decimal(10,2) NOT NULL,
-  `employee_id` int(11) NOT NULL,
-  `reimbursement_document_id` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `fk_reimbursement_reimbursement_type_idx` (`type_id`),
-  KEY `fk_reimbursement_employee_idx` (`employee_id`),
-  KEY `fk_reimbursement_document_idx` (`reimbursement_document_id`),
-  CONSTRAINT `fk_reimbursement_reimbursement_document` FOREIGN KEY (`reimbursement_document_id`) REFERENCES `reimbursement_document` (`id`) ON UPDATE CASCADE,
-  CONSTRAINT `fk_reimbursement_employee` FOREIGN KEY (`employee_id`) REFERENCES `employee` (`id`) ON UPDATE CASCADE,
-  CONSTRAINT `fk_reimbursement_reimbursement_type` FOREIGN KEY (`type_id`) REFERENCES `reimbursement_type` (`id`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=234 DEFAULT CHARSET=utf8;
-
-DELETE FROM `reimbursement`;
-/*!40000 ALTER TABLE `reimbursement` DISABLE KEYS */;
-INSERT INTO `reimbursement` (`id`, `type_id`, `number`, `date`, `value`, `employee_id`, `reimbursement_document_id`) VALUES
-  (1, 1, '47', '2016-12-08', 188.37, 3, 1),
-  (2, 1, '874', '2016-12-10', 188.81, 2, 1),
-  (3, 4, '157', '2016-12-05', 142.26, 1, 1),
-  (4, 4, '161', '2016-12-07', 329.51, 1, 1),
-  (5, 2, '0005', '2016-12-17', 13.93, 14, 2);
-/*!40000 ALTER TABLE `reimbursement` ENABLE KEYS */;
+`id` int(11) NOT NULL AUTO_INCREMENT,
+`type_id` int(11) NOT NULL,
+`number` varchar(45) NOT NULL,
+`date` date NOT NULL,
+`value` decimal(10,2) NOT NULL,
+`employee_id` int(11) NOT NULL,
+`document_id` int(11) DEFAULT NULL,
+`created_at` datetime NOT NULL,
+`updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+PRIMARY KEY (`id`),
+KEY `fk_reimbursement_type_id` (`type_id`),
+KEY `fk_reimbursement_employee_id` (`employee_id`),
+KEY `fk_reimbursement_document_id` (`document_id`),
+CONSTRAINT `fk_reimbursement_document_id` FOREIGN KEY (`document_id`) REFERENCES `reimbursement_document` (`id`) ON UPDATE CASCADE,
+CONSTRAINT `fk_reimbursement_employee_id` FOREIGN KEY (`employee_id`) REFERENCES `employee` (`id`) ON UPDATE CASCADE,
+CONSTRAINT `fk_reimbursement_type_id` FOREIGN KEY (`type_id`) REFERENCES `reimbursement_type` (`id`) ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
-DROP TABLE IF EXISTS `reimbursement_document`;
-CREATE TABLE IF NOT EXISTS `reimbursement_document` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `employee_id` int(11) NOT NULL DEFAULT '0',
-  `status_id` int(11) DEFAULT '1',
-  PRIMARY KEY (`id`),
-  KEY `fk_reimbursement_document_employee_idx` (`employee_id`),
-  KEY `fk_reimbursement_document_status_idx` (`status_id`),
-  CONSTRAINT `fk_reimbursement_document_employee` FOREIGN KEY (`employee_id`) REFERENCES `employee` (`id`) ON UPDATE CASCADE,
-  CONSTRAINT `fk_reimbursement_document_status` FOREIGN KEY (`status_id`) REFERENCES `status` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=54 DEFAULT CHARSET=utf8;
-
--- Dumping data for table heroku_50b788c3a03fca4.reimbursement_document: ~5 rows (approximately)
-DELETE FROM `reimbursement_document`;
-/*!40000 ALTER TABLE `reimbursement_document` DISABLE KEYS */;
-INSERT INTO `reimbursement_document` (`id`, `employee_id`, `status_id`) VALUES
-  (1, 1, 1),
-  (2, 1, 1);
-/*!40000 ALTER TABLE `reimbursement_document` ENABLE KEYS */;
-
-
-DROP TABLE IF EXISTS `reimbursement_type`;
+-- Dumping structure for table tmtools.reimbursement_type
 CREATE TABLE IF NOT EXISTS `reimbursement_type` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+`id` int(11) NOT NULL AUTO_INCREMENT,
+`name` varchar(45) DEFAULT NULL,
+PRIMARY KEY (`id`),
+UNIQUE KEY `reimbursement_type_name_UNIQUE` (`name`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
+-- Dumping data for table tmtools.reimbursement_type: ~5 rows (approximately)
 DELETE FROM `reimbursement_type`;
 /*!40000 ALTER TABLE `reimbursement_type` DISABLE KEYS */;
 INSERT INTO `reimbursement_type` (`id`, `name`) VALUES
-  (1, 'Bon combustibil'),
-  (2, 'Bon taxi'),
-  (3, 'Bilet tren'),
-  (4, 'Factura');
+(1, 'Bill'),
+(2, 'Fuel receipt'),
+(3, 'Taxi receipt'),
+(4, 'Train ticket'),
+(5, 'Travel allowance');
 /*!40000 ALTER TABLE `reimbursement_type` ENABLE KEYS */;
 
 
-DROP TABLE IF EXISTS `status`;
-CREATE TABLE IF NOT EXISTS `status` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(45) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+-- Dumping structure for table tmtools.travel
+CREATE TABLE IF NOT EXISTS `travel` (
+`id` int(11) NOT NULL AUTO_INCREMENT,
+`employee_id` int(11) NOT NULL,
+`purpose_id` int(11) NOT NULL,
+`destination_id` int(11) NOT NULL,
+`date_start` date NOT NULL,
+`date_end` date NOT NULL,
+`departure_leave_time` datetime NOT NULL,
+`departure_arrival_time` datetime NOT NULL,
+`destination_arrival_time` datetime NOT NULL,
+`destination_leave_time` datetime NOT NULL,
+`document_id` int(11) DEFAULT NULL,
+`created_at` datetime NOT NULL,
+`updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+PRIMARY KEY (`id`),
+KEY `fk_travel_document_id` (`document_id`),
+KEY `fk_travel_employee_id` (`employee_id`),
+KEY `fk_travel_purpose_id` (`purpose_id`),
+KEY `fk_travel_destination_id` (`destination_id`),
+CONSTRAINT `fk_travel_destination_id` FOREIGN KEY (`destination_id`) REFERENCES `travel_destination` (`id`) ON UPDATE CASCADE,
+CONSTRAINT `fk_travel_document_id` FOREIGN KEY (`document_id`) REFERENCES `document` (`id`) ON UPDATE CASCADE,
+CONSTRAINT `fk_travel_employee_id` FOREIGN KEY (`employee_id`) REFERENCES `employee` (`id`) ON UPDATE CASCADE,
+CONSTRAINT `fk_travel_purpose_id` FOREIGN KEY (`purpose_id`) REFERENCES `travel_purpose` (`id`) ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-DELETE FROM `status`;
-/*!40000 ALTER TABLE `status` DISABLE KEYS */;
-INSERT INTO `status` (`id`, `name`) VALUES
-  (1, 'New'),
-  (2, 'Pending'),
-  (3, 'Completed');
-/*!40000 ALTER TABLE `status` ENABLE KEYS */;
 
-
-DROP TABLE IF EXISTS `travel_destination`;
+-- Dumping structure for table tmtools.travel_destination
 CREATE TABLE IF NOT EXISTS `travel_destination` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `name_UNIQUE` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+`id` int(11) NOT NULL AUTO_INCREMENT,
+`name` varchar(45) NOT NULL,
+PRIMARY KEY (`id`),
+UNIQUE KEY `travel_destination_name_UNIQUE` (`name`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
+-- Dumping data for table tmtools.travel_destination: ~1 rows (approximately)
 DELETE FROM `travel_destination`;
 /*!40000 ALTER TABLE `travel_destination` DISABLE KEYS */;
 INSERT INTO `travel_destination` (`id`, `name`) VALUES
-  (1, 'Bucuresti'),
-  (2, 'Craiova');
+(1, 'Bucharest');
 /*!40000 ALTER TABLE `travel_destination` ENABLE KEYS */;
 
 
-DROP TABLE IF EXISTS `travel_document`;
-CREATE TABLE IF NOT EXISTS `travel_document` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `employee_id` int(11) NOT NULL,
-  `purpose_id` int(11) NOT NULL,
-  `destination_id` int(11) NOT NULL,
-  `date_start` date NOT NULL,
-  `date_end` date NOT NULL,
-  `departure_leave_time` datetime NOT NULL,
-  `departure_arrival_time` datetime NOT NULL,
-  `destination_arrival_time` datetime NOT NULL,
-  `destination_leave_time` datetime NOT NULL,
-  `status_id` int(11) DEFAULT '1',
-  PRIMARY KEY (`id`),
-  KEY `fk_travel_document_employee_idx` (`employee_id`),
-  KEY `fk_travel_document_travel_purpose_idx` (`purpose_id`),
-  KEY `fk_travel_document_travel_destination_idx` (`destination_id`),
-  KEY `fk_travel_document_status_idx` (`status_id`),
-  CONSTRAINT `fk_travel_document_employee` FOREIGN KEY (`employee_id`) REFERENCES `employee` (`id`) ON UPDATE CASCADE,
-  CONSTRAINT `fk_travel_document_status` FOREIGN KEY (`status_id`) REFERENCES `status` (`id`),
-  CONSTRAINT `fk_travel_document_travel_destination` FOREIGN KEY (`destination_id`) REFERENCES `travel_destination` (`id`) ON UPDATE CASCADE,
-  CONSTRAINT `fk_travel_document_travel_purpose` FOREIGN KEY (`purpose_id`) REFERENCES `travel_purpose` (`id`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=154 DEFAULT CHARSET=utf8;
-
-DELETE FROM `travel_document`;
-/*!40000 ALTER TABLE `travel_document` DISABLE KEYS */;
-INSERT INTO `travel_document` (`id`, `employee_id`, `purpose_id`, `destination_id`, `date_start`, `date_end`, `departure_leave_time`, `departure_arrival_time`, `destination_arrival_time`, `destination_leave_time`, `status_id`) VALUES
-  (1, 1, 1, 1, '2016-12-08', '2016-12-08', '2016-12-08 06:00:00', '2016-12-08 21:00:00', '2016-12-08 09:00:00', '2016-12-08 18:00:00', 1),
-  (2, 1, 1, 1, '2016-12-09', '2016-12-09', '2016-12-09 06:00:00', '2016-12-09 21:00:00', '2016-12-09 09:00:00', '2016-12-09 18:00:00', 1),
-  (3, 2, 2, 1, '2016-12-07', '2016-12-10', '2016-12-07 06:00:00', '2016-12-10 21:00:00', '2016-12-07 09:00:00', '2016-12-10 18:00:00', 1),
-  (4, 3, 1, 1, '2016-12-13', '2016-12-14', '2016-12-13 06:00:00', '2016-12-14 21:00:00', '2016-12-13 09:00:00', '2016-12-14 18:00:00', 1);
-/*!40000 ALTER TABLE `travel_document` ENABLE KEYS */;
-
-
-DROP TABLE IF EXISTS `travel_purpose`;
+-- Dumping structure for table tmtools.travel_purpose
 CREATE TABLE IF NOT EXISTS `travel_purpose` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `name_UNIQUE` (`name`)
+`id` int(11) NOT NULL AUTO_INCREMENT,
+`name` varchar(255) NOT NULL,
+PRIMARY KEY (`id`),
+UNIQUE KEY `travel_purpose_name_UNIQUE` (`name`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
+-- Dumping data for table tmtools.travel_purpose: ~5 rows (approximately)
 DELETE FROM `travel_purpose`;
 /*!40000 ALTER TABLE `travel_purpose` DISABLE KEYS */;
 INSERT INTO `travel_purpose` (`id`, `name`) VALUES
-  (1, 'Sedinta planificare'),
-  (2, 'Eveniment'),
-  (3, 'Campanie');
-
-SET FOREIGN_KEY_CHECKS=1;
-
-COMMIT;
+(3, 'Company event'),
+(5, 'Course'),
+(1, 'Meeting'),
+(2, 'Planning'),
+(4, 'Presentation');
+/*!40000 ALTER TABLE `travel_purpose` ENABLE KEYS */;
+/*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
+/*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

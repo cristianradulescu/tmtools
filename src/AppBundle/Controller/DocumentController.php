@@ -2,8 +2,7 @@
 
 namespace AppBundle\Controller;
 
-use AppBundle\Entity\DocumentInterface;
-use AppBundle\Entity\Status;
+use AppBundle\Entity\DocumentStatus;
 use AppBundle\Service\DocumentService;
 use Sonata\AdminBundle\Controller\CRUDController;
 use Sonata\AdminBundle\Datagrid\ProxyQueryInterface;
@@ -15,21 +14,29 @@ use Symfony\Component\HttpFoundation\Response;
  * Class DocumentController
  * @package AppBundle\Controller
  */
-abstract class DocumentController extends CRUDController
+class DocumentController extends CRUDController
 {
     /**
      * Return the template used for document rendering.
      *
      * @return string
      */
-    abstract protected function getDocumentTemplate();
+    protected function getDocumentTemplate()
+    {
+        return 'AppBundle:Documents:'.$this->admin->getSubject()->getType()->getTemplate().'.twig';
+    }
 
     /**
      * Return the corresponding service identifier.
      *
      * @return string
      */
-    abstract protected function getServiceId();
+    protected function getServiceId()
+    {
+        $documentTypeName = $this->admin->getSubject()->getType()->getName();
+
+        return 'app.'.str_replace(' ', '_', strtolower($documentTypeName)).'_document';
+    }
 
     /**
      * Render the document.
@@ -53,6 +60,28 @@ abstract class DocumentController extends CRUDController
     }
 
     /**
+     * Clone the travel document in order to change it's details.
+     *
+     * This is useful when you need to create travel documents with the same details for more employees. The action
+     * redirects to the edit page for the cloned object, in order to allow the user to edit the details.
+     *
+     * @return RedirectResponse
+     */
+    public function cloneAction()
+    {
+        /** @var TravelDocument $object */
+        $object = $this->admin->getSubject();
+        $clonedObject = clone $object;
+        $clonedObject = $this->admin->create($clonedObject);
+
+        $this->addFlash(
+            'sonata_flash_success',
+            'The travel document was successfully cloned. Please edit the details of the new document.'
+        );
+        return new RedirectResponse($this->admin->generateUrl('edit', array('id' => $clonedObject->getId())));
+    }
+
+    /**
      * @param ProxyQueryInterface $selectedModelQuery
      * @param Request|null $request
      * @return RedirectResponse
@@ -61,7 +90,7 @@ abstract class DocumentController extends CRUDController
      */
     public function batchActionMarkStatusPending(ProxyQueryInterface $selectedModelQuery, Request $request = null)
     {
-        return $this->changeStatus($selectedModelQuery, Status::STATUS_ID_PENDING);
+        return $this->changeStatus($selectedModelQuery, DocumentStatus::STATUS_PENDING);
     }
 
     /**
@@ -71,7 +100,7 @@ abstract class DocumentController extends CRUDController
      */
     public function batchActionMarkStatusCompleted(ProxyQueryInterface $selectedModelQuery, Request $request = null)
     {
-        return $this->changeStatus($selectedModelQuery, Status::STATUS_ID_COMPLETED);
+        return $this->changeStatus($selectedModelQuery, DocumentStatus::STATUS_COMPLETED);
     }
 
     /**
@@ -87,11 +116,11 @@ abstract class DocumentController extends CRUDController
     {
         $modelManager = $this->admin->getModelManager();
         $selectedModels = $selectedModelQuery->execute();
-        /** @var Status $status */
-        $status = $this->get('doctrine.orm.entity_manager')->find('AppBundle\Entity\Status', $statusId);
+        /** @var DocumentStatus $status */
+        $status = $this->get('doctrine.orm.entity_manager')->find('AppBundle\Entity\DocumentStatus', $statusId);
 
         try {
-            /** @var TravelDocument $selectedModel **/
+            /** @var Document $selectedModel **/
             foreach ($selectedModels as $selectedModel) {
                 $selectedModel->setStatus($status);
                 $modelManager->update($selectedModel);

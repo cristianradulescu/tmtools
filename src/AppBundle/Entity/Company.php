@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Company
  *
- * @ORM\Table(name="company", uniqueConstraints={@ORM\UniqueConstraint(name="cost_center_UNIQUE", columns={"cost_center"})}, indexes={@ORM\Index(name="fk_company_employee_idx", columns={"division_manager_id"})})
+ * @ORM\Table(name="company", uniqueConstraints={@ORM\UniqueConstraint(name="company_cost_center_UNIQUE", columns={"cost_center"}), @ORM\UniqueConstraint(name="company_name_UNIQUE", columns={"name"})}, indexes={@ORM\Index(name="fk_company_employee_id", columns={"division_manager_id"})})
  * @ORM\Entity
  */
 class Company
@@ -45,7 +45,28 @@ class Company
      */
     private $divisionManager;
 
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="created_at", type="datetime", nullable=false)
+     */
+    private $createdAt = 'CURRENT_TIMESTAMP';
 
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="updated_at", type="datetime", nullable=false)
+     */
+    private $updatedAt = 'CURRENT_TIMESTAMP';
+
+    /**
+     * Document constructor.
+     */
+    public function __construct()
+    {
+        $this->createdAt = new \DateTime();
+        $this->updatedAt = new \DateTime();
+    }
 
     /**
      * Get id
@@ -106,6 +127,29 @@ class Company
     }
 
     /**
+     * Set createdAt
+     *
+     * @param \DateTime $createdAt
+     *
+     * @return Company
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    /**
+     * Get createdAt
+     *
+     * @return \DateTime
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+    /**
      * Set divisionManager
      *
      * @param \AppBundle\Entity\Employee $divisionManager
@@ -130,12 +174,34 @@ class Company
     }
 
     /**
+     * Set updatedAt
+     *
+     * @param \DateTime $updatedAt
+     *
+     * @return Company
+     */
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get updatedAt
+     *
+     * @return \DateTime
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
+
+    /**
      * @return string
      */
     public function __toString()
     {
         return $this->getName();
     }
-
-
 }

@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Reimbursement
  *
- * @ORM\Table(name="reimbursement", indexes={@ORM\Index(name="fk_reimbursement_reimbursement_type_idx", columns={"type_id"}), @ORM\Index(name="fk_reimbursement_employee_idx", columns={"employee_id"}), @ORM\Index(name="fk_reimbursement_document_idx", columns={"reimbursement_document_id"})})
+ * @ORM\Table(name="reimbursement", indexes={@ORM\Index(name="fk_reimbursement_type_id", columns={"type_id"}), @ORM\Index(name="fk_reimbursement_employee_id", columns={"employee_id"}), @ORM\Index(name="fk_reimbursement_document_id", columns={"document_id"})})
  * @ORM\Entity
  */
 class Reimbursement
@@ -20,16 +20,6 @@ class Reimbursement
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
-
-    /**
-     * @var \ReimbursementType
-     *
-     * @ORM\ManyToOne(targetEntity="ReimbursementType")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="type_id", referencedColumnName="id")
-     * })
-     */
-    private $type;
 
     /**
      * @var string
@@ -53,6 +43,16 @@ class Reimbursement
     private $value;
 
     /**
+     * @var \Document
+     *
+     * @ORM\ManyToOne(targetEntity="Document")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="document_id", referencedColumnName="id")
+     * })
+     */
+    private $document;
+
+    /**
      * @var \Employee
      *
      * @ORM\ManyToOne(targetEntity="Employee")
@@ -63,17 +63,37 @@ class Reimbursement
     private $employee;
 
     /**
-     * @var \ReimbursementDocument
+     * @var \ReimbursementType
      *
-     * @ORM\ManyToOne(
-     *     targetEntity="ReimbursementDocument",
-     *     inversedBy="reimbursements"
-     * )
+     * @ORM\ManyToOne(targetEntity="ReimbursementType")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="reimbursement_document_id", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="type_id", referencedColumnName="id")
      * })
      */
-    private $reimbursementDocument;
+    private $type;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="created_at", type="datetime", nullable=false)
+     */
+    private $createdAt = 'CURRENT_TIMESTAMP';
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="updated_at", type="datetime", nullable=false)
+     */
+    private $updatedAt = 'CURRENT_TIMESTAMP';
+
+    /**
+     * Document constructor.
+     */
+    public function __construct()
+    {
+        $this->createdAt = new \DateTime();
+        $this->updatedAt = new \DateTime();
+    }
 
     /**
      * Get id
@@ -83,30 +103,6 @@ class Reimbursement
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set type
-     *
-     * @param \AppBundle\Entity\ReimbursementType $type
-     *
-     * @return Reimbursement
-     */
-    public function setType(\AppBundle\Entity\ReimbursementType $type = null)
-    {
-        $this->type = $type;
-
-        return $this;
-    }
-
-    /**
-     * Get type
-     *
-     * @return \AppBundle\Entity\ReimbursementType
-     */
-    public function getType()
-    {
-        return $this->type;
     }
 
     /**
@@ -182,6 +178,30 @@ class Reimbursement
     }
 
     /**
+     * Set document
+     *
+     * @param \AppBundle\Entity\Document $document
+     *
+     * @return Reimbursement
+     */
+    public function setDocument(\AppBundle\Entity\Document $document = null)
+    {
+        $this->document = $document;
+
+        return $this;
+    }
+
+    /**
+     * Get document
+     *
+     * @return \AppBundle\Entity\Document
+     */
+    public function getDocument()
+    {
+        return $this->document;
+    }
+
+    /**
      * Set employee
      *
      * @param \AppBundle\Entity\Employee $employee
@@ -206,49 +226,95 @@ class Reimbursement
     }
 
     /**
-     * Set reimbursementDocument
+     * Set type
      *
-     * @param \AppBundle\Entity\ReimbursementDocument $reimbursementDocument
+     * @param \AppBundle\Entity\ReimbursementType $type
      *
      * @return Reimbursement
      */
-    public function setReimbursementDocument(\AppBundle\Entity\ReimbursementDocument $reimbursementDocument = null)
+    public function setType(\AppBundle\Entity\ReimbursementType $type = null)
     {
-        $this->reimbursementDocument = $reimbursementDocument;
+        $this->type = $type;
 
         return $this;
     }
 
     /**
-     * Get reimbursementDocument
+     * Get type
      *
-     * @return \AppBundle\Entity\ReimbursementDocument
+     * @return \AppBundle\Entity\ReimbursementType
      */
-    public function getReimbursementDocument()
+    public function getType()
     {
-        return $this->reimbursementDocument;
+        return $this->type;
     }
 
     /**
-     * Get the status via associated reimbursement document.
+     * Set createdAt
      *
-     * If the reimbrusement is not yet associated with a document, will return an empty status.
+     * @param \DateTime $createdAt
+     *
+     * @return Reimbursement
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    /**
+     * Get createdAt
+     *
+     * @return \DateTime
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * Set updatedAt
+     *
+     * @param \DateTime $updatedAt
+     *
+     * @return Reimbursement
+     */
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get updatedAt
+     *
+     * @return \DateTime
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * Get the status via associated document.
+     *
+     * If the reimbursement is not yet associated with a document, will return an empty status.
      *
      * @return Status
      */
     public function getStatus()
     {
-        return $this->getReimbursementDocument()
-            ? $this->getReimbursementDocument()->getStatus()
-            : new Status();
-
+        return $this->getDocument()
+            ? $this->getDocument()->getStatus()
+            : new DocumentStatus();
     }
-
     /**
      * @return string
      */
     public function __toString()
     {
-        return (string)$this->type.' '.$this->number.' / '.$this->date->format('d-M-Y');
+        return (string)$this->getType().' '.$this->getNumber().' / '.$this->getDate()->format('d-M-Y');
     }
 }

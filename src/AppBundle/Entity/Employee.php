@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Employee
  *
- * @ORM\Table(name="employee", uniqueConstraints={@ORM\UniqueConstraint(name="username_UNIQUE", columns={"username"}), @ORM\UniqueConstraint(name="email_address_UNIQUE", columns={"email_address"}), @ORM\UniqueConstraint(name="personal_numeric_code_UNIQUE", columns={"personal_numeric_code"}), @ORM\UniqueConstraint(name="identity_card_number_UNIQUE", columns={"identity_card_number"})}, indexes={@ORM\Index(name="fk_employee_job_title_idx", columns={"job_title_id"}), @ORM\Index(name="fk_employee_employee_idx", columns={"direct_manager_id"}), @ORM\Index(name="fk_employee_team_idx", columns={"team_id"}), @ORM\Index(name="fk_employee_company_idx", columns={"company_id"})})
+ * @ORM\Table(name="employee", uniqueConstraints={@ORM\UniqueConstraint(name="personal_numeric_code_UNIQUE", columns={"personal_numeric_code"}), @ORM\UniqueConstraint(name="identity_card_number_UNIQUE", columns={"identity_card_number"}), @ORM\UniqueConstraint(name="username_UNIQUE", columns={"username"})}, indexes={@ORM\Index(name="fk_employee_job_title_id", columns={"job_title_id"}), @ORM\Index(name="fk_employee_division_manager_id", columns={"division_manager_id"}), @ORM\Index(name="fk_employee_company_id", columns={"company_id"})})
  * @ORM\Entity
  */
 class Employee
@@ -38,16 +38,9 @@ class Employee
     /**
      * @var string
      *
-     * @ORM\Column(name="username", type="string", length=255, nullable=false)
+     * @ORM\Column(name="username", type="string", length=45, nullable=true)
      */
     private $username;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="email_address", type="string", length=255, nullable=false)
-     */
-    private $emailAddress;
 
     /**
      * @var \DateTime
@@ -59,14 +52,14 @@ class Employee
     /**
      * @var integer
      *
-     * @ORM\Column(name="personal_numeric_code", type="bigint", nullable=true)
+     * @ORM\Column(name="personal_numeric_code", type="bigint", nullable=false)
      */
     private $personalNumericCode;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="identity_card_number", type="string", length=45, nullable=true)
+     * @ORM\Column(name="identity_card_number", type="string", length=9, nullable=false)
      */
     private $identityCardNumber;
 
@@ -85,10 +78,10 @@ class Employee
      *
      * @ORM\ManyToOne(targetEntity="Employee")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="direct_manager_id", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="division_manager_id", referencedColumnName="id")
      * })
      */
-    private $directManager;
+    private $divisionManager;
 
     /**
      * @var \EmployeeJobTitle
@@ -101,16 +94,27 @@ class Employee
     private $jobTitle;
 
     /**
-     * @var \EmployeeTeam
+     * @var \DateTime
      *
-     * @ORM\ManyToOne(targetEntity="EmployeeTeam")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="team_id", referencedColumnName="id")
-     * })
+     * @ORM\Column(name="created_at", type="datetime", nullable=false)
      */
-    private $team;
+    private $createdAt = 'CURRENT_TIMESTAMP';
 
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="update_at", type="datetime", nullable=false)
+     */
+    private $updateAt = 'CURRENT_TIMESTAMP';
 
+    /**
+     * Document constructor.
+     */
+    public function __construct()
+    {
+        $this->createdAt = new \DateTime();
+        $this->updatedAt = new \DateTime();
+    }
 
     /**
      * Get id
@@ -192,30 +196,6 @@ class Employee
     public function getUsername()
     {
         return $this->username;
-    }
-
-    /**
-     * Set emailAddress
-     *
-     * @param string $emailAddress
-     *
-     * @return Employee
-     */
-    public function setEmailAddress($emailAddress)
-    {
-        $this->emailAddress = $emailAddress;
-
-        return $this;
-    }
-
-    /**
-     * Get emailAddress
-     *
-     * @return string
-     */
-    public function getEmailAddress()
-    {
-        return $this->emailAddress;
     }
 
     /**
@@ -315,27 +295,27 @@ class Employee
     }
 
     /**
-     * Set directManager
+     * Set divisionManager
      *
-     * @param \AppBundle\Entity\Employee $directManager
+     * @param \AppBundle\Entity\Employee $divisionManager
      *
      * @return Employee
      */
-    public function setDirectManager(\AppBundle\Entity\Employee $directManager = null)
+    public function setDivisionManager(\AppBundle\Entity\Employee $divisionManager = null)
     {
-        $this->directManager = $directManager;
+        $this->divisionManager = $divisionManager;
 
         return $this;
     }
 
     /**
-     * Get directManager
+     * Get divisionManager
      *
      * @return \AppBundle\Entity\Employee
      */
-    public function getDirectManager()
+    public function getDivisionManager()
     {
-        return $this->directManager;
+        return $this->divisionManager;
     }
 
     /**
@@ -363,27 +343,51 @@ class Employee
     }
 
     /**
-     * Set team
+     * Set createdAt
      *
-     * @param \AppBundle\Entity\EmployeeTeam $team
+     * @param \DateTime $createdAt
      *
      * @return Employee
      */
-    public function setTeam(\AppBundle\Entity\EmployeeTeam $team = null)
+    public function setCreatedAt($createdAt)
     {
-        $this->team = $team;
+        $this->createdAt = $createdAt;
 
         return $this;
     }
 
     /**
-     * Get team
+     * Get createdAt
      *
-     * @return \AppBundle\Entity\EmployeeTeam
+     * @return \DateTime
      */
-    public function getTeam()
+    public function getCreatedAt()
     {
-        return $this->team;
+        return $this->createdAt;
+    }
+
+    /**
+     * Set updateAt
+     *
+     * @param \DateTime $updateAt
+     *
+     * @return Employee
+     */
+    public function setUpdateAt($updateAt)
+    {
+        $this->updateAt = $updateAt;
+
+        return $this;
+    }
+
+    /**
+     * Get updateAt
+     *
+     * @return \DateTime
+     */
+    public function getUpdateAt()
+    {
+        return $this->updateAt;
     }
 
     /**

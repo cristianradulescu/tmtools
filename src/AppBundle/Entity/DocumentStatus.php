@@ -5,13 +5,20 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * AquisitionBoughtService
+ * DocumentStatus
  *
- * @ORM\Table(name="aquisition_bought_service")
+ * @ORM\Table(name="document_status", uniqueConstraints={@ORM\UniqueConstraint(name="document_status_name_UNIQUE", columns={"name"})})
  * @ORM\Entity
  */
-class AquisitionBoughtService
+class DocumentStatus
 {
+    /**
+     * Constants for status ids
+     */
+    const STATUS_NEW = 1;
+    const STATUS_PENDING = 2;
+    const STATUS_COMPLETED = 3;
+
     /**
      * @var integer
      *
@@ -24,11 +31,9 @@ class AquisitionBoughtService
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=225, nullable=true)
+     * @ORM\Column(name="name", type="string", length=45, nullable=false)
      */
     private $name;
-
-
 
     /**
      * Get id
@@ -45,7 +50,7 @@ class AquisitionBoughtService
      *
      * @param string $name
      *
-     * @return AquisitionBoughtService
+     * @return DocumentStatus
      */
     public function setName($name)
     {
@@ -62,5 +67,13 @@ class AquisitionBoughtService
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->getName();
     }
 }

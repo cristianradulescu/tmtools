@@ -8,8 +8,20 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
 
+/**
+ * Class EmployeeAdmin
+ * @package AppBundle\Admin
+ */
 class EmployeeAdmin extends AbstractAdmin
 {
+    /**
+     * @var array
+     */
+    protected $datagridValues = array(
+        '_sort_by' => 'fullName',
+        '_sort_order' => 'ASC',
+    );
+
     /**
      * @param DatagridMapper $datagridMapper
      */
@@ -48,14 +60,13 @@ class EmployeeAdmin extends AbstractAdmin
             ->add('firstName')
             ->add('lastName')
             ->add('username')
-            ->add('emailAddress')
             ->add('birthday', 'sonata_type_date_picker', array(
                 'format' => 'dd-MM-yyyy'
             ))
             ->add('personalNumericCode')
             ->add('identityCardNumber')
             ->add('jobTitle')
-            ->add('directManager')
+            ->add('divisionManager')
             ->add('company')
         ;
     }
@@ -69,12 +80,11 @@ class EmployeeAdmin extends AbstractAdmin
             ->add('firstName')
             ->add('lastName')
             ->add('username')
-            ->add('emailAddress')
             ->add('birthday')
             ->add('personalNumericCode')
             ->add('identityCardNumber')
             ->add('jobTitle')
-            ->add('directManager')
+            ->add('divisionManager')
             ->add('company')
         ;
     }

@@ -18,4 +18,9 @@ parameters:
 
     travel_allowance: 32.5
 
-
+    # Travis CI
+    travis_database_host: "127.0.0.1"
+    travis_database_port: ""
+    travis_database_name: "tmtools"
+    travis_database_user: "travis"
+    travis_database_password: ""

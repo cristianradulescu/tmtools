@@ -5,19 +5,19 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Status
+ * DocumentType
  *
- * @ORM\Table(name="status")
+ * @ORM\Table(name="document_type", uniqueConstraints={@ORM\UniqueConstraint(name="document_type_name_UNIQUE", columns={"name"})})
  * @ORM\Entity
  */
-class Status
+class DocumentType
 {
     /**
-     * Place status ids in constants for easy access.
+     * Constant for type ids
      */
-    const STATUS_ID_NEW = 1;
-    const STATUS_ID_PENDING = 2;
-    const STATUS_ID_COMPLETED = 3;
+    const TYPE_TRAVEL = 1;
+    const TYPE_REIMBURSEMENT = 2;
+    const TYPE_SERVICE_AQUISITION = 3;
 
     /**
      * @var integer
@@ -35,7 +35,12 @@ class Status
      */
     private $name;
 
-
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="template", type="string", length=200, nullable=false)
+     */
+    private $template;
 
     /**
      * Get id
@@ -52,7 +57,7 @@ class Status
      *
      * @param string $name
      *
-     * @return Status
+     * @return DocumentType
      */
     public function setName($name)
     {
@@ -69,6 +74,30 @@ class Status
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * Set template
+     *
+     * @param string $template
+     *
+     * @return DocumentType
+     */
+    public function setTemplate($template)
+    {
+        $this->template = $template;
+
+        return $this;
+    }
+
+    /**
+     * Get template
+     *
+     * @return string
+     */
+    public function getTemplate()
+    {
+        return $this->template;
     }
 
     /**

@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * TravelDestination
  *
- * @ORM\Table(name="travel_destination", uniqueConstraints={@ORM\UniqueConstraint(name="name_UNIQUE", columns={"name"})})
+ * @ORM\Table(name="travel_destination", uniqueConstraints={@ORM\UniqueConstraint(name="travel_destination_name_UNIQUE", columns={"name"})})
  * @ORM\Entity
  */
 class TravelDestination
@@ -24,11 +24,9 @@ class TravelDestination
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=45, nullable=true)
+     * @ORM\Column(name="name", type="string", length=45, nullable=false)
      */
     private $name;
-
-
 
     /**
      * Get id
@@ -71,6 +69,4 @@ class TravelDestination
     {
         return $this->getName();
     }
-
-
 }

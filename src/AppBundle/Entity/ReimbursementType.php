@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * ReimbursementType
  *
- * @ORM\Table(name="reimbursement_type")
+ * @ORM\Table(name="reimbursement_type", uniqueConstraints={@ORM\UniqueConstraint(name="reimbursement_type_name_UNIQUE", columns={"name"})})
  * @ORM\Entity
  */
 class ReimbursementType
@@ -27,8 +27,6 @@ class ReimbursementType
      * @ORM\Column(name="name", type="string", length=45, nullable=true)
      */
     private $name;
-
-
 
     /**
      * Get id
