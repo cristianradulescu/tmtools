@@ -76,7 +76,7 @@ class Travel
     /**
      * @var \Document
      *
-     * @ORM\ManyToOne(targetEntity="Document")
+     * @ORM\OneToOne(targetEntity="Document")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="document_id", referencedColumnName="id")
      * })

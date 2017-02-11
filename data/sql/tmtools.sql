@@ -93,7 +93,7 @@ DELETE FROM `document_type`;
 /*!40000 ALTER TABLE `document_type` DISABLE KEYS */;
 INSERT INTO `document_type` (`id`, `name`, `template`) VALUES
   (1, 'Travel', 'travel_document.svg'),
-  (2, 'Reimbursement', 'reimbursement_document_svg'),
+  (2, 'Reimbursement', 'reimbursement_document.svg'),
   (3, 'Service quisition', 'service_aquisition_document.svg');
 /*!40000 ALTER TABLE `document_type` ENABLE KEYS */;
 
@@ -187,7 +187,7 @@ CREATE TABLE IF NOT EXISTS `reimbursement` (
   KEY `fk_reimbursement_type_id` (`type_id`),
   KEY `fk_reimbursement_employee_id` (`employee_id`),
   KEY `fk_reimbursement_document_id` (`document_id`),
-  CONSTRAINT `fk_reimbursement_document_id` FOREIGN KEY (`document_id`) REFERENCES `reimbursement_document` (`id`) ON UPDATE CASCADE,
+  CONSTRAINT `fk_reimbursement_document_id` FOREIGN KEY (`document_id`) REFERENCES `document` (`id`) ON UPDATE CASCADE,
   CONSTRAINT `fk_reimbursement_employee_id` FOREIGN KEY (`employee_id`) REFERENCES `employee` (`id`) ON UPDATE CASCADE,
   CONSTRAINT `fk_reimbursement_type_id` FOREIGN KEY (`type_id`) REFERENCES `reimbursement_type` (`id`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

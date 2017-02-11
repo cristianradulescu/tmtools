@@ -18,7 +18,7 @@ class EmployeeAdmin extends AbstractAdmin
      * @var array
      */
     protected $datagridValues = array(
-        '_sort_by' => 'fullName',
+        '_sort_by' => 'lastName',
         '_sort_order' => 'ASC',
     );
 

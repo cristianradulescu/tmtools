@@ -20,7 +20,7 @@ class TravelDocumentService extends DocumentService
     public function fillPlaceholders(Document $document)
     {
         parent::fillPlaceholders($document);
-        $travel = $document->getTravels()->first();
+        $travel = $document->getTravel();
 
         return array(
             'PLACEHOLDER_COST_CENTER' => $this->getCompany()->getCostCenter(),

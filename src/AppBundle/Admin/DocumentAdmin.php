@@ -19,8 +19,8 @@ class DocumentAdmin extends AbstractAdmin
      * @var array
      */
     protected $datagridValues = array(
-        '_sort_by' => 'id',
-        '_sort_order' => 'DESC',
+        '_sort_by' => 'status.id',
+        '_sort_order' => 'ASC',
     );
 
     /**
@@ -81,7 +81,7 @@ class DocumentAdmin extends AbstractAdmin
             ->add('type');
 
         if ($this->getSubject()->isTravelDocument()) {
-            $showMapper->add('travels');
+            $showMapper->add('travel');
         }
 
         if ($this->getSubject()->isReimbursementDocument()) {

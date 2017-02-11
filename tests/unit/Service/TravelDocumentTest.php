@@ -155,7 +155,7 @@ class TravelDocumentTest extends \PHPUnit_Framework_TestCase
         // travel document
         $travelDocument = m::mock('AppBundle\Entity\Document');
         $travelDocument->shouldReceive('getEmployee')->andReturn($employee);
-        $travelDocument->shouldReceive('getTravels')->andReturn(new ArrayCollection(array($travel)));
+        $travelDocument->shouldReceive('getTravel')->andReturn($travel);
 
         return $travelDocument;
     }

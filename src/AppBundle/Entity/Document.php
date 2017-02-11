@@ -53,6 +53,28 @@ class Document
     private $type;
 
     /**
+     * @var \Travel
+     *
+     * @ORM\OneToOne(
+     *     targetEntity="Travel",
+     *     mappedBy="document",
+     *     cascade={"persist"}
+     * )
+     */
+    private $travel;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\OneToMany(
+     *     targetEntity="Reimbursement",
+     *     mappedBy="document",
+     *     cascade={"persist"}
+     * )
+     */
+    private $reimbursements;
+
+    /**
      * @var \DateTime
      *
      * @ORM\Column(name="created_at", type="datetime", nullable=false)
@@ -71,6 +93,7 @@ class Document
      */
     public function __construct()
     {
+        $this->reimbursements = new \Doctrine\Common\Collections\ArrayCollection();
         $this->createdAt = new \DateTime();
         $this->updatedAt = new \DateTime();
     }
@@ -155,6 +178,26 @@ class Document
     public function getType()
     {
         return $this->type;
+    }
+
+    /**
+     * Get reimbursement
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getReimbursements()
+    {
+        return $this->reimbursements;
+    }
+
+    /**
+     * Get travel
+     *
+     * @return \Travel
+     */
+    public function getTravel()
+    {
+        return $this->travel;
     }
 
     /**
