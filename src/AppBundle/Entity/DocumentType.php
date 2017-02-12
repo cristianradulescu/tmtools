@@ -36,13 +36,6 @@ class DocumentType
     private $name;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="template", type="string", length=200, nullable=false)
-     */
-    private $template;
-
-    /**
      * Get id
      *
      * @return integer
@@ -74,30 +67,6 @@ class DocumentType
     public function getName()
     {
         return $this->name;
-    }
-
-    /**
-     * Set template
-     *
-     * @param string $template
-     *
-     * @return DocumentType
-     */
-    public function setTemplate($template)
-    {
-        $this->template = $template;
-
-        return $this;
-    }
-
-    /**
-     * Get template
-     *
-     * @return string
-     */
-    public function getTemplate()
-    {
-        return $this->template;
     }
 
     /**

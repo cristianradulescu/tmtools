@@ -17,16 +17,6 @@ use Symfony\Component\HttpFoundation\Response;
 class DocumentController extends CRUDController
 {
     /**
-     * Return the template used for document rendering.
-     *
-     * @return string
-     */
-    protected function getDocumentTemplate()
-    {
-        return 'AppBundle:Documents:'.$this->admin->getSubject()->getType()->getTemplate().'.twig';
-    }
-
-    /**
      * Return the corresponding service identifier.
      *
      * @return string
@@ -54,7 +44,7 @@ class DocumentController extends CRUDController
         $documentService = $this->get($this->getServiceId());
 
         return $this->render(
-            $this->getDocumentTemplate(),
+            'AppBundle:Documents:'.$documentService::DOCUMENT_TEMPLATE.'.twig',
             $documentService->fillPlaceholders($document)
         );
     }

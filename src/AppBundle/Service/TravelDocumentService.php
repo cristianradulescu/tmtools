@@ -12,6 +12,7 @@ use AppBundle\Entity\TravelDocument;
 class TravelDocumentService extends DocumentService
 {
     const SERVICE_ID = 'app.travel_document';
+    const DOCUMENT_TEMPLATE = 'travel_document.svg';
 
     /**
      * @param Document $document

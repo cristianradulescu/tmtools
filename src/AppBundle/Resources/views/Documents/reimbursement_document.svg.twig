@@ -1396,7 +1396,7 @@
           x="180"
           y="185"
           style="font-size:14px"
-          id="text392">{{PLACEHOLDER_EMPLOYEE_JOB_TITLE}}
+          id="text392">{{ PLACEHOLDER_EMPLOYEE_JOB_TITLE|trans({}, 'messages', 'ro') }}
     </text>
     <text
           x="93"
@@ -1435,7 +1435,7 @@
             id="text402"
             style="font-size:12px"
             x="{{ coords['type']['x'] }}"
-            y="{{ coords['type']['y'] + row_increment }}">{{ reimbursement.getType() }}
+            y="{{ coords['type']['y'] + row_increment }}">{{ reimbursement.getType()|trans({}, 'messages', 'ro') }}
         </text>
         <text
             id="text404"

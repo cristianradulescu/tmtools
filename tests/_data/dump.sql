@@ -83,7 +83,6 @@ INSERT INTO `document_status` (`id`, `name`) VALUES
 CREATE TABLE IF NOT EXISTS `document_type` (
 `id` int(11) NOT NULL AUTO_INCREMENT,
 `name` varchar(45) NOT NULL,
-`template` varchar(200) NOT NULL,
 PRIMARY KEY (`id`),
 UNIQUE KEY `document_type_name_UNIQUE` (`name`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
@@ -91,10 +90,10 @@ UNIQUE KEY `document_type_name_UNIQUE` (`name`)
 -- Dumping data for table tmtools.document_type: ~3 rows (approximately)
 DELETE FROM `document_type`;
 /*!40000 ALTER TABLE `document_type` DISABLE KEYS */;
-INSERT INTO `document_type` (`id`, `name`, `template`) VALUES
-(1, 'Travel', 'travel_document.svg'),
-(2, 'Reimbursement', 'reimbursement_document.svg'),
-(3, 'Service quisition', 'service_aquisition_document.svg');
+INSERT INTO `document_type` (`id`, `name`) VALUES
+(1, 'Travel'),
+(2, 'Reimbursement'),
+(3, 'Service quisition');
 /*!40000 ALTER TABLE `document_type` ENABLE KEYS */;
 
 
