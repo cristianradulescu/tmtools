@@ -2,6 +2,8 @@
 
 namespace AppBundle\Admin;
 
+use AppBundle\Entity\DocumentStatus;
+use AppBundle\Entity\DocumentType;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
@@ -63,6 +65,12 @@ class TravelAdmin extends AbstractAdmin
             'format' => 'dd-MM-yyyy HH:mm'
         );
 
+        $choicesQuery = $this->getModelManager()->createQuery('AppBundle\Entity\Document', 'doc')
+            ->where('doc.status = :status')
+            ->andWhere('doc.type = :type')
+            ->setParameter('status', DocumentStatus::STATUS_NEW)
+            ->setParameter('type', DocumentType::TYPE_TRAVEL);
+
         $formMapper
             ->add('employee')
             ->add('purpose')
@@ -74,7 +82,14 @@ class TravelAdmin extends AbstractAdmin
             ->add('destinationArrivalTime', 'sonata_type_datetime_picker', $dateTimePickerSettings)
             ->add('destinationLeaveTime', 'sonata_type_datetime_picker', $dateTimePickerSettings)
             ->add('departureArrivalTime', 'sonata_type_datetime_picker', $dateTimePickerSettings)
-            ->add('document')
+            ->add('document',
+                'sonata_type_model',
+                array('class' => 'AppBundle\Entity\Document',
+                    'multiple' => false,
+                    'query' => $choicesQuery,
+                    'btn_add' => false
+                )
+            )
         ;
     }
 

@@ -2,6 +2,8 @@
 
 namespace AppBundle\Admin;
 
+use AppBundle\Entity\DocumentStatus;
+use AppBundle\Entity\DocumentType;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
@@ -70,13 +72,26 @@ class ReimbursementAdmin extends AbstractAdmin
      */
     protected function configureFormFields(FormMapper $formMapper)
     {
+        $choicesQuery = $this->getModelManager()->createQuery('AppBundle\Entity\Document', 'doc')
+            ->where('doc.status = :status')
+            ->andWhere('doc.type = :type')
+            ->setParameter('status', DocumentStatus::STATUS_NEW)
+            ->setParameter('type', DocumentType::TYPE_REIMBURSEMENT);
+
         $formMapper
             ->add('employee')
             ->add('type')
             ->add('value')
             ->add('date', 'sonata_type_date_picker', array('format' => 'dd-MM-yyyy'))
             ->add('number')
-            ->add('document')
+            ->add('document',
+                'sonata_type_model',
+                array('class' => 'AppBundle\Entity\Document',
+                    'multiple' => false,
+                    'query' => $choicesQuery,
+                    'btn_add' => false
+                )
+            )
         ;
     }
 

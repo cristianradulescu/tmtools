@@ -268,8 +268,7 @@ class Document
      */
     public function getTotalAmount()
     {
-        if ($this->isReimbursementDocument())
-        {
+        if ($this->isReimbursementDocument()) {
             $total = 0;
             foreach ($this->getReimbursements() as $reimbursement) {
                 $total += $reimbursement->getValue();
@@ -278,8 +277,7 @@ class Document
             return round($total, 2);
         }
 
-        if ($this->isTravelDocument())
-        {
+        if ($this->isTravelDocument()) {
             return round($this->getTravel()->getNumberOfDaysOnTravel() * Travel::TRAVEL_ALLOWANCE, 2);
         }
     }
@@ -289,6 +287,17 @@ class Document
      */
     public function __toString()
     {
-        return $this->getType().' - '.$this->getEmployee();
+        $representation = $this->getType().' - '.$this->getEmployee();
+
+        if ($this->isReimbursementDocument()) {
+            return $representation.' ('.$this->getStatus().')';
+        }
+
+        if ($this->isTravelDocument()) {
+            return  $representation.' / '.$this->getTravel()->getDateStart()->format('Y-m-d').
+                ' ('.$this->getStatus().')';
+        }
+
+        return $representation;
     }
 }
