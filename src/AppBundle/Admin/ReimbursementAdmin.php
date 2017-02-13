@@ -49,7 +49,7 @@ class ReimbursementAdmin extends AbstractAdmin
             ->add('type')
             ->add('value')
             ->add('date', 'date', array(
-                'format' => 'Y-M-d'
+                'format' => 'd M Y'
             ))
             ->add('status',
                 'string',
@@ -89,7 +89,9 @@ class ReimbursementAdmin extends AbstractAdmin
                 array('class' => 'AppBundle\Entity\Document',
                     'multiple' => false,
                     'query' => $choicesQuery,
-                    'btn_add' => false
+                    'btn_add' => false,
+                    'placeholder' => '',
+                    'required' => false
                 )
             )
         ;

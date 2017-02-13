@@ -428,6 +428,20 @@ class Travel
     }
 
     /**
+     * Get the status via associated document.
+     *
+     * If the travel is not yet associated with a document, will return an empty status.
+     *
+     * @return Status
+     */
+    public function getStatus()
+    {
+        return $this->getDocument()
+            ? $this->getDocument()->getStatus()
+            : new DocumentStatus();
+    }
+
+    /**
      * @return int
      */
     public function getNumberOfDaysOnTravel()

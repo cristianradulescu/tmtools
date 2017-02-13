@@ -43,8 +43,14 @@ class TravelAdmin extends AbstractAdmin
         $listMapper
             ->add('employee')
             ->add('purpose')
-            ->add('dateStart')
-            ->add('dateEnd')
+            ->add('dateStart', 'date', array('format' => 'd M Y'))
+            ->add('dateEnd', 'date', array('format' => 'd M Y'))
+            ->add('status',
+                'string',
+                array(
+                    'template' => 'AppBundle:CRUD:list_field_status.html.twig'
+                )
+            )
             ->add('_action', null, array(
                 'actions' => array(
                     'show' => array(),
@@ -87,7 +93,9 @@ class TravelAdmin extends AbstractAdmin
                 array('class' => 'AppBundle\Entity\Document',
                     'multiple' => false,
                     'query' => $choicesQuery,
-                    'btn_add' => false
+                    'btn_add' => false,
+                    'placeholder' => '',
+                    'required' => false
                 )
             )
         ;
@@ -105,6 +113,7 @@ class TravelAdmin extends AbstractAdmin
             ->add('destinationArrivalTime')
             ->add('destinationLeaveTime')
             ->add('departureArrivalTime')
+            ->add('document')
         ;
     }
 }
