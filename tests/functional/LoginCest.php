@@ -13,7 +13,7 @@ class LoginCest
         $I->am('admin user');
         $I->wantTo('Login to administration area with correct credentials');
         $I->lookForwardTo('access all features of the administration area');
-        $I->amOnPage('/login');
+        $I->amOnPage('/app/user/list');
         $I->fillField('_username', 'test');
         $I->fillField('_password', 'test123');
         $I->click('Log in');

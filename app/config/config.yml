@@ -78,6 +78,8 @@ sonata_admin:
     show_mosaic_button: false
     options:
         title_mode: single_text
+    templates:
+        layout: AppBundle::standard_layout.html.twig
     dashboard:
         groups:
             hr:
