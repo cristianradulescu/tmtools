@@ -24,3 +24,7 @@ parameters:
     travis_database_name: "tmtools"
     travis_database_user: "travis"
     travis_database_password: ""
+
+    # FOS User
+    fos_user_from_email_address: "me@tmtools"
+    fos_user_from_email_sender_name: "Sender Name"
