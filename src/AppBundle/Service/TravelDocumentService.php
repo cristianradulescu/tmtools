@@ -4,7 +4,6 @@ namespace AppBundle\Service;
 
 use AppBundle\Entity\Document;
 use AppBundle\Entity\Travel;
-use AppBundle\Entity\TravelDocument;
 
 /**
  * Class TravelDocumentService

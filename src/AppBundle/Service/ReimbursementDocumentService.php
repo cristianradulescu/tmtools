@@ -3,7 +3,6 @@
 namespace AppBundle\Service;
 
 use AppBundle\Entity\Document;
-use AppBundle\Entity\ReimbursementDocument;
 
 /**
  * Class ReimbursementDocumentService
