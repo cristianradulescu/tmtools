@@ -3,6 +3,7 @@
 namespace AppBundle\Service;
 
 use AppBundle\Entity\Document;
+use AppBundle\Entity\Travel;
 use AppBundle\Entity\TravelDocument;
 
 /**
@@ -21,6 +22,8 @@ class TravelDocumentService extends DocumentService
     public function fillPlaceholders(Document $document)
     {
         parent::fillPlaceholders($document);
+
+        /** @var Travel $travel */
         $travel = $document->getTravel();
 
         return array(
@@ -42,8 +45,8 @@ class TravelDocumentService extends DocumentService
             'PLACEHOLDER_MANAGER_FIRST_NAME' => $this->getCompany()->getDivisionManager()->getFirstName(),
             'PLACEHOLDER_EMPLOYEE_LAST_NAME' => $this->getEmployee()->getLastName(),
             'PLACEHOLDER_EMPLOYEE_FIRST_NAME' => $this->getEmployee()->getFirstName(),
-            'days_on_travel' => $travel->getDateEnd()
-                    ->diff($travel->getDateStart())->days + 1
+            'PLACEHOLDER_TRAVEL_TOTAL_AMOUNT' => $document->getTotalAmount(),
+            'days_on_travel' => $travel->getNumberOfDaysOnTravel()
         );
     }
 }

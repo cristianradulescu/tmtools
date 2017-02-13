@@ -16,8 +16,6 @@ parameters:
     # A secret key that's used to generate certain security-related tokens
     secret:            123kmde94jfsdlfk3r9fs;dfk@(@*YGE&G!!@#!#EDqWE
 
-    travel_allowance: 32.5
-
     # Travis CI
     travis_database_host: "127.0.0.1"
     travis_database_port: ""

@@ -37,8 +37,6 @@ twig:
     strict_variables: "%kernel.debug%"
     form_themes:
         - 'SonataCoreBundle:Form:datepicker.html.twig'
-    globals:
-        travel_allowance: "%travel_allowance%"
 
 # Doctrine Configuration
 doctrine:

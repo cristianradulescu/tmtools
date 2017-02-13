@@ -44,6 +44,7 @@ class DocumentAdmin extends AbstractAdmin
             ->add('employee')
             ->add('status', 'string', array('template' => 'AppBundle:CRUD:list_field_status.html.twig'))
             ->add('type')
+            ->add('totalAmount', '', array('label' => 'Total'))
             ->add('_action', null, array(
                 'actions' => array(
                     'print' => array(

@@ -37,6 +37,7 @@ class ReimbursementDocumentServiceTest extends \PHPUnit_Framework_TestCase
                 'PLACEHOLDER_EMPLOYEE_JOB_TITLE' => $dataProvider['employee_job_title'],
                 'PLACEHOLDER_DIVISION_MANAGER_LAST_NAME' => $dataProvider['division_manager_last_name'],
                 'PLACEHOLDER_DIVISION_MANAGER_FIRST_NAME' => $dataProvider['division_manager_first_name'],
+                'PLACEHOLDER_REIMBURSEMENT_TOTAL_AMOUNT' => $dataProvider['reimbursement_total_amount'],
                 'reimbursement_collection' => $dataProvider['reimbursement_collection']
             ),
             (new ReimbursementDocumentService())->fillPlaceholders(
@@ -60,6 +61,7 @@ class ReimbursementDocumentServiceTest extends \PHPUnit_Framework_TestCase
                     'employee_job_title' => 'Software Developer',
                     'division_manager_last_name' => 'Manager',
                     'division_manager_first_name' => 'Bill',
+                    'reimbursement_total_amount' => 930.97,
                     'reimbursement_collection' => new ArrayCollection(
                         array(
                             new Reimbursement(),
@@ -77,6 +79,7 @@ class ReimbursementDocumentServiceTest extends \PHPUnit_Framework_TestCase
                     'employee_job_title' => 'Manager',
                     'division_manager_last_name' => 'Doe',
                     'division_manager_first_name' => 'Alice',
+                    'reimbursement_total_amount' => 231.50,
                     'reimbursement_collection' => new ArrayCollection(
                         array(
                             new Reimbursement()
@@ -114,6 +117,7 @@ class ReimbursementDocumentServiceTest extends \PHPUnit_Framework_TestCase
         $reimbursementDocument = m::mock('AppBundle\Entity\Document');
         $reimbursementDocument->shouldReceive('getEmployee')->andReturn($employee);
         $reimbursementDocument->shouldReceive('getReimbursements')->andReturn($dataProvider['reimbursement_collection']);
+        $reimbursementDocument->shouldReceive('getTotalAmount')->andReturn($dataProvider['reimbursement_total_amount']);
 
         return $reimbursementDocument;
     }

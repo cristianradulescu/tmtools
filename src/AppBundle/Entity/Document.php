@@ -193,7 +193,7 @@ class Document
     /**
      * Get travel
      *
-     * @return \Travel
+     * @return Travel
      */
     public function getTravel()
     {
@@ -261,6 +261,27 @@ class Document
     public function isReimbursementDocument()
     {
         return DocumentType::TYPE_REIMBURSEMENT === $this->getType()->getId();
+    }
+
+    /**
+     * @return float
+     */
+    public function getTotalAmount()
+    {
+        if ($this->isReimbursementDocument())
+        {
+            $total = 0;
+            foreach ($this->getReimbursements() as $reimbursement) {
+                $total += $reimbursement->getValue();
+            }
+
+            return round($total, 2);
+        }
+
+        if ($this->isTravelDocument())
+        {
+            return round($this->getTravel()->getNumberOfDaysOnTravel() * Travel::TRAVEL_ALLOWANCE, 2);
+        }
     }
 
     /**

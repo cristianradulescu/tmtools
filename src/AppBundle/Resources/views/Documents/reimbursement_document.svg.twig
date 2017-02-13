@@ -1413,7 +1413,6 @@
 
     <!-- Reimbursement table -->
     <g id="g3823">
-    {% set reimbursementTotal = 0 %}
     {%
         set coords = {
           'index': {'x' : 565, 'y': 175},
@@ -1455,8 +1454,6 @@
             x="{{ coords['value']['x'] }}"
             y="{{ coords['value']['y'] + row_increment }}">{{ reimbursement.getValue() }}
         </text>
-
-        {% set reimbursementTotal = reimbursementTotal + reimbursement.getValue() %}
     {% endfor %}
     </g>
     <!-- /Reimbursement table -->
@@ -1465,7 +1462,7 @@
         x="850"
         y="582"
         style="font-size:14px"
-        id="text398">{{ reimbursementTotal }}
+        id="text398">{{ PLACEHOLDER_REIMBURSEMENT_TOTAL_AMOUNT }}
     </text>
     <!-- /Placeholders -->
 

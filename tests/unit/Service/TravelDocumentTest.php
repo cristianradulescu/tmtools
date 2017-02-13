@@ -49,6 +49,7 @@ class TravelDocumentTest extends \PHPUnit_Framework_TestCase
                 'PLACEHOLDER_MANAGER_FIRST_NAME' => $dataProvider['manager_first_name'],
                 'PLACEHOLDER_EMPLOYEE_LAST_NAME' => $dataProvider['employee_last_name'],
                 'PLACEHOLDER_EMPLOYEE_FIRST_NAME' => $dataProvider['employee_first_name'],
+                'PLACEHOLDER_TRAVEL_TOTAL_AMOUNT' => $dataProvider['travel_total_amount'],
                 'days_on_travel' => $dataProvider['days_on_travel']
             ),
             (new TravelDocumentService())->fillPlaceholders($this->mockTravelDocument($dataProvider))
@@ -82,6 +83,7 @@ class TravelDocumentTest extends \PHPUnit_Framework_TestCase
                     'manager_first_name' => 'John',
                     'employee_last_name' => 'Employee',
                     'employee_first_name' => 'Bill',
+                    'travel_total_amount' => 32.5*3,
                     'days_on_travel' => 3
                 )
             ),
@@ -106,6 +108,7 @@ class TravelDocumentTest extends \PHPUnit_Framework_TestCase
                     'manager_first_name' => 'Alice',
                     'employee_last_name' => 'Employee',
                     'employee_first_name' => 'Charlie',
+                    'travel_total_amount' => 32.5,
                     'days_on_travel' => 1
                 )
             )
@@ -151,11 +154,13 @@ class TravelDocumentTest extends \PHPUnit_Framework_TestCase
         $travel->shouldReceive('getDepartureArrivalTime')->andReturn($dataProvider['startpoint_arrival_time']);
         $travel->shouldReceive('getPurpose')->andReturn($dataProvider['travel_purpose']);
         $travel->shouldReceive('getDestination')->andReturn($dataProvider['travel_destination']);
+        $travel->shouldReceive('getNumberOfDaysOnTravel')->andReturn($dataProvider['days_on_travel']);
 
         // travel document
         $travelDocument = m::mock('AppBundle\Entity\Document');
         $travelDocument->shouldReceive('getEmployee')->andReturn($employee);
         $travelDocument->shouldReceive('getTravel')->andReturn($travel);
+        $travelDocument->shouldReceive('getTotalAmount')->andReturn($dataProvider['travel_total_amount']);
 
         return $travelDocument;
     }

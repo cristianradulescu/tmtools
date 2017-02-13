@@ -12,6 +12,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Travel
 {
+    const TRAVEL_ALLOWANCE = 32.5;
+
     /**
      * @var integer
      *
@@ -423,6 +425,14 @@ class Travel
     public function getUpdatedAt()
     {
         return $this->updatedAt;
+    }
+
+    /**
+     * @return int
+     */
+    public function getNumberOfDaysOnTravel()
+    {
+        return (int) $this->getDateEnd()->diff($this->getDateStart())->days + 1;
     }
 
     /**

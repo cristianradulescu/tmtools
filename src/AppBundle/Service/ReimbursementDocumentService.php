@@ -29,6 +29,7 @@ class ReimbursementDocumentService extends DocumentService
             'PLACEHOLDER_EMPLOYEE_JOB_TITLE' => $this->getEmployee()->getJobTitle(),
             'PLACEHOLDER_DIVISION_MANAGER_LAST_NAME' => $this->getCompany()->getDivisionManager()->getLastName(),
             'PLACEHOLDER_DIVISION_MANAGER_FIRST_NAME' => $this->getCompany()->getDivisionManager()->getFirstName(),
+            'PLACEHOLDER_REIMBURSEMENT_TOTAL_AMOUNT' => $document->getTotalAmount(),
             'reimbursement_collection' => $document->getReimbursements()
         );
     }
