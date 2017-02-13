@@ -264,12 +264,20 @@ class Document
     }
 
     /**
+     * @return bool
+     */
+    public function hasTravel()
+    {
+        return null !== $this->getTravel();
+    }
+
+    /**
      * @return float
      */
     public function getTotalAmount()
     {
+        $total = 0;
         if ($this->isReimbursementDocument()) {
-            $total = 0;
             foreach ($this->getReimbursements() as $reimbursement) {
                 $total += $reimbursement->getValue();
             }
@@ -277,9 +285,11 @@ class Document
             return round($total, 2);
         }
 
-        if ($this->isTravelDocument()) {
+        if ($this->isTravelDocument() && $this->hasTravel()) {
             return round($this->getTravel()->getNumberOfDaysOnTravel() * Travel::TRAVEL_ALLOWANCE, 2);
         }
+
+        return $total;
     }
 
     /**
@@ -288,7 +298,7 @@ class Document
     public function __toString()
     {
         $representation = $this->getType().' - '.$this->getEmployee();
-        if ($this->isTravelDocument() && null !== $this->getTravel()) {
+        if ($this->isTravelDocument() && $this->hasTravel()) {
             return  $representation.', '.$this->getTravel()->getDateStart()->format('d M Y');
         }
 
