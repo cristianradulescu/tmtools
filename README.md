@@ -18,22 +18,20 @@ For local development, I use Docker (with docker-composer). The setup is found i
 ## 3. Application's structure
 The main sections are:
 * 3.1. HR
-* 3.2. Travel
-* 3.3. Reimbursement
+* 3.2. Accounting
+* 3.3. Travel
 * 3.4. Admin
 
 ### 3.1. HR
 This is where the employees' details can be managed.
 
-### 3.2. Travel
-In this section you can generate the documents which contain the travel details. You can also manage generic destinations and travel purposes.
+### 3.2. Accounting
+Create the documents which contain the travel or reimbursement details.
 
 On the _Travel Documents_ list page there is the _Print_ button which generates the document in a printable format.
 
-### 3.3. Reimbursement
-In this section you can generate the documents which contain the reimbursement details.
-
-On the _Reimbursement Documents_ list page there is the _Print_ button which generates the document in a printable format.
+### 3.3. Travel
+Manage generic destinations and travel purposes.
 
 ### 3.4. Admin
 Manage application's users (add, delete, set permissions...).
