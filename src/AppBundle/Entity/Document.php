@@ -288,14 +288,8 @@ class Document
     public function __toString()
     {
         $representation = $this->getType().' - '.$this->getEmployee();
-
-        if ($this->isReimbursementDocument()) {
-            return $representation.' ('.$this->getStatus().')';
-        }
-
-        if ($this->isTravelDocument()) {
-            return  $representation.' / '.$this->getTravel()->getDateStart()->format('Y-m-d').
-                ' ('.$this->getStatus().')';
+        if ($this->isTravelDocument() && null !== $this->getTravel()) {
+            return  $representation.', '.$this->getTravel()->getDateStart()->format('d M Y');
         }
 
         return $representation;

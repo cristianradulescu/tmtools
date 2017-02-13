@@ -441,7 +441,7 @@ class Travel
     public function __toString()
     {
         return $this->getEmployee().' - '.$this->getPurpose()
-            .' ('.$this->getDateStart()->format('Y-m-d')
-            .' / '.$this->getDateEnd()->format('Y-m-d').')';
+            .' ('.$this->getDateStart()->format('d M Y')
+            .' / '.$this->getDateEnd()->format('d M Y').')';
     }
 }
