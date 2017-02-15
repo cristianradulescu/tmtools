@@ -50,28 +50,6 @@ class DocumentController extends CRUDController
     }
 
     /**
-     * Clone the travel document in order to change it's details.
-     *
-     * This is useful when you need to create travel documents with the same details for more employees. The action
-     * redirects to the edit page for the cloned object, in order to allow the user to edit the details.
-     *
-     * @return RedirectResponse
-     */
-    public function cloneAction()
-    {
-        /** @var TravelDocument $object */
-        $object = $this->admin->getSubject();
-        $clonedObject = clone $object;
-        $clonedObject = $this->admin->create($clonedObject);
-
-        $this->addFlash(
-            'sonata_flash_success',
-            'The travel document was successfully cloned. Please edit the details of the new document.'
-        );
-        return new RedirectResponse($this->admin->generateUrl('edit', array('id' => $clonedObject->getId())));
-    }
-
-    /**
      * @param ProxyQueryInterface $selectedModelQuery
      * @param Request|null $request
      * @return RedirectResponse

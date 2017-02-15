@@ -8,6 +8,7 @@ use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
+use Sonata\AdminBundle\Route\RouteCollection;
 use Sonata\AdminBundle\Show\ShowMapper;
 
 /**
@@ -53,6 +54,9 @@ class TravelAdmin extends AbstractAdmin
             )
             ->add('_action', null, array(
                 'actions' => array(
+                    'clone' => array(
+                        'template' => 'AppBundle:CRUD:list__action_clone.html.twig'
+                    ),
                     'show' => array(),
                     'edit' => array(),
                     'delete' => array(),
@@ -115,5 +119,13 @@ class TravelAdmin extends AbstractAdmin
             ->add('departureArrivalTime')
             ->add('document')
         ;
+    }
+
+    /**
+     * @param RouteCollection $collection
+     */
+    protected function configureRoutes(RouteCollection $collection)
+    {
+        $collection->add('clone');
     }
 }

@@ -100,7 +100,6 @@ class DocumentAdmin extends AbstractAdmin
     protected function configureRoutes(RouteCollection $collection)
     {
         $collection->add('print');
-        $collection->add('clone');
     }
 
     /**
