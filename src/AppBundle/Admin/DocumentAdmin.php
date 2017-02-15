@@ -116,6 +116,10 @@ class DocumentAdmin extends AbstractAdmin
             'label' => 'Mark as Completed',
             'ask_confirmation' => true
         );
+        $actions['generateExpensesReport'] = array(
+            'label' => 'Generate report',
+            'ask_confirmation' => false
+        );
 
         return $actions;
     }

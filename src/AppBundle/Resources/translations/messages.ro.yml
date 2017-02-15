@@ -6,6 +6,7 @@ Taxi receipt: Bon taxi
 Train ticket: Bilet tren
 Bill: Factura
 Travel allowance: Diurna
+Travel allowance %nb_days% days: Diurna %nb_days% zile
 
 # Employee job titles
 Manager: Manager
@@ -14,3 +15,12 @@ Developer: Programator
 
 # Travel destinations
 Bucharest: Bucuresti
+
+# Travel purposes
+Meeting: Sedinta
+Planning: Planificare
+Company event: Eveniment companie
+Presentation: Prezentare
+Course: Curs
+Training: Instruire
+Black Friday campaign: Campanie Black Friday

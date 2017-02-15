@@ -2,7 +2,10 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Document;
 use AppBundle\Entity\DocumentStatus;
+use AppBundle\Entity\Reimbursement;
+use AppBundle\Entity\Travel;
 use AppBundle\Service\DocumentService;
 use Sonata\AdminBundle\Controller\CRUDController;
 use Sonata\AdminBundle\Datagrid\ProxyQueryInterface;
@@ -72,6 +75,42 @@ class DocumentController extends CRUDController
     }
 
     /**
+     * Generate a simple html table report, to be copy/pasted in an email.
+     *
+     * @param ProxyQueryInterface $selectedModelQuery
+     * @param Request|null $request
+     * @return Response
+     */
+    public function batchActionGenerateExpensesReport(ProxyQueryInterface $selectedModelQuery, Request $request = null)
+    {
+        $selectedModels = $selectedModelQuery->execute();
+        $report = array();
+
+        try {
+            /** @var Document $document **/
+            foreach ($selectedModels as $document) {
+                if ($document->isReimbursementDocument()) {
+                    $report = array_merge($report, $this->generateReimbursementExpensesReportByDocument($document));
+                }
+                if ($document->isTravelDocument() && $document->hasTravel()) {
+                    $report = array_merge($report, $this->generateTravelExpensesReportByDocument($document));
+                }
+            }
+        } catch (\Exception $e) {
+            $this->addFlash('sonata_flash_error', $e->getMessage());
+
+            return new RedirectResponse(
+                $this->admin->generateUrl('list', array('filter' => $this->admin->getFilterParameters()))
+            );
+        }
+
+        return $this->render(
+            'AppBundle::document_expenses_report.html.twig',
+            array('report' => $report)
+        );
+    }
+
+    /**
      * Common method used for status change batch actions.
      *
      * @param ProxyQueryInterface $selectedModelQuery
@@ -107,5 +146,52 @@ class DocumentController extends CRUDController
         return new RedirectResponse(
             $this->admin->generateUrl('list', array('filter' => $this->admin->getFilterParameters()))
         );
+    }
+
+    /**
+     * @param Document $document
+     * @return array
+     */
+    protected function generateReimbursementExpensesReportByDocument(Document $document)
+    {
+        $reimbursementsReport = array();
+        $reimbursementReport = array();
+        $reimbursementReport['employee'] = (string) $document->getEmployee();
+
+        /** @var Reimbursement $reimbursement */
+        foreach ($document->getReimbursements() as $reimbursement) {
+            $reimbursementReport['type'] = $this->trans(
+                (string) $reimbursement->getType(),
+                array(),
+                'messages',
+                'ro'
+            );
+            $reimbursementReport['amount'] = (string) $reimbursement->getValue();
+            $reimbursementsReport[] = $reimbursementReport;
+        }
+
+        return $reimbursementsReport;
+    }
+
+    /**
+     * @param Document $document
+     * @return array
+     */
+    protected function generateTravelExpensesReportByDocument(Document $document)
+    {
+        $travelReport = array();
+        $travelReport['employee'] = (string) $document->getEmployee();
+
+        /** @var Travel $travel */
+        $travel = $document->getTravel();
+        $travelReport['type'] = $this->trans(
+            'Travel allowance %nb_days% days',
+            array('%nb_days%' => $travel->getNumberOfDaysOnTravel()),
+            'messages',
+            'ro'
+        );
+        $travelReport['amount'] = (string) 32.5 * $travel->getNumberOfDaysOnTravel();
+
+        return array($travelReport);
     }
 }
