@@ -278,6 +278,75 @@ INSERT INTO `travel_purpose` (`id`, `name`) VALUES
 (2, 'Planning'),
 (4, 'Presentation');
 /*!40000 ALTER TABLE `travel_purpose` ENABLE KEYS */;
+
+-- Dumping structure for table tmtools.aquisition
+CREATE TABLE IF NOT EXISTS `aquisition` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `service_id` int(11) NOT NULL,
+  `supplier_id` int(11) NOT NULL,
+  `document_id` int(11) DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `fk_aquisition_service_id` (`service_id`),
+  KEY `fk_aquisition_supplier_id` (`supplier_id`),
+  KEY `fk_aquisition_document_id` (`document_id`),
+  CONSTRAINT `fk_aquisition_document_id` FOREIGN KEY (`document_id`) REFERENCES `document` (`id`) ON UPDATE CASCADE,
+  CONSTRAINT `fk_aquisition_service_id` FOREIGN KEY (`service_id`) REFERENCES `service` (`id`) ON UPDATE CASCADE,
+  CONSTRAINT `fk_aquisition_supplier_id` FOREIGN KEY (`supplier_id`) REFERENCES `supplier` (`id`) ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+-- Dumping data for table tmtools.aquisition: ~0 rows (approximately)
+DELETE FROM `aquisition`;
+/*!40000 ALTER TABLE `aquisition` DISABLE KEYS */;
+/*!40000 ALTER TABLE `aquisition` ENABLE KEYS */;
+
+
+-- Dumping structure for table tmtools.bill
+CREATE TABLE IF NOT EXISTS `bill` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `number` int(11) NOT NULL,
+  `value` int(11) NOT NULL,
+  `aquisition_id` int(11) NOT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `fk_bill_squisition_id` (`aquisition_id`),
+  CONSTRAINT `fk_bill_squisition_id` FOREIGN KEY (`aquisition_id`) REFERENCES `aquisition` (`id`) ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- Dumping data for table tmtools.bill: ~0 rows (approximately)
+DELETE FROM `bill`;
+/*!40000 ALTER TABLE `bill` DISABLE KEYS */;
+/*!40000 ALTER TABLE `bill` ENABLE KEYS */;
+
+
+-- Dumping structure for table tmtools.service
+CREATE TABLE IF NOT EXISTS `service` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- Dumping data for table tmtools.service: ~0 rows (approximately)
+DELETE FROM `service`;
+/*!40000 ALTER TABLE `service` DISABLE KEYS */;
+/*!40000 ALTER TABLE `service` ENABLE KEYS */;
+
+
+-- Dumping structure for table tmtools.supplier
+CREATE TABLE IF NOT EXISTS `supplier` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) NOT NULL,
+  `code` varchar(50) NOT NULL,
+  `bank_accounts` longtext NOT NULL COMMENT '(DC2Type:array)',
+  `created_at` datetime NOT NULL,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- Dumping data for table tmtools.supplier: ~0 rows (approximately)
+DELETE FROM `supplier`;
+
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

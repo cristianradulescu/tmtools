@@ -56,6 +56,30 @@
             <argument>AppBundle\Entity\TravelPurpose</argument>
             <argument>SonataAdminBundle:CRUD</argument>
         </service>
+        <service id="app.admin.service" class="AppBundle\Admin\ServiceAdmin">
+            <tag name="sonata.admin" manager_type="orm" group="aquisition" label="Services"/>
+            <argument>null</argument>
+            <argument>AppBundle\Entity\Service</argument>
+            <argument>SonataAdminBundle:CRUD</argument>
+        </service>
+        <service id="app.admin.supplier" class="AppBundle\Admin\SupplierAdmin">
+            <tag name="sonata.admin" manager_type="orm" group="aquisition" label="Suppliers"/>
+            <argument>null</argument>
+            <argument>AppBundle\Entity\Supplier</argument>
+            <argument>SonataAdminBundle:CRUD</argument>
+        </service>
+        <service id="app.admin.aquisition" class="AppBundle\Admin\AquisitionAdmin">
+            <tag name="sonata.admin" manager_type="orm" group="accounting" label="Aquisitions"/>
+            <argument>null</argument>
+            <argument>AppBundle\Entity\Aquisition</argument>
+            <argument>SonataAdminBundle:CRUD</argument>
+        </service>
+        <service id="app.admin.bill" class="AppBundle\Admin\BillAdmin">
+            <tag name="sonata.admin" manager_type="orm" group="accounting" label="Aquisition bills"/>
+            <argument>null</argument>
+            <argument>AppBundle\Entity\Bill</argument>
+            <argument>SonataAdminBundle:CRUD</argument>
+        </service>
         <service id="app.admin.user" class="AppBundle\Admin\UserAdmin">
             <tag name="sonata.admin" manager_type="orm" group="admin" label="Users"/>
             <argument>null</argument>
