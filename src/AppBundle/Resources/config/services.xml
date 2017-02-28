@@ -5,6 +5,7 @@
         <!-- App -->
         <service id="app.travel_document" class="AppBundle\Service\TravelDocumentService"/>
         <service id="app.reimbursement_document" class="AppBundle\Service\ReimbursementDocumentService"/>
+        <service id="app.aquisition_document" class="AppBundle\Service\AquisitionDocumentService"/>
         <!-- /App -->
 
         <!-- Admin -->

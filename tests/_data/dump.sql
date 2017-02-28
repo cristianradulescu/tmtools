@@ -93,7 +93,7 @@ DELETE FROM `document_type`;
 INSERT INTO `document_type` (`id`, `name`) VALUES
 (1, 'Travel'),
 (2, 'Reimbursement'),
-(3, 'Service quisition');
+(3, 'Aquisition');
 /*!40000 ALTER TABLE `document_type` ENABLE KEYS */;
 
 

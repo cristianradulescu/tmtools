@@ -26,9 +26,7 @@ class DocumentController extends CRUDController
      */
     protected function getServiceId()
     {
-        $documentTypeName = $this->admin->getSubject()->getType()->getName();
-
-        return 'app.'.str_replace(' ', '_', strtolower($documentTypeName)).'_document';
+        return 'app.'.$this->admin->getSubject()->getTypeUniqueId();
     }
 
     /**
@@ -40,14 +38,14 @@ class DocumentController extends CRUDController
      */
     public function printAction()
     {
-        /** @var DocumentInterface $document */
+        /** @var Document $document */
         $document = $this->admin->getSubject();
 
         /** @var DocumentService $documentService */
         $documentService = $this->get($this->getServiceId());
 
         return $this->render(
-            'AppBundle:Documents:'.$documentService::DOCUMENT_TEMPLATE.'.twig',
+            'AppBundle:Documents:'.$document->getTypeUniqueId().'.svg.twig',
             $documentService->fillPlaceholders($document)
         );
     }

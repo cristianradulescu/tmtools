@@ -293,6 +293,18 @@ class Document
     }
 
     /**
+     * Generate an unique identifier based on the document's type.
+     *
+     * Formula: the document's type name, lowercased, sufixed with '_document'.
+     *
+     * @return string
+     */
+    public function getTypeUniqueId()
+    {
+        return strtolower($this->getType()->getName()).'_document';
+    }
+
+    /**
      * @return string
      */
     public function __toString()

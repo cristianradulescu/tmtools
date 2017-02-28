@@ -10,9 +10,6 @@ use AppBundle\Entity\Document;
  */
 class ReimbursementDocumentService extends DocumentService
 {
-    const SERVICE_ID = 'app.reimbursement_document';
-    const DOCUMENT_TEMPLATE = 'reimbursement_document.svg';
-
     /**
      * @param DDocument $document
      * @return array
