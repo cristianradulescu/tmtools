@@ -86,8 +86,8 @@ sonata_admin:
                 label: Accounting
             travel:
                 label: Travel
-            aquisition:
-                label: Aquisition
+            acquisition:
+                label: Acquisition
             menu_separator:
                 label: " "
                 on_top: true

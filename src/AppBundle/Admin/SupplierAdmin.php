@@ -10,6 +10,10 @@ use Sonata\AdminBundle\Show\ShowMapper;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 
+/**
+ * Class SupplierAdmin
+ * @package AppBundle\Admin
+ */
 class SupplierAdmin extends AbstractAdmin
 {
     /**

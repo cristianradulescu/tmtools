@@ -5,12 +5,12 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Aquisition
+ * Acquisition
  *
- * @ORM\Table(name="aquisition", indexes={@ORM\Index(name="fk_aquisition_service_id", columns={"service_id"}), @ORM\Index(name="fk_aquisition_supplier_id", columns={"supplier_id"}), @ORM\Index(name="fk_aquisition_document_id", columns={"document_id"})})
+ * @ORM\Table(name="acquisition", indexes={@ORM\Index(name="fk_acquisition_service_id", columns={"service_id"}), @ORM\Index(name="fk_acquisition_supplier_id", columns={"supplier_id"}), @ORM\Index(name="fk_acquisition_document_id", columns={"document_id"})})
  * @ORM\Entity
  */
-class Aquisition
+class Acquisition
 {
     /**
      * @var integer
@@ -89,7 +89,7 @@ class Aquisition
      *
      * @param \DateTime $createdAt
      *
-     * @return Aquisition
+     * @return Acquisition
      */
     public function setCreatedAt($createdAt)
     {
@@ -113,7 +113,7 @@ class Aquisition
      *
      * @param \DateTime $updatedAt
      *
-     * @return Aquisition
+     * @return Acquisition
      */
     public function setUpdatedAt($updatedAt)
     {
@@ -137,7 +137,7 @@ class Aquisition
      *
      * @param \AppBundle\Entity\Document $document
      *
-     * @return Aquisition
+     * @return Acquisition
      */
     public function setDocument(\AppBundle\Entity\Document $document = null)
     {
@@ -161,7 +161,7 @@ class Aquisition
      *
      * @param \AppBundle\Entity\Service $service
      *
-     * @return Aquisition
+     * @return Acquisition
      */
     public function setService(\AppBundle\Entity\Service $service = null)
     {
@@ -185,7 +185,7 @@ class Aquisition
      *
      * @param \AppBundle\Entity\Supplier $supplier
      *
-     * @return Aquisition
+     * @return Acquisition
      */
     public function setSupplier(\AppBundle\Entity\Supplier $supplier = null)
     {

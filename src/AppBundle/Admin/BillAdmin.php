@@ -8,6 +8,10 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
 
+/**
+ * Class BillAdmin
+ * @package AppBundle\Admin
+ */
 class BillAdmin extends AbstractAdmin
 {
     /**
@@ -47,7 +51,7 @@ class BillAdmin extends AbstractAdmin
         $formMapper
             ->add('number')
             ->add('value')
-            ->add('aquisition')
+            ->add('acquisition')
         ;
     }
 

@@ -93,7 +93,7 @@ DELETE FROM `document_type`;
 INSERT INTO `document_type` (`id`, `name`) VALUES
   (1, 'Travel'),
   (2, 'Reimbursement'),
-  (3, 'Aquisition');
+  (3, 'Acquisition');
 /*!40000 ALTER TABLE `document_type` ENABLE KEYS */;
 
 
@@ -274,8 +274,8 @@ INSERT INTO `travel_purpose` (`id`, `name`) VALUES
   (4, 'Presentation');
 /*!40000 ALTER TABLE `travel_purpose` ENABLE KEYS */;
 
--- Dumping structure for table tmtools.aquisition
-CREATE TABLE IF NOT EXISTS `aquisition` (
+-- Dumping structure for table tmtools.acquisition
+CREATE TABLE IF NOT EXISTS `acquisition` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `service_id` int(11) NOT NULL,
   `supplier_id` int(11) NOT NULL,
@@ -283,18 +283,18 @@ CREATE TABLE IF NOT EXISTS `aquisition` (
   `created_at` datetime NOT NULL,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
-  KEY `fk_aquisition_service_id` (`service_id`),
-  KEY `fk_aquisition_supplier_id` (`supplier_id`),
-  KEY `fk_aquisition_document_id` (`document_id`),
-  CONSTRAINT `fk_aquisition_document_id` FOREIGN KEY (`document_id`) REFERENCES `document` (`id`) ON UPDATE CASCADE,
-  CONSTRAINT `fk_aquisition_service_id` FOREIGN KEY (`service_id`) REFERENCES `service` (`id`) ON UPDATE CASCADE,
-  CONSTRAINT `fk_aquisition_supplier_id` FOREIGN KEY (`supplier_id`) REFERENCES `supplier` (`id`) ON UPDATE CASCADE
+  KEY `fk_acquisition_service_id` (`service_id`),
+  KEY `fk_acquisition_supplier_id` (`supplier_id`),
+  KEY `fk_acquisition_document_id` (`document_id`),
+  CONSTRAINT `fk_acquisition_document_id` FOREIGN KEY (`document_id`) REFERENCES `document` (`id`) ON UPDATE CASCADE,
+  CONSTRAINT `fk_acquisition_service_id` FOREIGN KEY (`service_id`) REFERENCES `service` (`id`) ON UPDATE CASCADE,
+  CONSTRAINT `fk_acquisition_supplier_id` FOREIGN KEY (`supplier_id`) REFERENCES `supplier` (`id`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Dumping data for table tmtools.aquisition: ~0 rows (approximately)
-DELETE FROM `aquisition`;
-/*!40000 ALTER TABLE `aquisition` DISABLE KEYS */;
-/*!40000 ALTER TABLE `aquisition` ENABLE KEYS */;
+-- Dumping data for table tmtools.acquisition: ~0 rows (approximately)
+DELETE FROM `acquisition`;
+/*!40000 ALTER TABLE `acquisition` DISABLE KEYS */;
+/*!40000 ALTER TABLE `acquisition` ENABLE KEYS */;
 
 
 -- Dumping structure for table tmtools.bill
@@ -302,12 +302,12 @@ CREATE TABLE IF NOT EXISTS `bill` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `number` int(11) NOT NULL,
   `value` int(11) NOT NULL,
-  `aquisition_id` int(11) NOT NULL,
+  `acquisition_id` int(11) NOT NULL,
   `created_at` datetime NOT NULL,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
-  KEY `fk_bill_squisition_id` (`aquisition_id`),
-  CONSTRAINT `fk_bill_squisition_id` FOREIGN KEY (`aquisition_id`) REFERENCES `aquisition` (`id`) ON UPDATE CASCADE
+  KEY `fk_bill_acquisition_id` (`acquisition_id`),
+  CONSTRAINT `fk_bill_acquisition_id` FOREIGN KEY (`acquisition_id`) REFERENCES `acquisition` (`id`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- Dumping data for table tmtools.bill: ~0 rows (approximately)

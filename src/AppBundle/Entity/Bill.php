@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Bill
  *
- * @ORM\Table(name="bill", indexes={@ORM\Index(name="fk_bill_squisition_id", columns={"aquisition_id"})})
+ * @ORM\Table(name="bill", indexes={@ORM\Index(name="fk_bill_acquisition_id", columns={"acquisition_id"})})
  * @ORM\Entity
  */
 class Bill
@@ -50,14 +50,14 @@ class Bill
     private $updatedAt = 'CURRENT_TIMESTAMP';
 
     /**
-     * @var \Aquisition
+     * @var \Acquisition
      *
-     * @ORM\ManyToOne(targetEntity="Aquisition")
+     * @ORM\ManyToOne(targetEntity="Acquisition")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="aquisition_id", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="acquisition_id", referencedColumnName="id")
      * })
      */
-    private $aquisition;
+    private $acquisition;
 
     /**
      * Document constructor.
@@ -177,13 +177,13 @@ class Bill
     /**
      * Set aquisition
      *
-     * @param \AppBundle\Entity\Aquisition $aquisition
+     * @param \AppBundle\Entity\Acquisition $acquisition
      *
      * @return Bill
      */
-    public function setAquisition(\AppBundle\Entity\Aquisition $aquisition = null)
+    public function setAcquisition(\AppBundle\Entity\Acquisition $acquisition = null)
     {
-        $this->aquisition = $aquisition;
+        $this->acquisition = $acquisition;
 
         return $this;
     }
@@ -191,11 +191,11 @@ class Bill
     /**
      * Get aquisition
      *
-     * @return \AppBundle\Entity\Aquisition
+     * @return \AppBundle\Entity\Acquisition
      */
-    public function getAquisition()
+    public function getAcquisition()
     {
-        return $this->aquisition;
+        return $this->acquisition;
     }
 
     /**

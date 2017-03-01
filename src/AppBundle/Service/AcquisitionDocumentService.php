@@ -5,10 +5,10 @@ namespace AppBundle\Service;
 use AppBundle\Entity\Document;
 
 /**
- * Class AquisitionDocumentService
+ * Class AcquisitionDocumentService
  * @package AppBundle\Service
  */
-class AquisitionDocumentService extends DocumentService
+class AcquisitionDocumentService extends DocumentService
 {
     /**
      * @param Document $document
