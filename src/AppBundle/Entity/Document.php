@@ -2,8 +2,8 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints\DateTime;
 
 /**
  * Document
@@ -75,6 +75,17 @@ class Document
     private $reimbursements;
 
     /**
+     * @var \Acquisition
+     *
+     * @ORM\OneToOne(
+     *     targetEntity="Acquisition",
+     *     mappedBy="document",
+     *     cascade={"persist"}
+     * )
+     */
+    private $acquisition;
+
+    /**
      * @var \DateTime
      *
      * @ORM\Column(name="created_at", type="datetime", nullable=false)
@@ -93,7 +104,7 @@ class Document
      */
     public function __construct()
     {
-        $this->reimbursements = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->reimbursements = new ArrayCollection();
         $this->createdAt = new \DateTime();
         $this->updatedAt = new \DateTime();
     }
@@ -201,6 +212,16 @@ class Document
     }
 
     /**
+     * Get acquisition
+     *
+     * @return Acquisition
+     */
+    public function getAcquisition()
+    {
+        return $this->acquisition;
+    }
+
+    /**
      * Set createdAt
      *
      * @param \DateTime $createdAt
@@ -255,6 +276,7 @@ class Document
     {
         return DocumentType::TYPE_TRAVEL === $this->getType()->getId();
     }
+
     /**
      * @return bool
      */
@@ -266,9 +288,25 @@ class Document
     /**
      * @return bool
      */
+    public function isAcquisitionDocument()
+    {
+        return DocumentType::TYPE_ACQUISITION === $this->getType()->getId();
+    }
+
+    /**
+     * @return bool
+     */
     public function hasTravel()
     {
         return null !== $this->getTravel();
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasAcquisition()
+    {
+        return null !== $this->getAcquisition();
     }
 
     /**
@@ -287,6 +325,15 @@ class Document
 
         if ($this->isTravelDocument() && $this->hasTravel()) {
             return round($this->getTravel()->getNumberOfDaysOnTravel() * Travel::TRAVEL_ALLOWANCE, 2);
+        }
+
+        if ($this->isAcquisitionDocument() && $this->hasAcquisition()) {
+            /** @var Bill $bill */
+            foreach($this->getAcquisition()->getBills() as $bill) {
+                $total += $bill->getValue();
+            }
+
+            return round($total, 2);
         }
 
         return $total;

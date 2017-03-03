@@ -17,7 +17,7 @@ class DocumentType
      */
     const TYPE_TRAVEL = 1;
     const TYPE_REIMBURSEMENT = 2;
-    const TYPE_SERVICE_AQUISITION = 3;
+    const TYPE_ACQUISITION = 3;
 
     /**
      * @var integer

@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -52,6 +53,17 @@ class Acquisition
     private $supplier;
 
     /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\OneToMany(
+     *     targetEntity="Bill",
+     *     mappedBy="acquisition",
+     *     cascade={"persist"}
+     * )
+     */
+    private $bills;
+
+    /**
      * @var \DateTime
      *
      * @ORM\Column(name="created_at", type="datetime", nullable=false)
@@ -70,6 +82,7 @@ class Acquisition
      */
     public function __construct()
     {
+        $this->bills = new ArrayCollection();
         $this->createdAt = new \DateTime();
         $this->updatedAt = new \DateTime();
     }
@@ -202,6 +215,16 @@ class Acquisition
     public function getSupplier()
     {
         return $this->supplier;
+    }
+
+    /**
+     * Get bills
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getBills()
+    {
+        return $this->bills;
     }
 
     /**

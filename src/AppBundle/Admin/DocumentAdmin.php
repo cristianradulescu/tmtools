@@ -2,6 +2,7 @@
 
 namespace AppBundle\Admin;
 
+use AppBundle\Entity\Document;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
@@ -81,12 +82,18 @@ class DocumentAdmin extends AbstractAdmin
             ->add('status')
             ->add('type');
 
-        if ($this->getSubject()->isTravelDocument()) {
+        /** @var Document $document */
+        $document = $this->getSubject();
+        if ($document->isTravelDocument()) {
             $showMapper->add('travel');
         }
 
-        if ($this->getSubject()->isReimbursementDocument()) {
+        if ($document->isReimbursementDocument()) {
             $showMapper->add('reimbursements');
+        }
+
+        if ($document->isAcquisitionDocument()) {
+            $showMapper->add('acquisition');
         }
 
         $showMapper
