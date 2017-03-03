@@ -38,6 +38,20 @@ class Bill
     /**
      * @var \DateTime
      *
+     * @ORM\Column(name="date", type="datetime", nullable=false)
+     */
+    private $date;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="due_date", type="datetime", nullable=false)
+     */
+    private $dueDate;
+
+    /**
+     * @var \DateTime
+     *
      * @ORM\Column(name="created_at", type="datetime", nullable=false)
      */
     private $createdAt = 'CURRENT_TIMESTAMP';
@@ -64,6 +78,8 @@ class Bill
      */
     public function __construct()
     {
+        $this->date = new \DateTime();
+        $this->dueDate = new \DateTime();
         $this->createdAt = new \DateTime();
         $this->updatedAt = new \DateTime();
     }
@@ -127,6 +143,54 @@ class Bill
     }
 
     /**
+     * Set date
+     *
+     * @param \DateTime $date
+     *
+     * @return Bill
+     */
+    public function setDate($date)
+    {
+        $this->date = $date;
+
+        return $this;
+    }
+
+    /**
+     * Get date
+     *
+     * @return \DateTime
+     */
+    public function getDate()
+    {
+        return $this->date;
+    }
+
+    /**
+     * Set dueDate
+     *
+     * @param \DateTime $dueDate
+     *
+     * @return Bill
+     */
+    public function setDueDate($dueDate)
+    {
+        $this->dueDate = $dueDate;
+
+        return $this;
+    }
+
+    /**
+     * Get dueDate
+     *
+     * @return \DateTime
+     */
+    public function getDueDate()
+    {
+        return $this->dueDate;
+    }
+
+    /**
      * Set createdAt
      *
      * @param \DateTime $createdAt
@@ -175,7 +239,7 @@ class Bill
     }
 
     /**
-     * Set aquisition
+     * Set acquisition
      *
      * @param \AppBundle\Entity\Acquisition $acquisition
      *
@@ -189,7 +253,7 @@ class Bill
     }
 
     /**
-     * Get aquisition
+     * Get acquisition
      *
      * @return \AppBundle\Entity\Acquisition
      */
@@ -203,6 +267,6 @@ class Bill
      */
     public function __toString()
     {
-        return $this->getNumber().' ('.$this->getValue().')';
+        return $this->getNumber().'/'.$this->getDate()->format('d M Y').' ('.$this->getValue().')';
     }
 }

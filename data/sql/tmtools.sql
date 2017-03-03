@@ -303,6 +303,8 @@ CREATE TABLE IF NOT EXISTS `bill` (
   `number` int(11) NOT NULL,
   `value` int(11) NOT NULL,
   `acquisition_id` int(11) NOT NULL,
+  `date` DATETIME NOT NULL,
+  `due_date` DATETIME NOT NULL,
   `created_at` datetime NOT NULL,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),

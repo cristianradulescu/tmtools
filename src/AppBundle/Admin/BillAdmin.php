@@ -21,6 +21,7 @@ class BillAdmin extends AbstractAdmin
     {
         $datagridMapper
             ->add('number')
+            ->add('date')
             ->add('value')
         ;
     }
@@ -31,7 +32,9 @@ class BillAdmin extends AbstractAdmin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
+            ->add('acquisition.service', null, array('label' => 'Service'))
             ->add('number')
+            ->add('date', 'date', array('format' => 'd M Y'))
             ->add('value')
             ->add('_action', null, array(
                 'actions' => array(
@@ -51,6 +54,8 @@ class BillAdmin extends AbstractAdmin
         $formMapper
             ->add('number')
             ->add('value')
+            ->add('date', 'sonata_type_date_picker', array('format' => 'dd-MM-yyyy'))
+            ->add('dueDate', 'sonata_type_date_picker', array('format' => 'dd-MM-yyyy'))
             ->add('acquisition')
         ;
     }
@@ -64,6 +69,8 @@ class BillAdmin extends AbstractAdmin
             ->add('id')
             ->add('number')
             ->add('value')
+            ->add('date')
+            ->add('dueDate')
             ->add('createdAt')
             ->add('updatedAt')
         ;
