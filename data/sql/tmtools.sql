@@ -110,7 +110,7 @@ CREATE TABLE IF NOT EXISTS `employee` (
   `division_manager_id` int(11) DEFAULT NULL,
   `company_id` int(11) NOT NULL,
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `update_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `personal_numeric_code_UNIQUE` (`personal_numeric_code`),
   UNIQUE KEY `identity_card_number_UNIQUE` (`identity_card_number`),
@@ -126,7 +126,7 @@ CREATE TABLE IF NOT EXISTS `employee` (
 -- Dumping data for table tmtools.employee: ~31 rows (approximately)
 DELETE FROM `employee`;
 /*!40000 ALTER TABLE `employee` DISABLE KEYS */;
-INSERT INTO `employee` (`id`, `first_name`, `last_name`, `username`, `birthday`, `personal_numeric_code`, `identity_card_number`, `job_title_id`, `division_manager_id`, `company_id`, `created_at`, `update_at`) VALUES
+INSERT INTO `employee` (`id`, `first_name`, `last_name`, `username`, `birthday`, `personal_numeric_code`, `identity_card_number`, `job_title_id`, `division_manager_id`, `company_id`, `created_at`, `updated_at`) VALUES
   (1, 'Cristian', 'Radulescu', 'cristian.radulescu', '2011-07-06', 1234567890098, 'AB 123456', 1, 1, 1, '2017-02-10 17:21:52', '2017-02-10 17:21:52'),
   (2, 'Bob', 'Test', 'bob.test', '1987-10-09', 1098765432212, 'CD 987654', 2, 1, 1, '2017-02-10 17:21:52', '2017-02-10 17:21:52'),
   (3, 'Alice', 'Test', 'alice.test', '2011-01-01', 21231234112233, 'EF 123456', 2, 1, 1, '2017-02-10 17:21:52', '2017-02-10 17:21:52');
