@@ -45,7 +45,7 @@ class Employee
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="birthday", type="date", nullable=false)
+     * @ORM\Column(name="birthday", type="date", nullable=true)
      */
     private $birthday;
 

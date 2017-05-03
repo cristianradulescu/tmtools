@@ -60,9 +60,6 @@ class EmployeeAdmin extends AbstractAdmin
             ->add('firstName')
             ->add('lastName')
             ->add('username')
-            ->add('birthday', 'sonata_type_date_picker', array(
-                'format' => 'dd-MM-yyyy'
-            ))
             ->add('personalNumericCode')
             ->add('identityCardNumber')
             ->add('jobTitle')
