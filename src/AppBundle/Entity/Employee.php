@@ -45,7 +45,7 @@ class Employee
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="birthday", type="date", nullable=true)
+     * @ORM\Column(name="birthday", type="date", nullable=false)
      */
     private $birthday;
 
@@ -112,7 +112,6 @@ class Employee
      */
     public function __construct()
     {
-        $this->birthday = new \DateTime();
         $this->createdAt = new \DateTime();
         $this->updatedAt = new \DateTime();
     }
