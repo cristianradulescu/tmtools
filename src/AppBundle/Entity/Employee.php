@@ -112,6 +112,7 @@ class Employee
      */
     public function __construct()
     {
+        $this->birthday = new \DateTime();
         $this->createdAt = new \DateTime();
         $this->updatedAt = new \DateTime();
     }
