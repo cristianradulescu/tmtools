@@ -4,3 +4,7 @@ fos_user:
 app:
     resource: "@AppBundle/Resources/config/routing.yml"
     prefix: /
+
+api:
+    resource: "@AppBundle/Resources/config/routing/api.yml"
+    prefix: /api

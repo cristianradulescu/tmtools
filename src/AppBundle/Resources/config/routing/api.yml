@@ -1,0 +1,14 @@
+api_index:
+    path: /
+    defaults: { _controller: AppBundle:Documentaion:index }
+
+# employees
+api_employee_list:
+    path: /employee/list
+    defaults: { _controller: AppBundle:EmployeeApi:list }
+
+api_employee_show:
+    path: /employee/show/{id}
+    defaults: { _controller: AppBundle:EmployeeApi:show }
+    requirements:
+        id: '\d+'
