@@ -2,8 +2,11 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Company;
 use AppBundle\Entity\Employee;
+use AppBundle\Entity\EmployeeJobTitle;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Class EmployeeApiController
@@ -12,22 +15,17 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 class EmployeeApiController extends ApiController
 {
     /**
-     * @var string
-     */
-    protected $tableAlias = 'e';
-
-    /**
      * @return JsonResponse
      */
-    public function listAction()
+    public function listAction() : JsonResponse
     {
         $listFields = [
-            $this->tableAlias.'.id',
-            $this->tableAlias.'.username'
+            'e.id',
+            'e.username'
         ];
 
         $employees = $this->getDoctrine()->getManager()->getRepository(Employee::class)
-            ->createQueryBuilder($this->tableAlias)
+            ->createQueryBuilder('e')
             ->select($listFields)
             ->getQuery()
             ->getResult();
@@ -39,25 +37,71 @@ class EmployeeApiController extends ApiController
      * @param $id
      * @return JsonResponse
      */
-    public function showAction($id)
+    public function showAction($id) : JsonResponse
     {
         $showFields = [
-            $this->tableAlias.'.id',
-            $this->tableAlias.'.username',
-            $this->tableAlias.'.firstName',
-            $this->tableAlias.'.lastName',
-            $this->tableAlias.'.personalNumericCode',
-            $this->tableAlias.'.identityCardNumber',
+            'e.id',
+            'e.username',
+            'e.firstName',
+            'e.lastName',
+            'e.personalNumericCode',
+            'e.identityCardNumber',
         ];
 
         $employee = $this->getDoctrine()->getManager()->getRepository(Employee::class)
-            ->createQueryBuilder($this->tableAlias)
+            ->createQueryBuilder('e')
             ->select($showFields)
-            ->where($this->tableAlias.'.id = :id')
+            ->where('e.id = :id')
             ->setParameter('id', $id)
             ->getQuery()
             ->getOneOrNullResult();
 
         return new JsonResponse($employee);
+    }
+
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function createAction(Request $request) : JsonResponse
+    {
+        $doctrineManager = $this->getDoctrine()->getManager();
+        $params = $request->request->all();
+
+        try {
+            $employee = (new Employee())
+                ->setFirstName($params['first_name'])
+                ->setLastName(($params['last_name']))
+                ->setUsername($params['username'])
+                ->setPersonalNumericCode($params['personal_numeric_code'])
+                ->setIdentityCardNumber(($params['identity_card_number']));
+
+            $company = $doctrineManager->getRepository(Company::class)->find($params['company_id']);
+            $employee->setCompany($company);
+
+            $jobtitle = $doctrineManager->getRepository(EmployeeJobTitle::class)
+                ->find($params['job_title_id']);
+            $employee->setJobTitle($jobtitle);
+
+            $divisionManager = $doctrineManager->getRepository(Employee::class)
+                ->find($params['division_manager_id']);
+            $employee->setDivisionManager($divisionManager);
+
+            $doctrineManager->persist($employee);
+            $doctrineManager->flush();
+        } catch (Exception $e) {
+            return new JsonResponse(array('error' => $e->getMessage()));
+        }
+
+        return new JsonResponse(array('id' => $employee->getId()));
+    }
+
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function updateAction(Request $request) : JsonResponse
+    {
+        return new JsonResponse('To be implemented');
     }
 }

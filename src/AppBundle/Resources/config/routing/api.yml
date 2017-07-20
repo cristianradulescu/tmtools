@@ -2,7 +2,7 @@ api_index:
     path: /
     defaults: { _controller: AppBundle:Documentaion:index }
 
-# employees
+# Employee
 api_employee_list:
     path: /employee/list
     defaults: { _controller: AppBundle:EmployeeApi:list }
@@ -10,5 +10,17 @@ api_employee_list:
 api_employee_show:
     path: /employee/show/{id}
     defaults: { _controller: AppBundle:EmployeeApi:show }
+    requirements:
+        id: '\d+'
+
+api_employee_create:
+    path: /employee/create
+    defaults: { _controller: AppBundle:EmployeeApi:create }
+    methods: [POST]
+
+api_employee_update:
+    path: /employee/update/{id}
+    defaults: { _controller: AppBundle:EmployeeApi:update }
+    methods: [POST]
     requirements:
         id: '\d+'
