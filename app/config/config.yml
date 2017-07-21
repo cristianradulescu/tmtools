@@ -35,8 +35,6 @@ framework:
 twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
-    form_themes:
-        - 'SonataCoreBundle:Form:datepicker.html.twig'
 
 # Doctrine Configuration
 doctrine:
@@ -69,42 +67,3 @@ fos_user:
     from_email:
           address: "%fos_user_from_email_address%"
           sender_name: "%fos_user_from_email_sender_name%"
-
-# Sonata admin
-sonata_admin:
-    title: "TM tools"
-    show_mosaic_button: false
-    options:
-        title_mode: single_text
-    templates:
-        layout: AppBundle::standard_layout.html.twig
-    dashboard:
-        groups:
-            hr:
-                label: HR
-            accounting:
-                label: Accounting
-            travel:
-                label: Travel
-            menu_separator:
-                label: " "
-                on_top: true
-                items:
-                    - route: " "
-                      label: " "
-            admin:
-                label: Admin
-                roles: [ ROLE_ADMIN]
-            logout:
-                label: Logout
-                on_top: true
-                items:
-                    - route: "/logout" #route name doesn't work with "on_top: true"
-                      label: Logout
-
-sonata_block:
-    default_contexts: [cms]
-    blocks:
-        # enable the SonataAdminBundle block
-        sonata.admin.block.admin_list:
-            contexts: [default]
