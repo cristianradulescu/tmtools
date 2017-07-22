@@ -21,7 +21,9 @@ class EmployeeApiController extends ApiController
     {
         $listFields = [
             'e.id',
-            'e.username'
+            'e.username',
+            'e.personalNumericCode',
+            'e.identityCardNumber'
         ];
 
         $employees = $this->getDoctrine()->getManager()->getRepository(Employee::class)
