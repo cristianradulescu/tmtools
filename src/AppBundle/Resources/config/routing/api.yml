@@ -24,3 +24,26 @@ api_employee_update:
     methods: [POST]
     requirements:
         id: '\d+'
+
+# Document
+api_document_list:
+    path: /document/list
+    defaults: { _controller: AppBundle:DocumentApi:list }
+
+api_document_show:
+    path: /document/show/{id}
+    defaults: { _controller: AppBundle:DocumentApi:show }
+    requirements:
+          id: '\d+'
+
+api_document_create:
+    path: /document/create
+    defaults: { _controller: AppBundle:DocumentApi:create }
+    methods: [POST]
+
+api_document_update:
+    path: /document/update/{id}
+    defaults: { _controller: AppBundle:DocumentApi:update }
+    methods: [POST]
+    requirements:
+        id: '\d+'

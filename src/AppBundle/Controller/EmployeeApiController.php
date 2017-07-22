@@ -36,7 +36,7 @@ class EmployeeApiController extends ApiController
     }
 
     /**
-     * @param $id
+     * @param int $id
      * @return JsonResponse
      */
     public function showAction($id) : JsonResponse
@@ -104,6 +104,6 @@ class EmployeeApiController extends ApiController
      */
     public function updateAction(Request $request) : JsonResponse
     {
-        return new JsonResponse('To be implemented');
+        // TODO: Implement updateAction() method.
     }
 }
