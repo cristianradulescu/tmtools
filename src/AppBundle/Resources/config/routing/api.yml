@@ -47,3 +47,9 @@ api_document_update:
     methods: [POST]
     requirements:
         id: '\d+'
+
+api_document_print:
+    path: /document/print/{id}
+    defaults: { _controller: AppBundle:DocumentApi:print }
+    requirements:
+          id: '\d+'

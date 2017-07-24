@@ -4,8 +4,10 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Document;
 use AppBundle\Entity\Travel;
+use AppBundle\Service\DocumentService;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class DocumentApiController
@@ -81,5 +83,25 @@ class DocumentApiController extends ApiController
     public function updateAction(Request $request): JsonResponse
     {
         // TODO: Implement updateAction() method.
+    }
+
+    /**
+     * @param int $id
+     * @return Response
+     */
+    public function printAction($id) : Response
+    {
+        /** @var Document $document */
+        $document = $this->getDoctrine()->getManager()->getRepository(Document::class)->find($id);
+
+        /** @var DocumentService $documentService */
+        $documentService = $this->get(
+            'app.'.str_replace(' ', '_', strtolower($document->getType())).'_document'
+        );
+
+        return $this->render(
+            'AppBundle:Documents:'.$documentService::DOCUMENT_TEMPLATE.'.twig',
+            $documentService->fillPlaceholders($document)
+        );
     }
 }
