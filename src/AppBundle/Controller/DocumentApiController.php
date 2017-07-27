@@ -5,6 +5,10 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Document;
 use AppBundle\Entity\Travel;
 use AppBundle\Service\DocumentService;
+use AppBundle\Service\ReimbursementDocumentService;
+use AppBundle\Service\TravelDocumentService;
+use Doctrine\ORM\EntityRepository;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,7 +17,7 @@ use Symfony\Component\HttpFoundation\Response;
  * Class DocumentApiController
  * @package AppBundle\Controller
  */
-class DocumentApiController extends ApiController
+class DocumentApiController extends Controller implements CrudController
 {
     /**
      * @return JsonResponse
@@ -34,7 +38,9 @@ class DocumentApiController extends ApiController
             '(DATE_DIFF(doc.dateEnd, doc.dateStart) + 1) * '.Travel::TRAVEL_ALLOWANCE.' as total'
         ];
 
-        $reimbursementDocuments = $this->getDoctrine()->getManager()->getRepository(Document::class)
+        /** @var EntityRepository $documentRepository */
+        $documentRepository = $this->getDoctrine()->getManager()->getRepository(Document::class);
+        $reimbursementDocuments = $documentRepository
             ->createQueryBuilder('d')
             ->join('d.employee', 'e')
             ->join('d.type', 't')
@@ -44,8 +50,7 @@ class DocumentApiController extends ApiController
             ->groupBy('doc.document')
             ->getQuery()
             ->getResult();
-
-        $travelDocuments = $this->getDoctrine()->getManager()->getRepository(Document::class)
+        $travelDocuments = $documentRepository
             ->createQueryBuilder('d')
             ->join('d.employee', 'e')
             ->join('d.type', 't')
@@ -64,7 +69,7 @@ class DocumentApiController extends ApiController
      */
     public function showAction($id): JsonResponse
     {
-        // TODO: Implement showAction() method.
+        return new JsonResponse('TO DO');
     }
 
     /**
@@ -73,7 +78,7 @@ class DocumentApiController extends ApiController
      */
     public function createAction(Request $request): JsonResponse
     {
-        // TODO: Implement createAction() method.
+        return new JsonResponse('TO DO');
     }
 
     /**
@@ -82,7 +87,7 @@ class DocumentApiController extends ApiController
      */
     public function updateAction(Request $request): JsonResponse
     {
-        // TODO: Implement updateAction() method.
+        return new JsonResponse('TO DO');
     }
 
     /**
@@ -94,7 +99,7 @@ class DocumentApiController extends ApiController
         /** @var Document $document */
         $document = $this->getDoctrine()->getManager()->getRepository(Document::class)->find($id);
 
-        /** @var DocumentService $documentService */
+        /** @var DocumentService|TravelDocumentService|ReimbursementDocumentService $documentService */
         $documentService = $this->get(
             'app.'.str_replace(' ', '_', strtolower($document->getType())).'_document'
         );

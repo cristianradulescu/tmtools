@@ -2,13 +2,14 @@
 
 namespace AppBundle\Controller;
 
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * Class DocumentationApiController
  * @package AppBundle\Controller
  */
-class DocumentationApiController extends ApiController
+class DocumentationApiController extends Controller
 {
     /**
      * @return JsonResponse

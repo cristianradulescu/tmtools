@@ -2,38 +2,35 @@
 
 namespace AppBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * Class ApiController
+ * Interface CrudController
  * @package AppBundle\Controller
  */
-abstract class ApiController extends Controller
+interface CrudController
 {
     /**
      * @return JsonResponse
      */
-    abstract public function listAction() : JsonResponse;
+    public function listAction() : JsonResponse;
 
     /**
      * @param int $id
      * @return JsonResponse
      */
-    abstract public function showAction($id) : JsonResponse;
+    public function showAction($id) : JsonResponse;
 
     /**
      * @param Request $request
      * @return JsonResponse
      */
-    abstract public function createAction(Request $request) : JsonResponse;
+    public function createAction(Request $request) : JsonResponse;
 
     /**
      * @param Request $request
      * @return JsonResponse
      */
-    abstract public function updateAction(Request $request) : JsonResponse;
-
-
+    public function updateAction(Request $request) : JsonResponse;
 }

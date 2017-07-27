@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Company;
 use AppBundle\Entity\Employee;
 use AppBundle\Entity\EmployeeJobTitle;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -12,7 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
  * Class EmployeeApiController
  * @package AppBundle\Controller
  */
-class EmployeeApiController extends ApiController
+class EmployeeApiController extends Controller implements CrudController
 {
     /**
      * @return JsonResponse
@@ -25,6 +26,7 @@ class EmployeeApiController extends ApiController
             'e.personalNumericCode',
             'e.identityCardNumber'
         ];
+
 
         $employees = $this->getDoctrine()->getManager()->getRepository(Employee::class)
             ->createQueryBuilder('e')
@@ -91,7 +93,7 @@ class EmployeeApiController extends ApiController
 
             $doctrineManager->persist($employee);
             $doctrineManager->flush();
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             return new JsonResponse(array('error' => $e->getMessage()));
         }
 
@@ -104,6 +106,6 @@ class EmployeeApiController extends ApiController
      */
     public function updateAction(Request $request) : JsonResponse
     {
-        // TODO: Implement updateAction() method.
+        return new JsonResponse('TO DO');
     }
 }
