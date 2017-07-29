@@ -11,6 +11,11 @@ RUN apt-get update \
   && pecl install xdebug \
   && docker-php-ext-enable xdebug
 
+RUN apt-get install -y libzip-dev \
+  && pecl install zip && docker-php-ext-enable zip
+
+RUN apt-get install -y git
+
 COPY php-fpm.conf /etc/php-fpm.conf
 COPY php.ini /usr/local/etc/php/php.ini
 
