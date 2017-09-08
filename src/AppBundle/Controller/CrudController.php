@@ -20,7 +20,7 @@ interface CrudController
      * @param int $id
      * @return JsonResponse
      */
-    public function showAction($id) : JsonResponse;
+    public function showAction(int $id) : JsonResponse;
 
     /**
      * @param Request $request

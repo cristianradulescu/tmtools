@@ -41,26 +41,21 @@ class EmployeeApiController extends Controller implements CrudController
      * @param int $id
      * @return JsonResponse
      */
-    public function showAction($id) : JsonResponse
+    public function showAction(int $id) : JsonResponse
     {
-        $showFields = [
-            'e.id',
-            'e.username',
-            'e.firstName',
-            'e.lastName',
-            'e.personalNumericCode',
-            'e.identityCardNumber',
-        ];
-
         $employee = $this->getDoctrine()->getManager()->getRepository(Employee::class)
-            ->createQueryBuilder('e')
-            ->select($showFields)
-            ->where('e.id = :id')
-            ->setParameter('id', $id)
-            ->getQuery()
-            ->getOneOrNullResult();
+            ->find($id);
 
-        return new JsonResponse($employee);
+        return new JsonResponse(
+            [
+                'id' => $employee->getId(),
+                'username' => $employee->getUsername(),
+                'first_name' => $employee->getFirstName(),
+                'last_name' => $employee->getLastName(),
+                'personal_numeric_code' => $employee->getPersonalNumericCode(),
+                'identity_card_number' => $employee->getIdentityCardNumber()
+            ]
+        );
     }
 
     /**
@@ -94,10 +89,10 @@ class EmployeeApiController extends Controller implements CrudController
             $doctrineManager->persist($employee);
             $doctrineManager->flush();
         } catch (\Exception $e) {
-            return new JsonResponse(array('error' => $e->getMessage()));
+            return new JsonResponse(['error' => $e->getMessage()]);
         }
 
-        return new JsonResponse(array('id' => $employee->getId()));
+        return new JsonResponse(['id' => $employee->getId()]);
     }
 
     /**

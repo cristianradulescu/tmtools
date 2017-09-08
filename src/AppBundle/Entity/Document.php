@@ -201,6 +201,16 @@ class Document
     }
 
     /**
+     * @param Travel $travel
+     * @return $this
+     */
+    public function setTravel(Travel $travel)
+    {
+        $this->travel = $travel;
+        return $this;
+    }
+
+    /**
      * Set createdAt
      *
      * @param \DateTime $createdAt
