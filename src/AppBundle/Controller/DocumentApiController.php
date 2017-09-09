@@ -158,9 +158,28 @@ class DocumentApiController extends Controller implements CrudController
      * @param Request $request
      * @return JsonResponse
      */
-    public function updateAction(Request $request): JsonResponse
+    public function updateAction(Request $request) : JsonResponse
     {
-        return new JsonResponse('TO DO');
+        $doctrineManager = $this->getDoctrine()->getManager();
+
+        try {
+            $document = $doctrineManager->getRepository(Document::class)
+                ->find($request->attributes->get('id'));
+            // TODO: update document from request
+
+            $reimbursementParams = $request->request->get('reimbursement', array());
+            if (!empty($reimbursementParams)) {
+                $reimbursement = $this->createReimbursementForDocument($document, $reimbursementParams);
+                $document->addReimbursement($reimbursement);
+            }
+
+            $doctrineManager->flush();
+
+        } catch (\Exception $e) {
+            return new JsonResponse(['error' => $e->getMessage()]);
+        }
+
+        return new JsonResponse(['id' => $document->getId()]);
     }
 
     /**
