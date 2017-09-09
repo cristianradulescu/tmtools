@@ -7,6 +7,7 @@ use AppBundle\Entity\DocumentStatus;
 use AppBundle\Entity\DocumentType;
 use AppBundle\Entity\Employee;
 use AppBundle\Entity\Reimbursement;
+use AppBundle\Entity\ReimbursementType;
 use AppBundle\Entity\Travel;
 use AppBundle\Entity\TravelDestination;
 use AppBundle\Entity\TravelPurpose;
@@ -138,9 +139,11 @@ class DocumentApiController extends Controller implements CrudController
                 $travelParams = $params['travel'];
                 $travel = $this->createTravelForDocument($document, $travelParams);
                 $document->setTravel($travel);
+            } elseif ($document->isReimbursementDocument()) {
+                $reimbursementParams = $params['reimbursement'];
+                $reimbursement = $this->createReimbursementForDocument($document, $reimbursementParams);
+                $document->addReimbursement($reimbursement);
             }
-
-            // TODO: add reimbursement
 
             $doctrineManager->persist($document);
             $doctrineManager->flush();
@@ -149,32 +152,6 @@ class DocumentApiController extends Controller implements CrudController
         }
 
         return new JsonResponse(['id' => $document->getId()]);
-    }
-
-    /**
-     * @param Document $document
-     * @param array $travelDetails
-     * @return Travel
-     */
-    protected function createTravelForDocument(Document $document, array $travelDetails) : Travel
-    {
-        $doctrineManager = $this->getDoctrine()->getManager();
-        $destination = $doctrineManager->getRepository(TravelDestination::class)
-            ->find($travelDetails['destination_id']);
-        $purpose = $doctrineManager->getRepository(TravelPurpose::class)
-            ->find($travelDetails['purpose_id']);
-
-        return (new Travel())
-            ->setDocument($document)
-            ->setEmployee($document->getEmployee())
-            ->setDestination($destination)
-            ->setPurpose($purpose)
-            ->setDateStart(new \DateTime($travelDetails['date_start']))
-            ->setDateEnd(new \DateTime($travelDetails['date_start']))
-            ->setDepartureLeaveTime(new \DateTime($travelDetails['departure_leave_time']))
-            ->setDepartureArrivalTime(new \DateTime($travelDetails['departure_arrival_time']))
-            ->setDestinationLeaveTime(new \DateTime($travelDetails['destination_leave_time']))
-            ->setDestinationArrivalTime(new \DateTime($travelDetails['destination_arrival_time']));
     }
 
     /**
@@ -204,5 +181,53 @@ class DocumentApiController extends Controller implements CrudController
             'AppBundle:Documents:'.$documentService::DOCUMENT_TEMPLATE.'.twig',
             $documentService->fillPlaceholders($document)
         );
+    }
+
+    /**
+     * @param Document $document
+     * @param array $travelDetails
+     * @return Travel
+     */
+    protected function createTravelForDocument(Document $document, array $travelDetails) : Travel
+    {
+        $doctrineManager = $this->getDoctrine()->getManager();
+        $destination = $doctrineManager->getRepository(TravelDestination::class)
+            ->find($travelDetails['destination_id']);
+        $purpose = $doctrineManager->getRepository(TravelPurpose::class)
+            ->find($travelDetails['purpose_id']);
+
+        return (new Travel())
+            ->setDocument($document)
+            ->setEmployee($document->getEmployee())
+            ->setDestination($destination)
+            ->setPurpose($purpose)
+            ->setDateStart(new \DateTime($travelDetails['date_start']))
+            ->setDateEnd(new \DateTime($travelDetails['date_start']))
+            ->setDepartureLeaveTime(new \DateTime($travelDetails['departure_leave_time']))
+            ->setDepartureArrivalTime(new \DateTime($travelDetails['departure_arrival_time']))
+            ->setDestinationLeaveTime(new \DateTime($travelDetails['destination_leave_time']))
+            ->setDestinationArrivalTime(new \DateTime($travelDetails['destination_arrival_time']));
+    }
+
+    /**
+     * @param Document $document
+     * @param array $reimbursementDetails
+     * @return Reimbursement
+     */
+    protected function createReimbursementForDocument(Document $document, array $reimbursementDetails) : Reimbursement
+    {
+        $doctrineManager = $this->getDoctrine()->getManager();
+        $employee = $doctrineManager->getRepository(Employee::class)
+            ->find($reimbursementDetails['employee_id']);
+        $type = $doctrineManager->getRepository(ReimbursementType::class)
+            ->find($reimbursementDetails['type_id']);
+
+        return (new Reimbursement())
+            ->setDocument($document)
+            ->setEmployee($employee)
+            ->setType($type)
+            ->setNumber($reimbursementDetails['number'])
+            ->setValue($reimbursementDetails['value'])
+            ->setDate(new \DateTime($reimbursementDetails['date']));
     }
 }

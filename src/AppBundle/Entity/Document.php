@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints\DateTime;
 
@@ -183,11 +184,31 @@ class Document
     /**
      * Get reimbursement
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return ArrayCollection
      */
     public function getReimbursements()
     {
         return $this->reimbursements;
+    }
+
+    /**
+     * @param Reimbursement $reimbursement
+     * @return $this
+     */
+    public function addReimbursement(Reimbursement $reimbursement)
+    {
+        $this->reimbursements->add($reimbursement);
+        return $this;
+    }
+
+    /**
+     * @param Reimbursement $reimbursement
+     * @return $this
+     */
+    public function removeReimbursement(Reimbursement $reimbursement)
+    {
+        $this->reimbursements->removeElement($reimbursement);
+        return $this;
     }
 
     /**
