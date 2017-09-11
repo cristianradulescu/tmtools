@@ -2,9 +2,9 @@ imports:
     - { resource: config.yml }
 
 # Doctrine Configuration
-#doctrine:
-#    dbal:
-#        url:  "%env(DATABASE_URL)%"
+doctrine:
+    dbal:
+        url:  "%env(DATABASE_URL)%"
 
 monolog:
     handlers:
